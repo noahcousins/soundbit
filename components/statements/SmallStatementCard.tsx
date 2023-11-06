@@ -1,25 +1,23 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import StatementIcon from "@/components/icons/StatementIcon";
-import { formatDate } from "@/utils/formatUtils";
-
-import { Skeleton } from "@/components/ui/skeleton";
-import LikeButton from "@/components/interaction/LikeButton";
-import PoliticiansPreview from "@/components/politicians/PoliticiansPreview";
-
+import StatementIcon from '@/components/icons/StatementIcon';
+import LikeButton from '@/components/interaction/LikeButton';
+import PoliticiansPreview from '@/components/politicians/PoliticiansPreview';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  TooltipTrigger
+} from '@/components/ui/tooltip';
+import { formatDate } from '@/utils/formatUtils';
+import Link from 'next/link';
 
 export default function SmallStatementCard({
   statement,
   index,
   loading,
-  session,
+  session
 }: {
   statement: any;
   index: any;

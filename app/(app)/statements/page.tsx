@@ -1,31 +1,32 @@
-import React from "react";
+import PreviewPoliticianCard from '@/components/politicians/PreviewPoliticianCard';
+import Carousel from '@/components/sections/Carousel';
+import HorizontalGallery from '@/components/sections/HorizontalGallery';
+import SmallStatementCard from '@/components/statements/SmallStatementCard';
+import StatementPreviewGrid from '@/components/statements/StatementPreviewGrid';
+import StatementsGrid from '@/components/statements/StatementsGrid';
+import SectionHeader from '@/components/util/SectionHeader';
+import { SlideBlobOne } from '@/components/util/SvgImport';
 import {
   fetchStatementsWithPoliticians,
   fetchPoliticiansByIds,
   fetchCarouselWithSlides,
-  fetchSlidesById,
-} from "@/utils/supabase/api";
-import SmallStatementCard from "@/components/statements/SmallStatementCard";
-import StatementsGrid from "@/components/statements/StatementsGrid";
-import HorizontalGallery from "@/components/sections/HorizontalGallery";
-import Carousel from "@/components/sections/Carousel";
-import StatementPreviewGrid from "@/components/statements/StatementPreviewGrid";
-import { SlideBlobOne } from "@/components/util/SvgImport";
-import SectionHeader from "@/components/util/SectionHeader";
-
-import PreviewPoliticianCard from "@/components/politicians/PreviewPoliticianCard";
+  fetchSlidesById
+} from '@/utils/supabase/api';
+import React from 'react';
 
 export const revalidate = 0;
 
 export default async function Statements() {
   // Fetching statements data
   const statementsWithPoliticians = await fetchStatementsWithPoliticians();
+  console.log(statementsWithPoliticians);
+
   const politicianIds = statementsWithPoliticians.flatMap(
     (statement) => statement.politicianId
   );
   const politicians = await fetchPoliticiansByIds(politicianIds);
 
-  const carousel_name = "statements_page";
+  const carousel_name = 'statements_page';
 
   //Fetching carousel data
   const carouselSlides = await fetchCarouselWithSlides(carousel_name);
@@ -37,7 +38,7 @@ export default async function Statements() {
       ...statement,
       politicians: politicians.filter((politician) =>
         statement.politicianId!.includes(politician.id)
-      ),
+      )
     })
   );
 
@@ -65,7 +66,7 @@ export default async function Statements() {
   return (
     <main className="relative flex min-h-screen w-full flex-col items-start gap-16 py-12 lg:gap-24">
       <div className="bg-glow-3 absolute">
-        <SlideBlobOne fillColor={"purple"} />
+        <SlideBlobOne fillColor={'purple'} />
       </div>
       <Carousel slides={slides} />
 
@@ -102,8 +103,8 @@ export default async function Statements() {
 
       <div className="flex w-full flex-col content-between justify-between gap-8">
         <SectionHeader
-          heading={"All Statements"}
-          description={"Explore all statements by politicians."}
+          heading={'All Statements'}
+          description={'Explore all statements by politicians.'}
         />
         <StatementsGrid statementsData={statementsWithUpdatedPoliticians} />
       </div>
