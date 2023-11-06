@@ -8,3 +8,9 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+module.exports = {
+  images: {
+    domains: ['iuflqljinuwipvdjrxlt.supabase.co'] // Add your domain here
+  }
+};

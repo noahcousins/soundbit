@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Database } from '@/types_db';
 import { postData } from '@/utils/helpers';
 import { getStripe } from '@/utils/stripe-client';
@@ -139,10 +139,9 @@ export default function Pricing({
                       </p>
                       <p className="mt-4 text-zinc-300">{price.description}</p>
                       <Button
-                        variant="slim"
+                        variant="default"
                         type="button"
                         disabled={false}
-                        loading={priceIdLoading === price.id}
                         onClick={() => handleCheckout(price)}
                         className="block w-full py-2 mt-12 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900 "
                       >
@@ -239,10 +238,9 @@ export default function Pricing({
                     </span>
                   </p>
                   <Button
-                    variant="slim"
+                    variant="default"
                     type="button"
                     disabled={!session}
-                    loading={priceIdLoading === price.id}
                     onClick={() => handleCheckout(price)}
                     className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900"
                   >

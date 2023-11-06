@@ -1,63 +1,51 @@
-import SupabaseProvider from './supabase-provider';
-import Footer from '@/components/ui/Footer';
-import Navbar from '@/components/ui/Navbar';
-import { PropsWithChildren } from 'react';
-import 'styles/main.css';
-
-const meta = {
-  title: 'Next.js Subscription Starter',
-  description: 'Brought to you by Vercel, Stripe, and Supabase.',
-  cardImage: '/og.png',
-  robots: 'follow, index',
-  favicon: '/favicon.ico',
-  url: 'https://subscription-starter.vercel.app',
-  type: 'website'
-};
+import './globals.css';
+import ModeToggle from '@/components/ModeToggle';
+import Navigation from '@/components/layout/Navigation';
+import Sidebar from '@/components/layout/Sidebar';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
+import { GeistSans } from 'geist/font';
 
 export const metadata = {
-  title: meta.title,
-  description: meta.description,
-  cardImage: meta.cardImage,
-  robots: meta.robots,
-  favicon: meta.favicon,
-  url: meta.url,
-  type: meta.type,
-  openGraph: {
-    url: meta.url,
-    title: meta.title,
-    description: meta.description,
-    cardImage: meta.cardImage,
-    type: meta.type,
-    site_name: meta.title
-  },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@vercel',
-    title: meta.title,
-    description: meta.description,
-    cardImage: meta.cardImage
-  }
+  title: 'Next.js and Supabase Starter Kit',
+  description: 'The fastest way to build apps with Next.js and Supabase'
 };
 
 export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
   children
-}: PropsWithChildren) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body className="bg-black loading">
-        <SupabaseProvider>
-          {/* @ts-expect-error */}
-          <Navbar />
-          <main
-            id="skip"
-            className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)]"
+    <html lang="en" className={GeistSans.className}>
+      <body
+        className={`select-none bg-background focus-visible:ring-transparent dark:bg-[#010101]`}
+      >
+        <main className="min-h-screen max-w-[1600px] mx-auto flex flex-col items-center">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
-            {children}
-          </main>
-          <Footer />
-        </SupabaseProvider>
+            <div className="flex w-full">{children}</div>
+            <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
+              <p>
+                Powered by{' '}
+                <a
+                  href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
+                  target="_blank"
+                  className="font-bold hover:underline"
+                  rel="noreferrer"
+                >
+                  Supabase
+                </a>
+                <ModeToggle />
+              </p>
+            </footer>
+          </ThemeProvider>
+        </main>
+        <Toaster />
       </body>
     </html>
   );
