@@ -1,14 +1,36 @@
 import { Database } from '@/types_db';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 
+const cookieStore = cookies();
+
 export const createServerSupabaseClient = cache(() =>
-  createServerComponentClient<Database>({ cookies })
+  createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        }
+      }
+    }
+  )
 );
 
 export async function getSession() {
-  const supabase = createServerSupabaseClient();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        }
+      }
+    }
+  );
   try {
     const {
       data: { session }
