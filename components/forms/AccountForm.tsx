@@ -198,7 +198,7 @@ export default function AccountForm({ session }: AccountFormProps) {
             }
             type="submit"
           >
-            Submit
+            Update Profile
           </Button>
         </div>
       </form>

@@ -1,19 +1,18 @@
 // PoliticianFilters.js
 
-import { useState } from "react";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import AnimatedTabs from "@/components/politicians/AnimatedTabs";
-import AnimatedPositionTabs from "@/components/politicians/AnimatedPositionTabs";
-
+import AnimatedPositionTabs from '@/components/politicians/AnimatedPositionTabs';
+import AnimatedTabs from '@/components/politicians/AnimatedTabs';
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { X } from "lucide-react";
+  PopoverTrigger
+} from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { X } from 'lucide-react';
+import { useState } from 'react';
+import React from 'react';
 
 export default function PoliticianFilters({
   selectedParty,
@@ -23,7 +22,7 @@ export default function PoliticianFilters({
   politiciansWithCounts,
   handleStateFilter,
   selectedPosition,
-  handlePositionFilter,
+  handlePositionFilter
 }: {
   selectedParty: any;
   handlePartyFilter: any;
@@ -34,7 +33,7 @@ export default function PoliticianFilters({
   selectedPosition: any;
   handlePositionFilter: any;
 }) {
-  const [selectedStates, setSelectedStates] = useState([""]);
+  const [selectedStates, setSelectedStates] = useState<any[]>([]);
 
   const handleStateSelection = (state: string) => {
     let updatedStates;
@@ -70,8 +69,8 @@ export default function PoliticianFilters({
           <PopoverTrigger asChild>
             <Button variant="secondary">
               {selectedStates.length > 0
-                ? `Selected States: ${selectedStates.join(", ")}`
-                : "Select state"}
+                ? `Selected States: ${selectedStates.join(', ')}`
+                : 'Select state'}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="z-[99] w-fit">
@@ -95,8 +94,8 @@ export default function PoliticianFilters({
                         <div
                           className={`cursor-pointer rounded-sm bg-white bg-opacity-0 p-1 text-sm transition-all duration-100 ease-in-out hover:bg-opacity-10 ${
                             selectedStates.includes(state)
-                              ? "bg-opacity-10"
-                              : ""
+                              ? 'bg-opacity-10'
+                              : ''
                           }`}
                           onClick={() => handleStateSelection(state)}
                         >
@@ -114,7 +113,7 @@ export default function PoliticianFilters({
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="secondary">
-              {selectedPosition ? selectedPosition : "Select position"}
+              {selectedPosition ? selectedPosition : 'Select position'}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-fit">

@@ -1,26 +1,26 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Mic, ScrollText } from "lucide-react";
-import StatementIcon from "@/components/icons/StatementIcon";
-import LegislationIcon from "@/components/icons/LegislationIcon";
-
+import LegislationIcon from '@/components/icons/LegislationIcon';
+import StatementIcon from '@/components/icons/StatementIcon';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 import {
   formatState,
   formatParty,
-  getBackgroundColor,
-} from "@/utils/formatUtils"; // Adjust the import path accordingly.
+  getBackgroundColor
+} from '@/utils/formatUtils';
+import { Mic, ScrollText } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+
+// Adjust the import path accordingly.
 
 export default function SmallPoliticianCard({
   politician,
   legislationCount,
-  statementCount,
+  statementCount
 }: {
   politician: any;
   legislationCount: number;
@@ -33,7 +33,7 @@ export default function SmallPoliticianCard({
       {politician && (
         <div
           style={{
-            background: getBackgroundColor(politician.party),
+            background: getBackgroundColor(politician.party)
           }}
           className="absolute left-0 top-0 h-[150px] w-[250px] scale-100 transform opacity-50 transition-all duration-700 ease-out group-hover:scale-150 group-hover:opacity-100"
         ></div>
@@ -49,9 +49,9 @@ export default function SmallPoliticianCard({
               <div className="my-auto flex h-fit w-full flex-col items-center space-x-0 space-y-8 lg:flex-row lg:space-x-8 lg:space-y-0">
                 <div
                   className={`w-fit rounded-full sm:flex-shrink-0 ${
-                    politician.party === "Republican"
-                      ? "ring-0 transition-transform duration-200 hover:ring-8 hover:ring-red-500"
-                      : "ring-0 transition-transform duration-200 hover:ring-8 hover:ring-blue-500"
+                    politician.party === 'Republican'
+                      ? 'ring-0 transition-transform duration-200 hover:ring-8 hover:ring-red-500'
+                      : 'ring-0 transition-transform duration-200 hover:ring-8 hover:ring-blue-500'
                   }`}
                 >
                   <Image
@@ -71,10 +71,10 @@ export default function SmallPoliticianCard({
                 {/* Politician's position, name, party, and state */}
                 <div className="flex justify-between">
                   <h3 className="flex-grow text-left text-sm font-extralight uppercase text-primary opacity-60">
-                    {politician.position === "Representative"
-                      ? "Rep."
-                      : politician.position === "Senator"
-                      ? "Sen."
+                    {politician.position === 'Representative'
+                      ? 'Rep.'
+                      : politician.position === 'Senator'
+                      ? 'Sen.'
                       : politician.position}
                   </h3>
                   <p className="text-left text-sm font-extralight text-primary opacity-60">
@@ -88,7 +88,7 @@ export default function SmallPoliticianCard({
                 </h2>
               </div>
 
-              <div className="z-50 flex flex-col gap-2">
+              <div className="z-30 flex flex-col gap-2">
                 {/* Total statements and legislation */}
                 <p className="flex items-center gap-2 text-sm text-primary">
                   <TooltipProvider>

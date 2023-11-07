@@ -1,27 +1,25 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-
-import SmallPoliticianCard from "@/components/politicians/SmallPoliticianCard";
-import PoliticianFilters from "@/components/politicians/PoliticianFilters";
-
-import { Button } from "@/components/ui/button";
+import PoliticianFilters from '@/components/politicians/PoliticianFilters';
+import SmallPoliticianCard from '@/components/politicians/SmallPoliticianCard';
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+  PopoverTrigger
+} from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import React, { useState } from 'react';
 
 export default function PoliticiansGrid({
-  politiciansWithCounts,
+  politiciansWithCounts
 }: {
   politiciansWithCounts: any;
 }) {
-  const [selectedParty, setSelectedParty] = useState("");
-  const [selectedStates, setSelectedStates] = useState([""]);
-  const [selectedPosition, setSelectedPosition] = useState("");
+  const [selectedParty, setSelectedParty] = useState<string>();
+  const [selectedStates, setSelectedStates] = useState<any[]>([]);
+  const [selectedPosition, setSelectedPosition] = useState<string>();
 
   const handlePartyFilter = (party: string) => {
     setSelectedParty(party);

@@ -53,11 +53,20 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
     await supabase.auth.signOut();
     router.push('/'); // Redirect to the home page after signing out
   };
+  interface UserData {
+    username: string;
+    avatar_url: string;
+    // Add other properties here as needed
+  }
 
-  // console.log(sessionUser, "dodo2dodo");
+  interface UserRole {
+    role: string;
+    // Add other properties here as needed
+  }
 
-  const [userData, setUserData] = useState(null);
-  const [userRole, setUserRole] = useState(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState('');
 
   const [loading, setLoading] = useState(true);
 
@@ -104,7 +113,26 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
     fetchUserRole();
   }, [sessionUser]);
 
-  // console.log(userData, "dodoweee");
+  useEffect(() => {
+    async function downloadImage(path: string) {
+      try {
+        const { data, error } = await supabase.storage
+          .from('avatars')
+          .download(path);
+        if (error) {
+          throw error;
+        }
+
+        const url = URL.createObjectURL(data);
+        console.log(url, 'url here');
+        setAvatarUrl(url);
+      } catch (error) {
+        console.log('Error downloading image: ', error);
+      }
+    }
+
+    if (userData?.avatar_url) downloadImage(userData?.avatar_url);
+  }, [userData?.avatar_url, supabase]);
 
   return (
     <div className="flex w-fit items-center space-x-4">
@@ -119,7 +147,7 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
             <div className="order-1 flex cursor-pointer rounded-full border-2 border-white/30 transition-all duration-200 ease-in-out hover:border-white">
               {/* Wrap the components in a parent div */}
               <Avatar>
-                {/* <AvatarImage src={sessionUser.image_url} alt="@shadcn" /> */}
+                <AvatarImage src={avatarUrl} alt="@shadcn" />
                 <AvatarFallback>{fallbackInitials}</AvatarFallback>
               </Avatar>
             </div>

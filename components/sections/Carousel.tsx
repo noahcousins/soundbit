@@ -68,6 +68,9 @@ export default function Carousel({ slides }: { slides: any }) {
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         ref={swiperRef}
         className="rounded-2xl w-full h-full"
+        onSlideChangeTransitionEnd={(swiper) => {
+          setCurrentPage(swiper.realIndex); // Update the current page when the transition ends
+        }}
       >
         {slides.map((slide: any, index: any) => (
           <SwiperSlide
@@ -83,7 +86,6 @@ export default function Carousel({ slides }: { slides: any }) {
                   src={slide.background_image}
                 />
               </div>
-
               <div className="overlay absolute inset-0 z-[1] bg-gradient-to-r from-background to-transparent"></div>
 
               <div className="z-[2] flex gap-8 h-full w-full flex-col justify-between p-12">
