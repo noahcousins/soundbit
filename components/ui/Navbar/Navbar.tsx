@@ -1,10 +1,23 @@
 import s from './Navbar.module.css';
-import { createServerSupabaseClient } from '@/app/supabase-server';
 import Logo from '@/components/icons/Logo';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 
 export default async function Navbar() {
-  const supabase = createServerSupabaseClient();
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        }
+      }
+    }
+  );
   const {
     data: { user }
   } = await supabase.auth.getUser();
