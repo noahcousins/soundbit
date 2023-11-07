@@ -1,13 +1,15 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { createBrowserClient } from "@supabase/ssr";
-import Image from "next/image";
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { createBrowserClient } from '@supabase/ssr';
+import Image from 'next/image';
+import React, { useEffect, useState, useRef } from 'react';
 
 export default function Avatar({
   uid,
   url,
   size,
-  onUpload,
+  onUpload
 }: {
   uid: string;
   url: string;
@@ -18,14 +20,15 @@ export default function Avatar({
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     async function downloadImage(path: string) {
       try {
         const { data, error } = await supabase.storage
-          .from("avatars")
+          .from('avatars')
           .download(path);
         if (error) {
           throw error;
@@ -34,27 +37,33 @@ export default function Avatar({
         const url = URL.createObjectURL(data);
         setAvatarUrl(url);
       } catch (error) {
-        console.log("Error downloading image: ", error);
+        console.log('Error downloading image: ', error);
       }
     }
 
     if (url) downloadImage(url);
   }, [url, supabase]);
 
+  const openFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click?.(); // Optional chaining to prevent null/undefined error
+    }
+  };
+
   const uploadAvatar = async (event: any) => {
     try {
       setUploading(true);
 
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error("You must select an image to upload.");
+        throw new Error('You must select an image to upload.');
       }
 
       const file = event.target.files[0];
-      const fileExt = file.name.split(".").pop();
+      const fileExt = file.name.split('.').pop();
       const filePath = `${uid}-${Math.random()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from("avatars")
+        .from('avatars')
         .upload(filePath, file);
 
       if (uploadError) {
@@ -63,7 +72,8 @@ export default function Avatar({
 
       onUpload(filePath);
     } catch (error) {
-      alert("Error uploading avatar!");
+      alert('Error uploading avatar!');
+      console.log(error, 'hehwhh wwe e f');
     } finally {
       setUploading(false);
     }
@@ -87,16 +97,15 @@ export default function Avatar({
         />
       )}
       <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? "Uploading ..." : "Upload"}
-        </label>
+        <Button variant={'secondary'} onClick={openFileInput}>
+          {uploading ? 'Uploading ...' : 'Upload'}
+        </Button>
         <input
+          ref={fileInputRef}
           style={{
-            visibility: "hidden",
-            position: "absolute",
+            display: 'none'
           }}
           type="file"
-          id="single"
           accept="image/*"
           onChange={uploadAvatar}
           disabled={uploading}

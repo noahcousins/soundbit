@@ -1,27 +1,24 @@
 // @ts-nocheck
 // No check due to Swiper.js API types. Fix later.
 
-"use client";
+'use client';
 
-import { useRef, useState, useEffect } from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-
-import { MoveLeft, MoveRight } from "lucide-react";
-
+import { Button, buttonVariants } from '@/components/ui/button';
+import { MoveLeft, MoveRight } from 'lucide-react';
+import Link from 'next/link';
+import { useRef, useState, useEffect } from 'react';
+import { Autoplay, Pagination, Navigation, EffectFade } from 'swiper/modules';
 // Swiper imports
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper and modules styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
-import PoliticianBlip from "@/components/politicians/PoliticianBlip";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+import PoliticianBlip from '@/components/politicians/PoliticianBlip';
 
 export default function FeaturedLegislationSlider({
-  legislationsWithUpdatedPoliticians,
+  legislationsWithUpdatedPoliticians
 }: {
   legislationsWithUpdatedPoliticians: any;
 }) {
@@ -43,15 +40,15 @@ export default function FeaturedLegislationSlider({
             setCurrentPage(current);
             return `${current} of ${total}`;
           },
-          type: "custom",
+          type: 'custom'
         }}
         autoplay={{
           delay: swiperSlideDur,
-          disableOnInteraction: false,
+          disableOnInteraction: false
         }}
         navigation={{
-          nextEl: ".swiper-next-button",
-          prevEl: ".swiper-prev-button",
+          nextEl: '.swiper-next-button',
+          prevEl: '.swiper-prev-button'
         }}
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         ref={swiperRef}

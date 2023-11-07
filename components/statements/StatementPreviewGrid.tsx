@@ -1,13 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { SlideBlobOne } from "@/components/util/SvgImport";
-
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import StatementPreviewRow from "@/components/statements/StatementPreviewRow";
+import StatementPreviewRow from '@/components/statements/StatementPreviewRow';
+import { SlideBlobOne } from '@/components/util/SvgImport';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
 export default function StatementPreviewGrid({
-  statementsWithUpdatedPoliticians,
+  statementsWithUpdatedPoliticians
 }: {
   statementsWithUpdatedPoliticians: any;
 }) {
@@ -65,12 +64,12 @@ export default function StatementPreviewGrid({
   //Sorting by Party
   const democratStatements = statementsWithUpdatedPoliticians.filter(
     (statement: any) =>
-      statement.politicians[0]?.party.toLowerCase() === "democrat"
+      statement.politicians[0]?.party.toLowerCase() === 'democrat'
   );
 
   const republicanStatements = statementsWithUpdatedPoliticians.filter(
     (statement: any) =>
-      statement.politicians[0]?.party.toLowerCase() === "republican"
+      statement.politicians[0]?.party.toLowerCase() === 'republican'
   );
 
   // Democrat Statements Pagination

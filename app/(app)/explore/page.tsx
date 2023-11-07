@@ -1,11 +1,11 @@
-import AuthButton from '../../components/AuthButton';
-import DeployButton from '../../components/DeployButton';
 import {
   getSession,
   getSubscription,
   getActiveProductsWithPrices
 } from '@/app/supabase-server';
+import AuthButton from '@/components/AuthButton';
 import ConnectSupabaseSteps from '@/components/ConnectSupabaseSteps';
+import DeployButton from '@/components/DeployButton';
 import Header from '@/components/Header';
 import Pricing from '@/components/Pricing';
 import SignUpUserSteps from '@/components/SignUpUserSteps';
@@ -27,7 +27,7 @@ import { cookies } from 'next/headers';
 
 const carousel_name = 'statements_page';
 
-export default async function Index() {
+export default async function Explore() {
   const cookieStore = cookies();
 
   const canInitSupabaseClient = () => {

@@ -1,23 +1,20 @@
-"use client";
+'use client';
 
-import { useRef, useState, useEffect } from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-
-import { MoveLeft, MoveRight } from "lucide-react";
-
+import { Button, buttonVariants } from '@/components/ui/button';
+import { MoveLeft, MoveRight } from 'lucide-react';
+import Link from 'next/link';
+import { useRef, useState, useEffect } from 'react';
+import { Autoplay, Pagination, Navigation, EffectFade } from 'swiper/modules';
 // Swiper imports
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper and modules styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 export default function FeaturedStatementSlider({
-  statementsData,
+  statementsData
 }: {
   statementsData: any;
 }) {
@@ -39,15 +36,15 @@ export default function FeaturedStatementSlider({
             setCurrentPage(current);
             return `${current} of ${total}`;
           },
-          type: "custom",
+          type: 'custom'
         }}
         autoplay={{
           delay: swiperSlideDur,
-          disableOnInteraction: false,
+          disableOnInteraction: false
         }}
         navigation={{
-          nextEl: ".swiper-next-button",
-          prevEl: ".swiper-prev-button",
+          nextEl: '.swiper-next-button',
+          prevEl: '.swiper-prev-button'
         }}
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         ref={swiperRef}
@@ -55,7 +52,7 @@ export default function FeaturedStatementSlider({
       >
         {statementsData.slice(0, 8).map((statement: any, index: any) => (
           <SwiperSlide
-            className="relative z-20 grid min-h-[480px] w-full shrink-0 grid-cols-2 flex-wrap items-center justify-items-center overflow-hidden md:min-h-[390px]"
+            className="relative z-20 grid min-h-[480px] h-full w-full shrink-0 grid-cols-2 flex-wrap items-center justify-items-center overflow-hidden md:min-h-[390px]"
             key={index}
           >
             <div className="relative flex h-full w-full items-center rounded-2xl bg-primary/5">

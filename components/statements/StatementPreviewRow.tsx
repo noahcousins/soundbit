@@ -1,18 +1,17 @@
-import { formatDate } from "@/utils/formatUtils";
-import PoliticiansPreview from "../politicians/PoliticiansPreview";
-import Link from "next/link";
-import StatementIcon from "@/components/icons/StatementIcon";
-
+import PoliticiansPreview from '../politicians/PoliticiansPreview';
+import StatementIcon from '@/components/icons/StatementIcon';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  TooltipTrigger
+} from '@/components/ui/tooltip';
+import { formatDate } from '@/utils/formatUtils';
+import Link from 'next/link';
 
 export default function StatementPreviewRow({
   statement,
-  index,
+  index
 }: {
   statement: any;
   index: any;
@@ -28,28 +27,26 @@ export default function StatementPreviewRow({
       <div className="z-10 flex w-full items-center justify-between gap-2 drop-shadow-lg">
         <div className="flex items-center gap-2">
           <StatementIcon />
-          <Link href={`/statements/${statement.handle}`}>
-            <div className="flex w-fit flex-col">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Link href={`/statements/${statement?.handle}`}>
-                      <h4 className="h-full text-left text-sm font-semibold text-primary line-clamp-1 lg:text-base">
-                        {statement.subject}
-                      </h4>
-                    </Link>
-                  </TooltipTrigger>
-                  {/* <TooltipContent>
+          <div className="flex w-fit flex-col">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link href={`/statements/${statement.handle}`}>
+                    <h4 className="h-full text-left text-sm font-semibold text-primary line-clamp-1 lg:text-base">
+                      {statement.subject}
+                    </h4>
+                  </Link>
+                </TooltipTrigger>
+                {/* <TooltipContent>
                     <p className="text-left">{statement.subject}</p>
                   </TooltipContent> */}
-                </Tooltip>
-              </TooltipProvider>
+              </Tooltip>
+            </TooltipProvider>
 
-              <p className="z-10 text-xs opacity-80 drop-shadow-lg">
-                {formatDate(statement.date)}
-              </p>
-            </div>
-          </Link>
+            <p className="z-10 text-xs opacity-80 drop-shadow-lg">
+              {formatDate(statement.date)}
+            </p>
+          </div>
         </div>
 
         <PoliticiansPreview politicians={statement.politicians} />

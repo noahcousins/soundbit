@@ -1,22 +1,20 @@
-"use client";
+'use client';
 
-import { useRef, useState, useEffect } from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { fetchPoliticianById } from "@/utils/supabase/api";
-import { MoveLeft, MoveRight } from "lucide-react";
-
+import { Button, buttonVariants } from '@/components/ui/button';
+import { fetchPoliticianById } from '@/utils/supabase/api';
+import { MoveLeft, MoveRight } from 'lucide-react';
+import Link from 'next/link';
+import { useRef, useState, useEffect } from 'react';
+import { Autoplay, Pagination, Navigation, EffectFade } from 'swiper/modules';
 // Swiper imports
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
 // import Swiper and modules styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
-import PoliticianBlip from "@/components/politicians/PoliticianBlip";
-import Image from "next/image";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+import PoliticianBlip from '@/components/politicians/PoliticianBlip';
+import Image from 'next/image';
 
 export default function Carousel({ slides }: { slides: any }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -43,12 +41,12 @@ export default function Carousel({ slides }: { slides: any }) {
   }, [slides]);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col gap-2">
       <Swiper
         spaceBetween={0}
         loop={true}
         fadeEffect={{
-          crossFade: true, // enables slides to cross fade
+          crossFade: true // enables slides to cross fade
         }}
         effect="fade"
         pagination={{
@@ -57,23 +55,23 @@ export default function Carousel({ slides }: { slides: any }) {
             setCurrentPage(current);
             return `${current} of ${total}`;
           },
-          type: "custom",
+          type: 'custom'
         }}
         autoplay={{
           delay: swiperSlideDur,
-          disableOnInteraction: false,
+          disableOnInteraction: false
         }}
         navigation={{
-          nextEl: ".swiper-next-button",
-          prevEl: ".swiper-prev-button",
+          nextEl: '.swiper-next-button',
+          prevEl: '.swiper-prev-button'
         }}
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         ref={swiperRef}
-        className="rounded-2xl"
+        className="rounded-2xl w-full h-full"
       >
         {slides.map((slide: any, index: any) => (
           <SwiperSlide
-            className="relative z-20 grid min-h-[480px] w-full shrink-0 grid-cols-2 flex-wrap items-center justify-items-center overflow-hidden md:min-h-[390px]"
+            className="relative z-20 flex w-full shrink-0 flex-wrap items-center justify-items-center overflow-hidden"
             key={index}
           >
             <div className="relative flex h-full w-full items-center rounded-2xl bg-primary/5">
@@ -88,7 +86,7 @@ export default function Carousel({ slides }: { slides: any }) {
 
               <div className="overlay absolute inset-0 z-[1] bg-gradient-to-r from-background to-transparent"></div>
 
-              <div className="z-[2] flex h-full w-full flex-col justify-between p-12">
+              <div className="z-[2] flex gap-8 h-full w-full flex-col justify-between p-12">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-4xl font-semibold line-clamp-2">
                     {slide?.title}
@@ -204,7 +202,7 @@ function PageBullets({
   current,
   total,
   onClick,
-  swiperSlideDur,
+  swiperSlideDur
 }: {
   current: number;
   total: number;
@@ -220,7 +218,7 @@ function PageBullets({
         return (
           <div
             className={`border-contrast ease-in-out] relative h-[4px] w-full cursor-pointer overflow-hidden rounded-full bg-foreground/25 transition-all duration-75 ${
-              isActive ? "bg-foreground/10" : "opacity-50"
+              isActive ? 'bg-foreground/10' : 'opacity-50'
             }`}
             key={index}
             onClick={() => onClick(index)}
@@ -229,7 +227,7 @@ function PageBullets({
               className="absolute left-0 h-full w-full bg-foreground"
               style={{
                 width: `${isActive ? progressBarWidth : 0}%`,
-                transition: isActive ? `width ${swiperSlideDur}ms linear` : "",
+                transition: isActive ? `width ${swiperSlideDur}ms linear` : ''
               }}
             ></div>
           </div>

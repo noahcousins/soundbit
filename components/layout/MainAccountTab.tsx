@@ -1,8 +1,24 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import DropdownLogOutButton from '@/components/layout/DropdownLogOutButton';
+import SignOutButton from '@/components/layout/SignOutButton';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { createBrowserClient } from '@supabase/ssr';
 import {
   Cloud,
   CreditCard,
@@ -17,30 +33,11 @@ import {
   Settings,
   User,
   UserPlus,
-  Users,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import DropdownLogOutButton from "@/components/layout/DropdownLogOutButton";
-import SignOutButton from "@/components/layout/SignOutButton";
-
-import { useRouter } from "next/navigation";
-import { createBrowserClient } from "@supabase/ssr";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Link from "next/link";
+  Users
+} from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 
 export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
   const fallbackInitials =
@@ -54,7 +51,7 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push("/"); // Redirect to the home page after signing out
+    router.push('/'); // Redirect to the home page after signing out
   };
 
   // console.log(sessionUser, "dodo2dodo");
@@ -68,13 +65,13 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
   const fetchUserProfile = async () => {
     if (sessionUser) {
       const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", sessionUser.id)
+        .from('profiles')
+        .select('*')
+        .eq('user_id', sessionUser.id)
         .single();
 
       if (error) {
-        console.error("Error fetching user profile:", error);
+        console.error('Error fetching user profile:', error);
       } else {
         setUserData(data);
         setLoading(false);
@@ -86,13 +83,13 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
   const fetchUserRole = async () => {
     if (sessionUser) {
       const { data, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", sessionUser.id)
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', sessionUser.id)
         .single();
 
       if (error) {
-        console.error("Error fetching user profile:", error);
+        console.error('Error fetching user profile:', error);
       } else {
         //@ts-ignore
         setUserRole(data);
@@ -131,7 +128,7 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={"/account/profile"}>
+              <Link href={'/account/profile'}>
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
@@ -189,10 +186,10 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
               </DropdownMenuItem>
             </DropdownMenuGroup> */}
             {/* @ts-ignore */}
-            {!loading && userData && userData.role === "admin" && (
+            {!loading && userData && userData.role === 'admin' && (
               <>
                 <DropdownMenuSeparator />
-                <Link href={"/admin"}>
+                <Link href={'/admin'}>
                   <DropdownMenuItem>
                     <Shield className="mr-2 h-4 w-4" />
                     <span>Admin</span>
