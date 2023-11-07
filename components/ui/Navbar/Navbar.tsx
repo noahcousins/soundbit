@@ -1,10 +1,7 @@
-import Link from 'next/link';
-import { createServerSupabaseClient } from '@/app/supabase-server';
-
-import Logo from '@/components/icons/Logo';
-import SignOutButton from './SignOutButton';
-
 import s from './Navbar.module.css';
+import { createServerSupabaseClient } from '@/app/supabase-server';
+import Logo from '@/components/icons/Logo';
+import Link from 'next/link';
 
 export default async function Navbar() {
   const supabase = createServerSupabaseClient();
@@ -36,7 +33,7 @@ export default async function Navbar() {
           </div>
           <div className="flex justify-end flex-1 space-x-8">
             {user ? (
-              <SignOutButton />
+              <div className=""></div>
             ) : (
               <Link href="/signin" className={s.link}>
                 Sign in
