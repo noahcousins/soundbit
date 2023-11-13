@@ -1,13 +1,10 @@
-import NavLinks from "@/components/layout/NavLinks";
-
-import Image from "next/image";
-import Link from "next/link";
-
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
-
-import MainAccountTab from "./MainAccountTab";
-import AuthButtons from "./AuthButtons";
+import AuthButtons from './AuthButtons';
+import MainAccountTab from './MainAccountTab';
+import NavLinks from '@/components/layout/NavLinks';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Navigation() {
   const cookieStore = cookies();
@@ -19,17 +16,17 @@ export default async function Navigation() {
       cookies: {
         get(name: string) {
           return cookieStore.get(name)?.value;
-        },
-      },
+        }
+      }
     }
   );
 
   const {
-    data: { user },
+    data: { user }
   } = await supabase.auth.getUser();
 
   return (
-    <nav className="w-full flex sticky top-0 bg-background z-50 justify-center border-b border-b-foreground/10 h-16">
+    <nav className="flex justify-center border-b-foreground/10 h-16 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="w-full flex justify-between items-center p-3 text-sm">
         <Link href="/">
           <Image
@@ -38,10 +35,10 @@ export default async function Navigation() {
             height={20.96}
             src="/uapoli_logo_nav.png"
           />
-        </Link>{" "}
+        </Link>{' '}
         <NavLinks />
         <div className="flex">
-          {" "}
+          {' '}
           {!user && <AuthButtons />}
           {/* {isSupabaseConnected && <AuthButton />} */}
           {user && <MainAccountTab sessionUser={user} />}

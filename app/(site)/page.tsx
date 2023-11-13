@@ -90,7 +90,7 @@ export default async function Index() {
 
   return (
     <div className="w-full flex flex-col gap-20 text-primary items-center">
-      <Carousel slides={slides} />
+      {/* <Carousel slides={slides} /> */}
       <HorizontalGallery
         heading="Politicians"
         description="Meet the politicians leading the conversation on UAPs and explore their perspectives."

@@ -28,12 +28,12 @@ export async function fetchUserProfile(userId: string) {
 export async function fetchCounts(politicianId: string) {
   let { data: legislationData, error: legislationError } = await supabase
     .from('legislations')
-    .select('*', { count: 'exact' })
+    .select('id', { count: 'exact' })
     .contains('politicianTags', [politicianId]);
 
   let { data: statementData, error: statementError } = await supabase
     .from('statements')
-    .select('*', { count: 'exact' })
+    .select('id', { count: 'exact' })
     .eq('politicianId', politicianId);
 
   return {
@@ -44,6 +44,20 @@ export async function fetchCounts(politicianId: string) {
 
 export async function fetchPoliticiansAndCounts() {
   const politiciansData = await supabase.from('politicians').select('*');
+  const politiciansWithCounts = await Promise.all(
+    politiciansData.data!.map(async (politician) => {
+      const counts = await fetchCounts(politician.id);
+      return { ...politician, ...counts };
+    })
+  );
+
+  return politiciansWithCounts;
+}
+
+export async function fetchPoliticiansAndCounts2() {
+  const politiciansData = await supabase
+    .from('politicians')
+    .select('handle,pictureUrl,state,party,position,name');
   const politiciansWithCounts = await Promise.all(
     politiciansData.data!.map(async (politician) => {
       const counts = await fetchCounts(politician.id);
