@@ -1,36 +1,36 @@
-import Image from "next/image";
-
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  DialogTrigger
+} from '@/components/ui/dialog';
+import { formatState, formatParty } from '@/utils/formatUtils';
+import Image from 'next/image';
+import { AiOutlineTwitter, AiOutlineLink } from 'react-icons/ai';
+import { BiLogoFacebook } from 'react-icons/bi';
 
-import { AiOutlineTwitter, AiOutlineLink } from "react-icons/ai";
-import { BiLogoFacebook } from "react-icons/bi";
-import { formatState, formatParty } from "@/utils/formatUtils"; // Adjust the import path accordingly.
+// Adjust the import path accordingly.
 
 export default function PoliticianDetails({ politician }: { politician: any }) {
   const getBackgroundColor = (party: string) => {
-    if (party === "Republican") {
-      return "radial-gradient(100% 100% at 0% 0%, #cf3e3e18, transparent)";
-    } else if (party === "Democrat") {
-      return "radial-gradient(100% 100% at 0% 0%, #3EACCF18, transparent)";
+    if (party === 'Republican') {
+      return 'radial-gradient(100% 100% at 0% 0%, #cf3e3e18, transparent)';
+    } else if (party === 'Democrat') {
+      return 'radial-gradient(100% 100% at 0% 0%, #3EACCF18, transparent)';
     } else {
-      return "";
+      return '';
     }
   };
 
   const truncateBio = (bio: string, maxWords: number) => {
-    const words = bio.split(" ");
+    const words = bio.split(' ');
     if (words.length <= maxWords) {
       return bio;
     }
     const truncatedWords = words.slice(0, maxWords);
-    return truncatedWords.join(" ") + "...";
+    return truncatedWords.join(' ') + '...';
   };
 
   const truncatedBio = truncateBio(politician.biography, 45);
@@ -38,17 +38,8 @@ export default function PoliticianDetails({ politician }: { politician: any }) {
   const termDates = JSON.parse(politician.termDates);
 
   return (
-    <div className="border-scale-500 hover:border-scale-700 dark:bg-scale-300 hover:border-primary/ group relative flex w-full gap-8 overflow-hidden rounded-2xl border-[1px] border-primary/10 p-8 text-left transition-all duration-100">
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-primary to-transparent opacity-5"></div>
-
-      <div className="absolute inset-0 z-0 bg-gradient-to-bl from-primary to-transparent opacity-5"></div>
-      <div
-        style={{
-          background: getBackgroundColor(politician.party),
-        }}
-        className="absolute left-0 top-0 z-0 h-[150px] w-[250px] scale-100 transform opacity-50 transition-all duration-700 ease-out group-hover:scale-150 group-hover:opacity-100"
-      ></div>
-      <div className="z-10 flex-col gap-8">
+    <div className="group relative flex w-full gap-8 overflow-hidden p-8 text-left">
+      <div className="z-10 w-full flex-col gap-8">
         <div className="my-auto flex h-fit flex-col items-center space-x-0 space-y-8 lg:flex-row lg:space-x-8 lg:space-y-0">
           <div className="rounded-full sm:flex-shrink-0">
             <Image
@@ -135,9 +126,9 @@ export default function PoliticianDetails({ politician }: { politician: any }) {
                             IN OFFICE
                           </p>
                           <p className=" ">
-                            {politician.yearIn} -{" "}
-                            {politician.yearOut === "Present"
-                              ? "Present"
+                            {politician.yearIn} -{' '}
+                            {politician.yearOut === 'Present'
+                              ? 'Present'
                               : politician.yearOut}
                           </p>
                         </div>
@@ -172,9 +163,9 @@ export default function PoliticianDetails({ politician }: { politician: any }) {
                   IN OFFICE
                 </p>
                 <p className=" ">
-                  {politician.yearIn} -{" "}
-                  {politician.yearOut === "Present"
-                    ? "Present"
+                  {politician.yearIn} -{' '}
+                  {politician.yearOut === 'Present'
+                    ? 'Present'
                     : politician.yearOut}
                 </p>
               </div>

@@ -1,4 +1,4 @@
-import { Mic } from "lucide-react";
+import { Mic } from 'lucide-react';
 
 export default function StatementIcon() {
   return (

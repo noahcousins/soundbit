@@ -1,4 +1,4 @@
-import { ScrollText } from "lucide-react";
+import { ScrollText } from 'lucide-react';
 
 export default function LegislationIcon() {
   return (

@@ -39,7 +39,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
-export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
+export default function MainAccountTab({
+  sessionUser,
+  profile,
+  userRole
+}: {
+  sessionUser: any;
+  profile: any;
+  userRole: any;
+}) {
+  console.log(profile, userRole, 'asdfasd');
   const fallbackInitials =
     sessionUser && sessionUser.email.slice(0, 2).toUpperCase();
 
@@ -64,54 +73,9 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
     // Add other properties here as needed
   }
 
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [avatarUrl, setAvatarUrl] = useState('');
 
   const [loading, setLoading] = useState(true);
-
-  // Fetch user profile function
-  const fetchUserProfile = async () => {
-    if (sessionUser) {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', sessionUser.id)
-        .single();
-
-      if (error) {
-        console.error('Error fetching user profile:', error);
-      } else {
-        setUserData(data);
-        setLoading(false);
-      }
-    }
-  };
-
-  // Fetch user profile function
-  const fetchUserRole = async () => {
-    if (sessionUser) {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', sessionUser.id)
-        .single();
-
-      if (error) {
-        console.error('Error fetching user profile:', error);
-      } else {
-        //@ts-ignore
-        setUserRole(data);
-        setLoading(false);
-      }
-    }
-  };
-
-  // useEffect to fetch user profile
-  useEffect(() => {
-    fetchUserProfile();
-    fetchUserRole();
-  }, [sessionUser]);
 
   useEffect(() => {
     async function downloadImage(path: string) {
@@ -131,15 +95,15 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
       }
     }
 
-    if (userData?.avatar_url) downloadImage(userData?.avatar_url);
-  }, [userData?.avatar_url, supabase]);
+    if (profile?.avatar_url) downloadImage(profile?.avatar_url);
+  }, [profile?.avatar_url, supabase]);
 
   return (
     <div className="flex w-fit items-center space-x-4">
       <div className="flex items-center space-x-4">
         <p className="hidden whitespace-nowrap text-sm text-primary/90 md:flex">
           {/* @ts-ignore */}
-          Hello, {userData?.username || sessionUser?.email}
+          Hello, {profile?.username || sessionUser?.email}
         </p>
 
         <DropdownMenu>
@@ -214,7 +178,7 @@ export default function MainAccountTab({ sessionUser }: { sessionUser: any }) {
               </DropdownMenuItem>
             </DropdownMenuGroup> */}
             {/* @ts-ignore */}
-            {!loading && userData && userData.role === 'admin' && (
+            {!loading && userRole && userRole.role === 'admin' && (
               <>
                 <DropdownMenuSeparator />
                 <Link href={'/admin'}>

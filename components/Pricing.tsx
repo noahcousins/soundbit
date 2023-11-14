@@ -143,7 +143,7 @@ export default function Pricing({
                         type="button"
                         disabled={false}
                         onClick={() => handleCheckout(price)}
-                        className="block w-full py-2 mt-12 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900 "
+                        className="block w-full py-2 mt-12 text-sm font-semibold text-center text-black rounded-md"
                       >
                         {products[0].name ===
                         subscription?.prices?.products?.name
@@ -242,7 +242,7 @@ export default function Pricing({
                     type="button"
                     disabled={!session}
                     onClick={() => handleCheckout(price)}
-                    className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900"
+                    className="block w-full py-2 mt-8 text-sm font-semibold text-center text-background hover:text-white rounded-md hover:bg-zinc-900"
                   >
                     {subscription ? 'Manage' : 'Subscribe'}
                   </Button>

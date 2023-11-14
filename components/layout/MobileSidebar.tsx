@@ -6,6 +6,15 @@ import SidebarContent from '@/components/layout/sidebar/SidebarContent';
 import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
+import {
   Users2,
   ScrollText,
   Compass,
@@ -67,24 +76,32 @@ const bottomRoutes = [
   }
 ];
 
-export default function Sidebar() {
+export default function MobileSidebar() {
   // console.log("Check for cookie", sessionUser);
 
   return (
-    <div className="hidden sticky w-1/6 bg-gradient-to-b from-white/5 to-transparent top-0 z-30 lg:flex flex-col gap-4 leading-none transition">
-      <div className="flex sticky top-0 flex-col justify-between">
-        <Link href="/">
-          <div className="p-5">
+    <Sheet>
+      <SheetTrigger>
+        <Menu size={24} />
+      </SheetTrigger>
+      <SheetContent className="w-[300px]" side={'left'}>
+        <SheetHeader>
+          <Link href="/">
             <Image
+              className="p-5 w-1/2"
+              alt="UAPoli logo"
               width={80}
               height={20.96}
-              alt="UAPoli logo"
               src="/uapoli_logo_nav.png"
             />
-          </div>
-        </Link>
-        <SidebarContent />
-      </div>
-    </div>
+          </Link>
+          <SidebarContent />
+
+          {/* <SheetTitle>Are you sure absolutely sure?</SheetTitle> */}
+          {/* <SheetDescription>
+          </SheetDescription> */}
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
   );
 }
