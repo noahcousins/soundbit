@@ -26,17 +26,25 @@ export default async function AppNavigation() {
     data: { user }
   } = await supabase.auth.getUser();
 
-  const { data: profileData, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('user_id', user!.id)
-    .single();
+  let profileData = null;
+  let userRoleData = null;
 
-  const { data: userRoleData, error: userRoleError } = await supabase
-    .from('user_roles')
-    .select('role')
-    .eq('user_id', user!.id)
-    .single();
+  if (user) {
+    const { data: profileResponse, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', user!.id)
+      .single();
+
+    const { data: userRoleResponse, error: userRoleError } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user!.id)
+      .single();
+
+    profileData = profileResponse;
+    userRoleData = userRoleResponse;
+  }
 
   console.log(user, 'LLLDLDL');
 
