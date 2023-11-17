@@ -1,8 +1,8 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function LoadingStatements() {
   return (
-    <main className="flex min-h-screen w-full flex-col items-start gap-8 py-12">
+    <main className="flex min-h-screen w-full flex-col items-start gap-8">
       <div className="flex w-full flex-col content-between justify-between gap-8">
         <div className="flex flex-col gap-3">
           <Skeleton className="h-[40px] w-[204px] rounded-full" />

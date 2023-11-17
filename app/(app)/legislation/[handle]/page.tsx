@@ -58,13 +58,6 @@ export default async function Legislation({ params }: { params: any }) {
 
   const showAllPoliticians = false; // or true based on your logic
 
-  // Fetch the corresponding politician record
-  // const politicianId = legislation?.politicianId;
-  // let politician = null;
-  // if (politicianId) {
-  //   politician = await fetchPoliticianDetails(politicianId); // You need to define this function in your API.js
-  // }
-
   const mappedDisclosureValue =
     ((legislation.disclosureScore! + 10) / 20) * 100;
   const mappedBipartisanValue =
@@ -80,7 +73,7 @@ export default async function Legislation({ params }: { params: any }) {
   const currentStage = legislation.stage; // Assuming legislation.stage is available
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-start gap-8 py-8 lg:gap-12 lg:py-12">
+    <main className="flex min-h-screen w-full flex-col items-start gap-8 lg:gap-12">
       <Breadcrumbs
         items={[
           { name: 'Legislation', link: '/legislation' },

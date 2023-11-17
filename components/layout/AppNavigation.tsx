@@ -33,13 +33,13 @@ export default async function AppNavigation() {
     const { data: profileResponse, error: profileError } = await supabase
       .from('profiles')
       .select('*')
-      .eq('user_id', user!.id)
+      .eq('user_id', user.id)
       .single();
 
     const { data: userRoleResponse, error: userRoleError } = await supabase
       .from('user_roles')
       .select('role')
-      .eq('user_id', user!.id)
+      .eq('user_id', user.id)
       .single();
 
     profileData = profileResponse;
@@ -49,8 +49,8 @@ export default async function AppNavigation() {
   console.log(user, 'LLLDLDL');
 
   return (
-    <nav className="flex justify-center border-b-foreground/10 h-16 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full flex justify-between items-center p-3 text-sm">
+    <nav className="sticky top-0 z-50 flex h-16 w-full justify-center border-b border-b-foreground/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex w-full items-center justify-between p-3 text-sm">
         <div className="flex items-center lg:hidden">
           <MobileSidebar />
         </div>

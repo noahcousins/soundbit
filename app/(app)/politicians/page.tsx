@@ -6,8 +6,10 @@ export const revalidate = 0;
 export default async function Politicians() {
   const politiciansWithCounts = await fetchPoliticiansAndCounts2();
 
+  // console.log(politiciansWithCounts, 'weee');
+
   return (
-    <main className="flex min-h-screen w-full flex-col items-start gap-4 py-12">
+    <main className="flex min-h-screen w-full flex-col items-start gap-4">
       <div className="flex w-full flex-col content-between justify-between gap-8">
         <div className="flex w-full flex-col content-between justify-between">
           <h1 className="text-4xl font-bold">Politicians</h1>

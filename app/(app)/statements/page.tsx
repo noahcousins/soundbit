@@ -64,10 +64,11 @@ export default async function Statements() {
   const top3Politicians = await fetchPoliticiansByIds(top3PoliticianIds);
 
   return (
-    <main className="relative flex min-h-screen w-full flex-col items-start gap-16 py-12 lg:gap-24">
+    <main className="relative flex min-h-screen w-full flex-col items-start gap-16 lg:gap-24">
       <div className="bg-glow-3 absolute">
         <SlideBlobOne fillColor={'purple'} />
       </div>
+
       <Carousel slides={slides} />
 
       <HorizontalGallery

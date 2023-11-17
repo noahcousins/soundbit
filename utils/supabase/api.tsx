@@ -25,47 +25,82 @@ export async function fetchUserProfile(userId: string) {
 
 // Politicians grid page
 
-export async function fetchCounts(politicianId: string) {
-  let { data: legislationData, error: legislationError } = await supabase
-    .from('legislations')
-    .select('id', { count: 'exact' })
-    .contains('politicianTags', [politicianId]);
+export async function fetchCounts(politician: string) {
+  let politicianId = politician.id;
 
-  let { data: statementData, error: statementError } = await supabase
-    .from('statements')
-    .select('id', { count: 'exact' })
-    .eq('politicianId', politicianId);
+  try {
+    const legislationResponse = await supabase
+      .from('legislations')
+      .select('id', { count: 'exact' })
+      .contains('politicianTags', [politicianId]);
 
-  return {
-    legislationCount: legislationData ? legislationData.length : 0,
-    statementCount: statementData ? statementData.length : 0
-  };
+    const statementResponse = await supabase
+      .from('statements')
+      .select('id', { count: 'exact' })
+      .eq('politicianId', politicianId);
+
+    const legislationCount = legislationResponse.count || 0;
+    const statementCount = statementResponse.count || 0;
+
+    return {
+      legislationCount,
+      statementCount
+    };
+  } catch (error) {
+    console.error(
+      `Error fetching counts for politicianId ${politicianId}:`,
+      error
+    );
+    throw error;
+  }
 }
 
-export async function fetchPoliticiansAndCounts() {
-  const politiciansData = await supabase.from('politicians').select('*');
-  const politiciansWithCounts = await Promise.all(
-    politiciansData.data!.map(async (politician) => {
-      const counts = await fetchCounts(politician.id);
-      return { ...politician, ...counts };
-    })
-  );
+// export async function fetchPoliticiansAndCounts() {
+//   const politiciansData = await supabase.from('politicians').select('*');
+//   const politiciansWithCounts = await Promise.all(
+//     politiciansData.data!.map(async (politician) => {
+//       const counts = await fetchCounts(politician.id);
+//       return { ...politician, ...counts };
+//     })
+//   );
 
-  return politiciansWithCounts;
-}
+//   return politiciansWithCounts;
+// }
 
 export async function fetchPoliticiansAndCounts2() {
   const politiciansData = await supabase
     .from('politicians')
-    .select('handle,pictureUrl,state,party,position,name');
+    .select('id,handle,pictureUrl,state,party,position,name');
+
   const politiciansWithCounts = await Promise.all(
     politiciansData.data!.map(async (politician) => {
-      const counts = await fetchCounts(politician.id);
-      return { ...politician, ...counts };
+      try {
+        const counts = await fetchCounts(politician);
+
+        console.log(politician, 'poliiii');
+        return { ...politician, ...counts };
+      } catch (error) {
+        // Handle the error or continue with default counts if an error occurs.
+        console.error(
+          `Error fetching counts for politician ${politician.id}:`,
+          error
+        );
+        return { ...politician, legislationCount: 0, statementCount: 3 };
+      }
     })
   );
 
   return politiciansWithCounts;
+}
+
+export async function fetchPoliticiansOutreach() {
+  const politiciansData = await supabase
+    .from('politicians')
+    .select(
+      'id,handle,pictureUrl,state,party,position,name,phone_number,officialWebsite'
+    );
+
+  return politiciansData;
 }
 
 export async function fetchPoliticianDetails(handle: string) {
@@ -485,8 +520,18 @@ export async function addLike(statementId, session) {
   return data;
 }
 
-export async function addSend(templateId, session, politician) {
-  if (!session) return; // User not authenticated
+export async function addSend(templateId, session, politician, toast) {
+  if (!session) {
+    // User not authenticated, show toast
+    toast({
+      title: 'Not logged in',
+      variant: 'destructive',
+      description: 'You must be logged in to perform this action.',
+      duration: 5000 // Optional: Specify the duration for the toast
+    });
+    return null;
+  }
+
   const { data, error } = await supabase.from('sends').upsert([
     {
       user_id: session.user.id,
@@ -495,10 +540,24 @@ export async function addSend(templateId, session, politician) {
       premium: true
     }
   ]);
+
   if (error) {
     console.error('Error adding send:', error);
+    toast({
+      title: 'Error',
+      variant: 'destructive',
+      description: error.message,
+      duration: 5000 // Optional: Specify the duration for the toast
+    });
     return null;
   }
+
+  toast({
+    title: 'Success',
+    description: 'Sent successfully.',
+    duration: 5000 // Optional: Specify the duration for the toast
+  });
+
   return data;
 }
 

@@ -1,11 +1,12 @@
-import EventCard from "@/components/politicians/EventCard";
-import VerticalGallery from "@/components/sections/VerticalGallery";
+import EventCard from '@/components/politicians/EventCard';
+import VerticalGallery from '@/components/sections/VerticalGallery';
 import {
   fetchEventsWithPoliticians,
-  fetchPoliticiansByIds,
-} from "@/utils/supabase/api"; // Adjust with your API functions import
+  fetchPoliticiansByIds
+} from '@/utils/supabase/api';
+// Adjust with your API functions import
 
-import { MapPin } from "lucide-react";
+import { MapPin } from 'lucide-react';
 
 export const revalidate = 0;
 
@@ -20,13 +21,13 @@ export default async function Events() {
     ...event,
     politicians: politicians.filter((politician) =>
       event.politicianTags!.includes(politician.id)
-    ),
+    )
   }));
 
   return (
-    <main className="flex min-h-screen flex-col gap-16 py-8">
+    <main className="flex min-h-screen w-full flex-col gap-16">
       <div className="mx-auto flex h-96 w-full items-center rounded-2xl bg-primary/10 p-24">
-        <div className="mx-auto my-auto flex h-full w-1/2 flex-col items-center justify-center">
+        <div className="mx-auto my-auto flex h-full flex-col items-center justify-center">
           <h3 className="mx-auto w-fit text-center text-4xl font-semibold">
             No hearings soon...
           </h3>

@@ -1,5 +1,5 @@
 import './globals.css';
-import ModeToggle from '@/components/ModeToggle';
+import Footer from '@/components/layout/Footer';
 import Navigation from '@/components/layout/Navigation';
 import Sidebar from '@/components/layout/Sidebar';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={`select-none bg-background focus-visible:ring-transparent dark:bg-[#010101]`}
       >
-        <main className="min-h-screen max-w-[1600px] mx-auto flex flex-col items-center">
+        <main className="mx-auto flex min-h-screen max-w-[1600px] flex-col items-center">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -29,20 +29,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className="flex w-full">{children}</div>
-            <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-              <p>
-                Powered by{' '}
-                <a
-                  href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                  target="_blank"
-                  className="font-bold hover:underline"
-                  rel="noreferrer"
-                >
-                  Supabase
-                </a>
-                <ModeToggle />
-              </p>
-            </footer>
+            <Footer />
           </ThemeProvider>
         </main>
         <Toaster />

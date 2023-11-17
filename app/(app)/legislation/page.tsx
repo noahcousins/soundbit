@@ -1,18 +1,18 @@
 // Code B
 
-import SmallLegislationCard from "@/components/legislation/SmallLegislationCard";
-import LegislationGrid from "@/components/legislation/LegislationGrid";
-import SectionHeader from "@/components/util/SectionHeader";
+import SmallLegislationCard from '@/components/legislation/SmallLegislationCard';
+import LegislationGrid from '@/components/legislation/LegislationGrid';
+import SectionHeader from '@/components/util/SectionHeader';
 
-import FeaturedLegislationSlider from "@/components/legislation/FeaturedLegislationSlider";
-import { SlideBlobOne } from "@/components/util/SvgImport";
+import FeaturedLegislationSlider from '@/components/legislation/FeaturedLegislationSlider';
+import { SlideBlobOne } from '@/components/util/SvgImport';
 
 import {
   fetchLegislationsWithPoliticians,
-  fetchPoliticiansByIds,
-} from "@/utils/supabase/api";
+  fetchPoliticiansByIds
+} from '@/utils/supabase/api';
 
-import HorizontalGallery from "@/components/sections/HorizontalGallery";
+import HorizontalGallery from '@/components/sections/HorizontalGallery';
 
 export const revalidate = 0;
 
@@ -28,14 +28,14 @@ export default async function Legislations() {
       ...legislation,
       politicians: politicians.filter((politician) =>
         legislation.politicianTags!.includes(politician.id)
-      ),
+      )
     })
   );
 
   return (
-    <main className="relative flex min-h-screen w-full flex-col items-start gap-16 py-12">
+    <main className="relative flex min-h-screen w-full flex-col items-start gap-16">
       <div className="bg-glow-3 absolute">
-        <SlideBlobOne fillColor={"purple"} />
+        <SlideBlobOne fillColor={'purple'} />
       </div>
       <FeaturedLegislationSlider
         legislationsWithUpdatedPoliticians={legislationsWithUpdatedPoliticians}
@@ -56,8 +56,8 @@ export default async function Legislations() {
 
       <div className="flex w-full flex-col content-between justify-between gap-8">
         <SectionHeader
-          heading={"Browse legislation."}
-          description={"Explore all UAP related legislation."}
+          heading={'Browse legislation.'}
+          description={'Explore all UAP related legislation.'}
         />
         <LegislationGrid
           legislationsWithUpdatedPoliticians={
