@@ -16,7 +16,7 @@ import Carousel from '@/components/sections/Carousel';
 import HorizontalGallery from '@/components/sections/HorizontalGallery';
 import SmallStatementCard from '@/components/statements/SmallStatementCard';
 import {
-  fetchPoliticiansAndCounts,
+  fetchPoliticiansAndCounts2,
   fetchStatements,
   fetchLegislationsWithPoliticians,
   fetchCarouselWithSlides,
@@ -47,7 +47,7 @@ export default async function Explore() {
 
   const isSupabaseConnected = canInitSupabaseClient();
 
-  const politicians = await fetchPoliticiansAndCounts();
+  const politicians = await fetchPoliticiansAndCounts2();
   const { statementsData } = await fetchStatements();
   const legislations = await fetchLegislationsWithPoliticians();
 
@@ -89,7 +89,7 @@ export default async function Explore() {
   ));
 
   return (
-    <div className="w-full flex flex-col gap-20 text-primary items-center">
+    <div className="flex w-full flex-col items-center gap-20 text-primary">
       <Carousel slides={slides} />
       <HorizontalGallery
         heading="Politicians"
