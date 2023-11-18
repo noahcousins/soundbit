@@ -55,7 +55,7 @@ export default function SmallStatementCard({
             <Tooltip>
               <TooltipTrigger>
                 <Link href={`/statements/${statement?.handle}`}>
-                  <h4 className="h-full text-left font-semibold text-primary line-clamp-1">
+                  <h4 className="line-clamp-1 h-full text-left font-semibold text-primary">
                     {statement.subject}
                   </h4>
                 </Link>
@@ -72,12 +72,18 @@ export default function SmallStatementCard({
               &ldquo;
             </span>
           </div>
-          <p className="text-xs text-primary/60 line-clamp-2">
+          <p className="line-clamp-2 text-xs text-primary/60">
             {statement.quote}
           </p>
         </Link>
 
-        {session && <LikeButton statementId={statement.id} session={session} />}
+        {session && (
+          <LikeButton
+            statementId={statement.id}
+            session={session}
+            initialLiked={false}
+          />
+        )}
       </div>
     </div>
   );
