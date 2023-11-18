@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import UAPoliLogo from '../../public/uapoli-light.svg';
 
 const topRoutes = [
   {
@@ -71,15 +72,16 @@ export default function Sidebar() {
   // console.log("Check for cookie", sessionUser);
 
   return (
-    <div className="hidden sticky w-1/6 bg-gradient-to-b from-white/5 to-transparent top-0 z-30 lg:flex flex-col gap-4 leading-none transition">
-      <div className="flex sticky top-0 flex-col justify-between">
+    <div className="sticky top-0 z-30 hidden w-1/6 flex-col gap-4 bg-gradient-to-b from-white/5 to-transparent leading-none transition lg:flex">
+      <div className="sticky top-0 flex flex-col justify-between">
         <Link href="/">
           <div className="p-5">
             <Image
+              priority
+              alt="UAPoli logo"
               width={80}
               height={20.96}
-              alt="UAPoli logo"
-              src="/uapoli_logo_nav.png"
+              src={UAPoliLogo}
             />
           </div>
         </Link>

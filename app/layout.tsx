@@ -7,8 +7,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { GeistSans } from 'geist/font';
 
 export const metadata = {
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase'
+  title: 'UAPoli',
+  description:
+    'A bipartisan congressional outreach platform advocating for UAP disclosure.'
 };
 
 export default function RootLayout({

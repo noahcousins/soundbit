@@ -19,6 +19,14 @@ import {
 } from '@/utils/supabase/api'; // Import the new functions
 import PreviewPoliticianCard from '@/components/politicians/PreviewPoliticianCard';
 
+export async function generateMetadata({ params }: { params: any }) {
+  const { handle } = params;
+  const politician = await fetchPoliticianDetails(handle);
+  return {
+    title: `${politician?.name} - UAPoli`
+  };
+}
+
 export const revalidate = 0;
 
 export default async function Politician({ params }: { params: any }) {

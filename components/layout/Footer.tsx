@@ -9,9 +9,9 @@ export default function Footer() {
 
   const iconVariants = {
     hovered: {
-      scale: 1.2,
+      scale: 1.1,
       transition: {
-        duration: 0.3,
+        duration: 0.1,
         yoyo: Infinity,
         ease: 'easeInOut'
       }

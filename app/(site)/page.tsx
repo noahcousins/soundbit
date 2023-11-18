@@ -16,6 +16,14 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 
+import MultiLayerParallax from '@/components/sections/hero/MultiLayerParallax';
+
+export const metadata = {
+  title: 'UAPoli',
+  description:
+    'A bipartisan congressional outreach platform advocating for UAP disclosure.'
+};
+
 export default async function Home() {
   const [session, products, subscription] = await Promise.all([
     getSession(),
@@ -24,67 +32,68 @@ export default async function Home() {
   ]);
 
   return (
-    <div className={'flex flex-col w-full space-y-16'}>
-      <div
+    <div className={'flex w-full flex-col space-y-16'}>
+      {/* <div
         className={
-          'my-12 w-full flex flex-col items-center lg:my-16' +
+          'my-12 flex w-full flex-col items-center lg:my-16' +
           ' mx-auto justify-center animate-in fade-in ' +
           ' duration-1000 slide-in-from-top-12'
         }
       >
-        <div className="flex w-full">
-          <div className={'flex w-1/2 flex-1 flex-col space-y-8'}>
-            <Badge className="w-fit" variant="outline">
-              The leading UAP congressional outreach platform
-            </Badge>
-            <h1 className="scroll-m-20 flex flex-col text-4xl font-extrabold tracking-tight lg:text-5xl">
-              <span className="flex">
-                Propelling
-                <span
-                  className={
-                    'bg-gradient-to-r bg-clip-text text-transparent' +
-                    ' from-red-400 to-blue-700 leading-[1.2]'
-                  }
-                >
-                  {' '}
-                  bipartisan
-                </span>
+        <div className="flex w-full flex-1 flex-col space-y-8 text-center">
+          <Badge className="mx-auto w-fit" variant="outline">
+            The leading UAP congressional outreach platform
+          </Badge>
+          <div className="mx-auto flex w-full flex-col">
+            {' '}
+            <h1 className="mx-auto flex scroll-m-20 items-center text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
+              Propelling{' '}
+              <span
+                className={
+                  'bg-gradient-to-r bg-clip-text pl-2 text-transparent' +
+                  ' from-blue-500 via-purple-700 to-red-500 leading-[1.2]'
+                }
+              >
+                {' '}
+                bipartisan
               </span>
-              UAP disclosure efforts.
-              {/* </span> */}
             </h1>
-            <p className="flex flex-col text-center gap-1">
-              <span>Track the political climate around UAP.</span>
-              <span>One-click send to your politicians.</span>
-              <span>Be a voice in disclosure.</span>
-            </p>
-
-            <div className={'flex flex-col items-center space-y-4'}>
-              <span className={'text-xs text-gray-500 dark:text-gray-400'}>
-                Free plan. No credit card required.
-              </span>
-            </div>
+            <h1 className="mx-auto flex  scroll-m-20 flex-col text-center text-4xl font-extrabold tracking-tight lg:text-5xl">
+              UAP disclosure efforts.
+            </h1>
           </div>
-          <div className="flex w-1/2"></div>
+
+          <p className="flex flex-col gap-1 text-center">
+            <span>Track the political climate around UAP.</span>
+            <span>One-click send to your politicians.</span>
+            <span>Be a voice in disclosure.</span>
+          </p>
+
+          <div className={'flex flex-col items-center space-y-4'}>
+            <span className={'text-xs text-gray-500 dark:text-gray-400'}>
+              Free plan. No credit card required.
+            </span>
+          </div>
         </div>
-      </div>
+      </div> */}
+      <MultiLayerParallax />
 
       <div
         className={
-          'flex justify-center w-full py-12 max-w-5xl mx-auto animate-in fade-in ' +
-          ' duration-1000 slide-in-from-top-16 fill-mode-both delay-300'
+          'mx-auto flex w-full max-w-5xl justify-center py-12 animate-in fade-in ' +
+          ' delay-300 duration-1000 slide-in-from-top-16 fill-mode-both'
         }
       >
         <Image
           priority
           className={
-            'shadow-[0_0_1000px_0] rounded-2xl' +
-            ' shadow-accent/40 animate-in fade-in' +
-            ' zoom-in-50 delay-300 duration-1000 ease-out fill-mode-both'
+            'rounded-2xl shadow-[0_0_1000px_0]' +
+            ' shadow-purple-700/40 animate-in fade-in' +
+            ' delay-300 duration-1000 ease-out zoom-in-50 fill-mode-both'
           }
           width={2688}
           height={1824}
-          src={`/assets/images/dashbŽard-dark.webp`}
+          src={`/explore-dark.jpg`}
           alt={`App Image`}
         />
       </div>
@@ -105,7 +114,7 @@ export default async function Home() {
             <div className={'flex flex-col space-y-2'}>
               <User className={'h-5'} />
 
-              <div className={'text-gray-500 dark:text-gray-400 text-sm'}>
+              <div className={'text-sm text-gray-500 dark:text-gray-400'}>
                 Secure and Easy-to-Use Authentication for Your SaaS Website
               </div>
             </div>
@@ -113,7 +122,7 @@ export default async function Home() {
             <div className={'flex flex-col space-y-2'}>
               <Library className={'h-5'} />
 
-              <div className={'text-gray-500 dark:text-gray-400 text-sm'}>
+              <div className={'text-sm text-gray-500 dark:text-gray-400'}>
                 Powerful Multi-Tenancy Features for Maximum Flexibility and
                 Efficiency
               </div>
@@ -122,7 +131,7 @@ export default async function Home() {
             <div className={'flex flex-col space-y-2'}>
               <Users className={'h-5'} />
 
-              <div className={'text-gray-500 dark:text-gray-400 text-sm'}>
+              <div className={'text-sm text-gray-500 dark:text-gray-400'}>
                 Effortlessly Manage and Organize Your Team Members
               </div>
             </div>
@@ -130,7 +139,7 @@ export default async function Home() {
             <div className={'flex flex-col space-y-2'}>
               <Paintbrush className={'h-5'} />
 
-              <div className={'text-gray-500 dark:text-gray-400 text-sm'}>
+              <div className={'text-sm text-gray-500 dark:text-gray-400'}>
                 Customizable UI Themes to Match Your Brand and Style
               </div>
             </div>
@@ -138,7 +147,7 @@ export default async function Home() {
             <div className={'flex flex-col space-y-2'}>
               <Box className={'h-5'} />
 
-              <div className={'text-gray-500 dark:text-gray-400 text-sm'}>
+              <div className={'text-sm text-gray-500 dark:text-gray-400'}>
                 Pre-built UI Components to Speed Up Your Development
               </div>
             </div>
@@ -146,7 +155,7 @@ export default async function Home() {
             <div className={'flex flex-col space-y-2'}>
               <File className={'h-5'} />
 
-              <div className={'text-gray-500 dark:text-gray-400 text-sm'}>
+              <div className={'text-sm text-gray-500 dark:text-gray-400'}>
                 Pre-built Blog and Documentation Pages to Help Your Users
               </div>
             </div>
@@ -189,7 +198,7 @@ export default async function Home() {
           </div>
 
           <div>
-            <span className={'flex space-x-2 items-center'}>
+            <span className={'flex items-center space-x-2'}>
               <span>Get Started</span>
               <ChevronRight className={'h-3'} />
             </span>
@@ -198,7 +207,7 @@ export default async function Home() {
       </div>
 
       <div
-        className={'flex flex-col items-center justify-center py-16 space-y-16'}
+        className={'flex flex-col items-center justify-center space-y-16 py-16'}
       >
         <div className={'flex flex-col items-center space-y-8 text-center'}>
           <div className={'flex flex-col space-y-2.5'}></div>

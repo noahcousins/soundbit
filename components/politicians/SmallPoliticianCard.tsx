@@ -27,9 +27,7 @@ export default function SmallPoliticianCard({
   statementCount: number;
 }) {
   return (
-    <div className="border-scale-500 hover:border-scale-700 dark:bg-scale-300 group relative flex w-full cursor-pointer justify-between overflow-hidden rounded-2xl border-[1px] border-white border-opacity-10 p-4 text-left transition-all duration-100 hover:border-opacity-50">
-      <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent opacity-5"></div>
-      <div className="absolute inset-0 bg-gradient-to-bl from-white to-transparent opacity-5"></div>
+    <div className="border-scale-500 hover:border-scale-700 dark:bg-scale-300 group relative flex w-full cursor-pointer justify-between overflow-hidden rounded-2xl border-opacity-10 bg-white/5 p-4 text-left transition-all duration-100 hover:border-opacity-50">
       {politician && (
         <div
           style={{

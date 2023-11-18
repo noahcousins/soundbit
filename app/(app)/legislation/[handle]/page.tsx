@@ -26,6 +26,14 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { ScrollText, Dot, ChevronRight } from 'lucide-react';
 import { cookies } from 'next/headers';
 
+export async function generateMetadata({ params }: { params: any }) {
+  const { handle } = params;
+  const legislation = await fetchLegislation(handle);
+  return {
+    title: `"${legislation?.title}" - UAPoli`
+  };
+}
+
 export const revalidate = 0;
 
 export default async function Legislation({ params }: { params: any }) {

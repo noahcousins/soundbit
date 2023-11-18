@@ -16,6 +16,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
+
 const profileSchema = z.object({
   username: z.string().min(1, 'Username is required'),
   website: z.string().url({ message: 'Invalid URL format' }).optional(),
@@ -48,6 +51,8 @@ export default function AccountForm({ session }: AccountFormProps) {
 
   const [loading, setLoading] = useState(true);
   const user = session?.user;
+
+  const { toast } = useToast(); // Initialize useToast hook
 
   const getProfile = useCallback(async () => {
     try {
@@ -96,9 +101,16 @@ export default function AccountForm({ session }: AccountFormProps) {
       ]);
 
       if (error) throw error;
-      alert('Profile updated!');
+      toast({
+        title: 'Updated',
+        description: 'Your profile has been updated.'
+      });
     } catch (error) {
-      alert('Error updating the data!');
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: 'Error updating your profile.'
+      });
     } finally {
       setLoading(false);
     }
@@ -188,18 +200,21 @@ export default function AccountForm({ session }: AccountFormProps) {
               </div>
             )}
           />
-          <Button
-            onClick={() =>
-              updateProfile({
-                full_name: form.getValues('full_name'),
-                username: form.getValues('username'),
-                website: form.getValues('website')
-              })
-            }
-            type="submit"
-          >
-            Update Profile
-          </Button>
+          <div className="flex w-full justify-end">
+            <Button
+              onClick={() =>
+                updateProfile({
+                  full_name: form.getValues('full_name'),
+                  username: form.getValues('username'),
+                  website: form.getValues('website')
+                })
+              }
+              type="submit"
+              className="mr-0 w-1/3"
+            >
+              Update Profile
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

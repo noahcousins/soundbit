@@ -1,14 +1,14 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 export default function PoliticiansPreview({
-  politicians,
+  politicians
 }: {
   politicians: any;
 }) {
@@ -16,7 +16,7 @@ export default function PoliticiansPreview({
   const additionalPoliticiansCount = Math.max(0, politicians?.length - 3);
 
   return (
-    <div className={`flex w-full justify-end items-end content-end -space-x-4`}>
+    <div className={`flex w-full -space-x-4`}>
       {/* Display up to 3 politician images */}
       {politicians?.slice(0, 3).map((politician: any, index: any) => (
         <Link key={index} href={`/politicians/${politician.handle}`}>

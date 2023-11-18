@@ -4,7 +4,6 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
-// import { Icons } from "@/components/icons"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,40 +14,66 @@ import {
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
 
-const components: { title: string; href: string; description: string }[] = [
+import {
+  Megaphone,
+  Users2,
+  ScrollText,
+  Compass,
+  Mic,
+  Library,
+  Blocks,
+  Gavel,
+  Info
+} from 'lucide-react';
+
+type ComponentItem = {
+  title: string;
+  href: string;
+  description: string;
+  icon: React.ElementType; // Adding the icon property
+};
+
+const components: ComponentItem[] = [
   {
     title: 'Outreach',
     href: '/outreach',
     description:
-      'A modal dialog that interrupts the user with important content and expects a response.'
+      'A modal dialog that interrupts the user with important content and expects a response.',
+    icon: Megaphone // Icon for Outreach
   },
   {
     title: 'Politicians',
     href: '/politicians',
-    description: 'For sighted users to preview content available behind a link.'
+    description:
+      'For sighted users to preview content available behind a link.',
+    icon: Users2 // Icon for Politicians
   },
   {
     title: 'Statements',
     href: '/statements',
     description:
-      'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.'
+      'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
+    icon: Mic // Icon for Statements
   },
   {
     title: 'Legislation',
     href: '/legislation',
-    description: 'Visually or semantically separates content.'
+    description: 'Visually or semantically separates content.',
+    icon: ScrollText // Icon for Legislation
   },
   {
     title: 'Hearings',
     href: '/hearings',
     description:
-      'A set of layered sections of content—known as tab panels—that are displayed one at a time.'
+      'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
+    icon: Gavel // Icon for Hearings
   },
   {
     title: 'Newsroom',
     href: '/newsroom',
     description:
-      'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.'
+      'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
+    icon: Compass // Icon for Newsroom
   }
 ];
 
@@ -66,7 +91,6 @@ export default function NavLinks() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
-                    {/* <Icons.logo className="h-6 w-6" /> */}
                     <div className="mb-2 mt-4 text-lg font-medium">UAPoli</div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Propelling bipartisan UAP disclosure efforts in DC.
@@ -74,14 +98,23 @@ export default function NavLinks() {
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Learn">
-                Learn about the current UAP climate in DC.
+              <ListItem href="/docs" title="Learn" icon={Library}>
+                Explore the history of Unidentified Aerial Phenomena (UAP), or
+                UFOs.
               </ListItem>
-              <ListItem href="/docs/installation" title="How to Use">
-                How to install dependencies and structure your app.
+              <ListItem
+                href="/docs/installation"
+                title="How to Use"
+                icon={Blocks}
+              >
+                Quick tips to get you started and connected to your reps.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem
+                href="/docs/primitives/typography"
+                title="About Us"
+                icon={Info}
+              >
+                Uncover the story behind UAPoli, gain insight into our mission.
               </ListItem>
             </ul>
           </NavigationMenuContent>
@@ -95,6 +128,7 @@ export default function NavLinks() {
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  icon={component.icon}
                 >
                   {component.description}
                 </ListItem>
@@ -103,7 +137,7 @@ export default function NavLinks() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
+          <Link href="/plans" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Plans
             </NavigationMenuLink>
@@ -116,8 +150,8 @@ export default function NavLinks() {
 
 const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<'a'> & { icon: React.ElementType }
+>(({ className, title, children, icon: Icon, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -129,7 +163,12 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="flex items-center gap-1">
+            {' '}
+            <Icon size={16} />{' '}
+            <div className="text-sm font-medium leading-none">{title}</div>
+          </div>
+
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>

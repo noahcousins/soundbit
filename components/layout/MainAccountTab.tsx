@@ -48,7 +48,6 @@ export default function MainAccountTab({
   profile: any;
   userRole: any;
 }) {
-  console.log(profile, userRole, 'asdfasd');
   const fallbackInitials =
     sessionUser && sessionUser.email.slice(0, 2).toUpperCase();
 
@@ -88,10 +87,9 @@ export default function MainAccountTab({
         }
 
         const url = URL.createObjectURL(data);
-        console.log(url, 'url here');
         setAvatarUrl(url);
       } catch (error) {
-        console.log('Error downloading image: ', error);
+        // console.log('Error downloading image: ', error);
       }
     }
 
@@ -120,10 +118,10 @@ export default function MainAccountTab({
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={'/account/profile'}>
+              <Link href={'/account'}>
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
+                  <span>Account</span>
                   {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
                 </DropdownMenuItem>
               </Link>

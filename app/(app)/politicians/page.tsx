@@ -10,11 +10,9 @@ export default async function Politicians() {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start gap-4">
-      <div className="flex w-full flex-col content-between justify-between gap-8">
-        <div className="flex w-full flex-col content-between justify-between">
-          <h1 className="text-4xl font-bold">Politicians</h1>
-          <p className="text-lg">Browse by politician.</p>
-        </div>
+      <div className="flex w-full flex-col content-between justify-between">
+        <h1 className="text-4xl font-bold">Politicians</h1>
+        <p className="text-lg">Browse by politician.</p>
       </div>
       <PoliticiansGrid politiciansWithCounts={politiciansWithCounts} />
     </main>

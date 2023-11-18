@@ -13,23 +13,17 @@ import { useState } from 'react';
 
 export default function LikeButton({
   statementId,
-  session
+  session,
+  initialLiked
 }: {
   statementId: string;
   session: any;
+  initialLiked: boolean;
 }) {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(initialLiked);
   const router = useRouter(); // Initialize useRouter
   const { toast } = useToast(); // Initialize useToast hook
-
-  async function fetchData() {
-    if (session) {
-      const liked = await checkLiked({ session, statementId });
-      setIsLiked(liked);
-    }
-  }
-
-  fetchData(); // Fetch the initial liked status when the component is rendered
+  // Fetch the initial liked status when the component is rendered
 
   async function handleLike() {
     if (!session) {
@@ -65,7 +59,7 @@ export default function LikeButton({
           size={48}
           className={` ${
             isLiked
-              ? 'pointer-events-none rounded-full bg-violet-600/90 p-2 transition-all duration-200 ease-in-out hover:p-4'
+              ? 'pointer-events-none rounded-full bg-purple-700 p-2 transition-all duration-200 ease-in-out hover:p-4'
               : 'pointer-events-none rounded-full p-2'
           }`}
         />

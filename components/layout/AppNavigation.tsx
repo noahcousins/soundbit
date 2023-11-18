@@ -46,8 +46,6 @@ export default async function AppNavigation() {
     userRoleData = userRoleResponse;
   }
 
-  console.log(user, 'LLLDLDL');
-
   return (
     <nav className="sticky top-0 z-50 flex h-16 w-full justify-center border-b border-b-foreground/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex w-full items-center justify-between p-3 text-sm">

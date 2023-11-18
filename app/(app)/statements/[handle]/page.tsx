@@ -13,6 +13,8 @@ import Breadcrumbs from '@/components/util/Breadcrumbs';
 import ValueColoredBlob from '@/components/util/ValueColoredBlob';
 // Import functions from your API file
 import { getBackgroundColor } from '@/utils/formatUtils';
+import { checkLiked } from '@/utils/supabase/api';
+
 import {
   fetchStatement,
   fetchStatementPolitician,
@@ -23,6 +25,14 @@ import {
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cookies } from 'next/headers';
+
+export async function generateMetadata({ params }: { params: any }) {
+  const { handle } = params;
+  const statement = await fetchStatement(handle);
+  return {
+    title: `"${statement?.quote}" - UAPoli`
+  };
+}
 
 export default async function Statement({ params }: { params: any }) {
   const { handle } = params;
@@ -47,6 +57,8 @@ export default async function Statement({ params }: { params: any }) {
 
   const statement = await fetchStatement(handle);
 
+  const liked = await checkLiked({ session, statementId: statement!.id });
+
   const politician = await fetchStatementPolitician(statement!.politicianId!);
   const otherStatements = await fetchOtherStatements(statement!.politicianId);
 
@@ -70,8 +82,8 @@ export default async function Statement({ params }: { params: any }) {
         </div>
 
         <div className="flex w-full flex-col gap-8">
-          <div className="flex lg:flex-row flex-col gap-8 justify-center">
-            <div className="relative flex w-full lg:w-1/2 flex-col gap-6">
+          <div className="flex flex-col justify-center gap-8 lg:flex-row">
+            <div className="relative flex w-full flex-col gap-6 lg:w-1/2">
               <div className="absolute -left-11 -top-12 select-none">
                 <span className="text-scale-600 text-[160px] leading-none text-primary/25">
                   &ldquo;
@@ -80,13 +92,17 @@ export default async function Statement({ params }: { params: any }) {
               <blockquote className="z-10 max-w-lg text-xl lg:text-3xl">
                 {statement?.quote}
               </blockquote>
-              <div className="w-full max-w-lg flex justify-between">
+              <div className="flex w-full max-w-lg justify-between">
                 <PoliticianBlip politician={politician} isSmall={true} />{' '}
-                <LikeButton session={session} statementId={statement!.id} />
+                <LikeButton
+                  initialLiked={liked}
+                  session={session}
+                  statementId={statement!.id}
+                />
               </div>
             </div>
 
-            <div className="flex w-full lg:w-1/2 flex-col">
+            <div className="flex w-full flex-col lg:w-1/2">
               <p className="text-sm font-bold uppercase">
                 {new Date(statement!.date!).toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -144,24 +160,6 @@ export default async function Statement({ params }: { params: any }) {
           </div>
         ))}
       </HorizontalGallery>
-      {/*       <div className="flex w-full flex-wrap gap-8">
-        <div className="flex w-full flex-col">
-          <div className="flex w-full gap-8">
-            <StatementCard
-              statements={otherStatements}
-              politician={politician}
-              contentOnLeft={true}
-            />
-
-             <div className="border-scale-500 hover:border-scale-700 dark:bg-scale-300 group relative flex w-full flex-col justify-between overflow-hidden rounded-sm border-[1px] border-white border-opacity-10 p-8 text-left transition-all duration-100 hover:border-opacity-50">
-              <div className="m-auto text-center">
-                <p className="">+ 3 other statements</p>
-                <p className="">view all</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </main>
   );
 }

@@ -26,6 +26,8 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
+import UAPoliLogo from '../../public/uapoli-light.svg';
+
 const topRoutes = [
   {
     label: 'Explore',
@@ -88,11 +90,11 @@ export default function MobileSidebar() {
         <SheetHeader>
           <Link href="/">
             <Image
-              className="p-5 w-1/2"
+              priority
               alt="UAPoli logo"
               width={80}
               height={20.96}
-              src="/uapoli_logo_nav.png"
+              src={UAPoliLogo}
             />
           </Link>
           <SidebarContent />

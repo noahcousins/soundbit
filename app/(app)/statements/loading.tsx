@@ -15,7 +15,7 @@ export default function LoadingStatements() {
             key={index}
             className="relative flex h-[200px] w-[350px] flex-col rounded-2xl border-[1px] border-white border-opacity-10"
           >
-            <Skeleton className="absolute z-10 h-full w-full opacity-5" />
+            <Skeleton className="absolute z-10 h-full w-full rounded-2xl opacity-5" />
             <div className="z-20 my-auto flex w-full flex-col content-between justify-between gap-4 p-8">
               <Skeleton className="h-8 w-8 rounded-full" />
               <Skeleton className="h-[28px] w-[126px] rounded-full" />

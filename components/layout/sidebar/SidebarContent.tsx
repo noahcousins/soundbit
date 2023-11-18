@@ -16,6 +16,13 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
+
 const topRoutes = [
   {
     label: 'Explore',
@@ -68,37 +75,70 @@ const bottomRoutes = [
 
 export default function SidebarContent() {
   return (
-    <div className="flex flex-col justify-between">
-      <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
-        {topRoutes.map((route) => (
-          <NavLink key={route.href} href={route.href}>
-            <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10 hover:text-primary">
-              <route.icon className="mr-3 h-5 w-5" />
-              {route.label}
+    <div className="flex flex-col justify-between p-0 lg:p-5">
+      <Accordion type="single" collapsible defaultValue="item-1">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Discover</AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
+              {topRoutes.map((route) => (
+                <NavLink key={route.href} href={route.href}>
+                  <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10 hover:text-primary">
+                    <route.icon size={16} className="mr-3" />
+                    {route.label}
+                  </div>
+                </NavLink>
+              ))}
             </div>
-          </NavLink>
-        ))}
-      </div>
-      <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
-        {mainRoutes.map((route) => (
-          <NavLink key={route.href} href={route.href}>
-            <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10">
-              <route.icon className="mr-3 h-5 w-5" />
-              {route.label}
+            <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
+              {mainRoutes.map((route) => (
+                <NavLink key={route.href} href={route.href}>
+                  <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10">
+                    <route.icon size={16} className="mr-3" />
+                    {route.label}
+                  </div>
+                </NavLink>
+              ))}
             </div>
-          </NavLink>
-        ))}
-      </div>
-      <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
-        {bottomRoutes.map((route) => (
-          <NavLink key={route.href} href={route.href}>
-            <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10 hover:text-white">
-              <route.icon className="mr-3 h-5 w-5" />
-              {route.label}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      <Accordion type="single" collapsible defaultValue="item-1">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>How it works</AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
+              {topRoutes.map((route) => (
+                <NavLink key={route.href} href={route.href}>
+                  <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10 hover:text-primary">
+                    <route.icon className="mr-3 h-5 w-5" />
+                    {route.label}
+                  </div>
+                </NavLink>
+              ))}
             </div>
-          </NavLink>
-        ))}
-      </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      <Accordion type="single" collapsible>
+        <AccordionItem value="item-1">
+          <AccordionTrigger>Account & Profile</AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-1 rounded-2xl bg-transparent p-2 transition-colors hover:bg-background/40">
+              {bottomRoutes.map((route) => (
+                <NavLink key={route.href} href={route.href}>
+                  <div className="group flex w-44 flex-1 cursor-pointer items-center justify-start rounded-lg p-3 text-sm transition hover:bg-white/10 hover:text-white">
+                    <route.icon className="mr-3 h-5 w-5" />
+                    {route.label}
+                  </div>
+                </NavLink>
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }

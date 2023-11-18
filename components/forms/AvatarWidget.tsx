@@ -81,7 +81,7 @@ export default function Avatar({
   };
 
   return (
-    <div>
+    <div className="mx-auto flex flex-col gap-4">
       {avatarUrl ? (
         <Image
           width={size}
@@ -97,8 +97,12 @@ export default function Avatar({
           style={{ height: size, width: size }}
         />
       )}
-      <div style={{ width: size }}>
-        <Button variant={'secondary'} onClick={openFileInput}>
+      <div className="mx-auto flex w-full" style={{ width: size }}>
+        <Button
+          className="mx-auto"
+          variant={'secondary'}
+          onClick={openFileInput}
+        >
           {uploading ? 'Uploading ...' : 'Upload'}
         </Button>
         <input

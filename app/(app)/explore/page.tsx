@@ -112,14 +112,7 @@ export default async function Explore() {
       >
         {legislationCards}
       </HorizontalGallery>
-      here
-      <Pricing
-        session={session}
-        user={session?.user}
-        products={products}
-        subscription={subscription}
-      />
-      here
+
       <div className="w-full">
         <div className="flex w-full flex-col items-center lg:flex-row">
           <div className="w-full p-0 lg:w-1/2 lg:p-24">

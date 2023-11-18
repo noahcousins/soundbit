@@ -20,7 +20,7 @@ export default function Paywall() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 2000); // 2 seconds delay
+    }, 5000); // 2 seconds delay
 
     return () => clearTimeout(timer);
   }, []);
