@@ -4,9 +4,17 @@ import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast'; // Import useToast hook
+import { useToast } from '@/components/ui/use-toast';
 
-import { addSend } from '@/utils/supabase/api'; // Replace "your-file" with the actual path to the file containing addSend
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+
+import { addSend } from '@/utils/supabase/api/legacy/api'; // Replace "your-file" with the actual path to the file containing addSend
 
 export default function TemplateForm({
   templates,
@@ -18,18 +26,31 @@ export default function TemplateForm({
   politician: any;
 }) {
   const [showCallScript, setShowCallScript] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    templates.templatesData[0]
+  );
+
   const { toast } = useToast();
 
-  const toggleContent = showCallScript
-    ? templates.templatesData[0].call_script
-    : templates.templatesData[0].letter;
+  const handleTemplateChange = (value: string) => {
+    const newSelectedTemplate = templates.templatesData.find(
+      (template: { id: any }) => template.id === value
+    );
+    setSelectedTemplate(newSelectedTemplate);
+  };
 
-  const formattedContent = toggleContent.replace(/\n/g, '<br />');
+  const toggleContent = showCallScript
+    ? selectedTemplate?.call_script
+    : selectedTemplate?.letter;
+
+  const formattedContent = toggleContent
+    ? toggleContent.replace(/\n/g, '<br />')
+    : '';
 
   const handleSubmit = async () => {
     try {
       const result = await addSend(
-        templates.templatesData[0].id,
+        selectedTemplate.id, // Use the ID of the selected template
         session,
         politician,
         toast
@@ -59,9 +80,31 @@ export default function TemplateForm({
     }
   };
 
+  console.log(templates, 'dododo');
+
   return (
     <div className="flex w-full flex-col gap-2 pt-8">
       <div className="mx-auto flex flex-col items-center gap-2">
+        <Select onValueChange={(value) => handleTemplateChange(value)}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select Template" />
+          </SelectTrigger>
+          <SelectContent>
+            {templates.templatesData.map((template: any) => (
+              <SelectItem
+                key={template.id}
+                value={template.id}
+                onSelect={() => {
+                  console.log('Template selected:', template); // Log to check if onSelect is triggered
+                  setSelectedTemplate(template);
+                }}
+              >
+                {template.issue}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
         <Label htmlFor="call-script">
           {showCallScript ? (
             <p className="font-normal">

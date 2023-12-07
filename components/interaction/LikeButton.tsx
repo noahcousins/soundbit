@@ -3,7 +3,11 @@
 // Import useRouter
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import { addLike, removeLike, checkLiked } from '@/utils/supabase/api';
+import {
+  addLike,
+  removeLike,
+  checkLiked
+} from '@/utils/supabase/api/legacy/api';
 import { Heart } from 'lucide-react';
 // Import your API functions
 import { useRouter } from 'next/navigation';

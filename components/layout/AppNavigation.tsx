@@ -7,6 +7,8 @@ import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import UAPoliLogo from '../../public/uapoli-light.svg';
+
 export default async function AppNavigation() {
   const cookieStore = cookies();
 
@@ -57,12 +59,13 @@ export default async function AppNavigation() {
           <NavLinks />
         </div>
 
-        <Link className="visible lg:hidden" href="/">
+        <Link className="visible cursor-pointer lg:hidden" href="/">
           <Image
+            priority
             alt="UAPoli logo"
             width={80}
             height={20.96}
-            src="/uapoli_logo_nav.png"
+            src={UAPoliLogo}
           />
         </Link>
         <div className="flex">

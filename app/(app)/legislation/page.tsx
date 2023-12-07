@@ -10,7 +10,7 @@ import { SlideBlobOne } from '@/components/util/SvgImport';
 import {
   fetchLegislationsWithPoliticians,
   fetchPoliticiansByIds
-} from '@/utils/supabase/api';
+} from '@/utils/supabase/api/legacy/api';
 
 import HorizontalGallery from '@/components/sections/HorizontalGallery';
 

@@ -38,42 +38,43 @@ const components: ComponentItem[] = [
     title: 'Outreach',
     href: '/outreach',
     description:
-      'A modal dialog that interrupts the user with important content and expects a response.',
-    icon: Megaphone // Icon for Outreach
+      'One click tool to message your elected officials about UAP. Find all points of contact for your rep.',
+    icon: Megaphone
   },
   {
     title: 'Politicians',
     href: '/politicians',
     description:
-      'For sighted users to preview content available behind a link.',
-    icon: Users2 // Icon for Politicians
+      'Find all congressional politicians active on UAP. Browse by party, state, and position.',
+    icon: Users2
   },
   {
     title: 'Statements',
     href: '/statements',
     description:
-      'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
-    icon: Mic // Icon for Statements
+      'Hear directly from politicians on UAP. Investigate how the statements affect the Bipartisan Index.',
+    icon: Mic
   },
   {
     title: 'Legislation',
     href: '/legislation',
-    description: 'Visually or semantically separates content.',
-    icon: ScrollText // Icon for Legislation
+    description:
+      'Vote on all proposed and enacted UAP legislation, and track the status as debated in Congress.',
+    icon: ScrollText
   },
   {
     title: 'Hearings',
     href: '/hearings',
     description:
-      'A set of layered sections of content—known as tab panels—that are displayed one at a time.',
-    icon: Gavel // Icon for Hearings
+      'Browse all congressional hearings related to UAP, including members, dates, and topics discussed.',
+    icon: Gavel
   },
   {
     title: 'Newsroom',
     href: '/newsroom',
     description:
-      'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
-    icon: Compass // Icon for Newsroom
+      'Read trending articles about UAP disclosure in Washington, from trusted & reliable sources.',
+    icon: Compass
   }
 ];
 
@@ -98,7 +99,7 @@ export default function NavLinks() {
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Learn" icon={Library}>
+              <ListItem href="/learn" title="Learn" icon={Library}>
                 Explore the history of Unidentified Aerial Phenomena (UAP), or
                 UFOs.
               </ListItem>

@@ -3,7 +3,7 @@ import VerticalGallery from '@/components/sections/VerticalGallery';
 import {
   fetchEventsWithPoliticians,
   fetchPoliticiansByIds
-} from '@/utils/supabase/api';
+} from '@/utils/supabase/api/legacy/api';
 // Adjust with your API functions import
 
 import { MapPin } from 'lucide-react';

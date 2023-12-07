@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { fetchUserData } from "@/utils/supabase/api";
+import React, { useState, useEffect } from 'react';
+import { fetchUserData } from '@/utils/supabase/api/legacy/api';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Cloud,
   CreditCard,
@@ -18,14 +18,14 @@ import {
   Settings,
   User,
   UserPlus,
-  Users,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import DropdownLogOutButton from "@/components/layout/DropdownLogOutButton";
-import SignOutButton from "@/components/layout/SignOutButton";
+  Users
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import DropdownLogOutButton from '@/components/layout/DropdownLogOutButton';
+import SignOutButton from '@/components/layout/SignOutButton';
 
-import { useRouter } from "next/navigation";
-import { createBrowserClient } from "@supabase/ssr";
+import { useRouter } from 'next/navigation';
+import { createBrowserClient } from '@supabase/ssr';
 
 import {
   DropdownMenu,
@@ -39,12 +39,12 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Link from "next/link";
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
 export default function SidebarAccountTab({
-  sessionUser,
+  sessionUser
 }: {
   sessionUser: any;
 }) {
@@ -59,7 +59,7 @@ export default function SidebarAccountTab({
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push("/"); // Redirect to the home page after signing out
+    router.push('/'); // Redirect to the home page after signing out
   };
 
   const [userData, setUserData] = useState<{
@@ -72,13 +72,13 @@ export default function SidebarAccountTab({
   const fetchUserProfile = async () => {
     if (sessionUser) {
       const { data, error } = await supabase
-        .from("user")
-        .select("*")
-        .eq("id", sessionUser.user.id)
+        .from('user')
+        .select('*')
+        .eq('id', sessionUser.user.id)
         .single();
 
       if (error) {
-        console.error("Error fetching user profile:", error);
+        console.error('Error fetching user profile:', error);
       } else {
         setUserData(data);
         setLoading(false);
@@ -111,7 +111,7 @@ export default function SidebarAccountTab({
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={"/account/profile"}>
+              <Link href={'/account/profile'}>
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
@@ -169,10 +169,10 @@ export default function SidebarAccountTab({
                 <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            {!loading && userData && userData.role === "admin" && (
+            {!loading && userData && userData.role === 'admin' && (
               <>
                 <DropdownMenuSeparator />
-                <Link href={"/admin"}>
+                <Link href={'/admin'}>
                   <DropdownMenuItem>
                     <Shield className="mr-2 h-4 w-4" />
                     <span>Admin</span>

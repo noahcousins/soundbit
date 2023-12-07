@@ -4,7 +4,10 @@ import Link from 'next/link';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-import { fetchPoliticiansOutreach, fetchTemplates } from '@/utils/supabase/api';
+import {
+  fetchPoliticiansOutreach,
+  fetchTemplates
+} from '@/utils/supabase/api/legacy/api';
 import OutreachForm from '@/components/outreach/OutreachForm';
 
 export const revalidate = 0;

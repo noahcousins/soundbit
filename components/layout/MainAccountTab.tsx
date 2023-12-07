@@ -118,10 +118,10 @@ export default function MainAccountTab({
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={'/account'}>
+              <Link href={'/profile'}>
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
-                  <span>Account</span>
+                  <span>Profile</span>
                   {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
                 </DropdownMenuItem>
               </Link>
@@ -130,11 +130,14 @@ export default function MainAccountTab({
                 <span>Billing</span>
                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </DropdownMenuItem> */}
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-                {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
-              </DropdownMenuItem>
+              <Link href={'/settings'}>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                  {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+                </DropdownMenuItem>
+              </Link>
+
               {/* <DropdownMenuItem>
                 <Keyboard className="mr-2 h-4 w-4" />
                 <span>Keyboard shortcuts</span>

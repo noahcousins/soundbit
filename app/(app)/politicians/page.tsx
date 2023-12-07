@@ -1,12 +1,10 @@
 import PoliticiansGrid from '@/components/politicians/PoliticiansGrid';
-import { fetchPoliticiansAndCounts2 } from '@/utils/supabase/api';
+import { fetchPoliticiansPageWithCounts } from '@/utils/supabase/api/politicians';
 
 export const revalidate = 0;
 
 export default async function Politicians() {
-  const politiciansWithCounts = await fetchPoliticiansAndCounts2();
-
-  // console.log(politiciansWithCounts, 'weee');
+  const politiciansWithCounts = await fetchPoliticiansPageWithCounts();
 
   return (
     <main className="flex min-h-screen w-full flex-col items-start gap-4">

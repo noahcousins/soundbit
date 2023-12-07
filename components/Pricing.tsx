@@ -90,31 +90,12 @@ export default function Pricing({
     return priceA - priceB;
   });
 
-  if (!products.length)
-    return (
-      <section className="bg-black">
-        <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-24 lg:px-8">
-          <div className="sm:align-center sm:flex sm:flex-col"></div>
-          <p className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            No subscription pricing plans found. Create them in your{' '}
-            <a
-              className="text-pink-500 underline"
-              href="https://dashboard.stripe.com/products"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Stripe Dashboard
-            </a>
-            .
-          </p>
-        </div>
-      </section>
-    );
+  if (!products.length) return <div className=""></div>;
 
   if (products.length === 1)
     return (
       <section className="bg-black">
-        <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-6xl">
           <div className="sm:align-center sm:flex sm:flex-col">
             <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
               Plans & Pricing
@@ -179,7 +160,7 @@ export default function Pricing({
 
   return (
     <section className="bg-black">
-      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-6xl">
         <div className="sm:align-center sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
             Plans & Pricing
@@ -249,7 +230,7 @@ export default function Pricing({
                   <h2 className="text-2xl font-semibold leading-6 text-white">
                     {product.name}
                   </h2>
-                  <p className="text-zinc-300">{product.description}</p>
+                  <p className="text-sm text-zinc-300">{product.description}</p>
                   <p className="">
                     <span className="white text-5xl font-extrabold">
                       {priceString}

@@ -21,7 +21,7 @@ import {
   fetchLegislationsWithPoliticians,
   fetchCarouselWithSlides,
   fetchSlidesById
-} from '@/utils/supabase/api';
+} from '@/utils/supabase/api/legacy/api';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
@@ -113,7 +113,7 @@ export default async function Explore() {
         {legislationCards}
       </HorizontalGallery>
 
-      <div className="w-full">
+      {/* <div className="w-full">
         <div className="flex w-full flex-col items-center lg:flex-row">
           <div className="w-full p-0 lg:w-1/2 lg:p-24">
             <h3 className="text-2xl font-semibold">Browse by politician.</h3>
@@ -162,7 +162,7 @@ export default async function Explore() {
             <div className="h-72 w-full rounded-2xl bg-primary/5"></div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

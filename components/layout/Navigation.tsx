@@ -9,8 +9,6 @@ import MobileSidebar from '@/components/layout/MobileSidebar';
 
 import UAPoliLogo from '../../public/uapoli-light.svg';
 
-// ... (import statements)
-
 export default async function Navigation() {
   const cookieStore = cookies();
 
@@ -81,7 +79,7 @@ export default async function Navigation() {
         <div className="flex items-center lg:hidden">
           <MobileSidebar />
         </div>
-        <Link className="hidden lg:flex" href="/">
+        <Link className="hidden cursor-pointer lg:flex" href="/">
           <Image
             priority
             alt="UAPoli logo"

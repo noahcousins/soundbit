@@ -35,10 +35,8 @@ export default function PoliticianDetails({ politician }: { politician: any }) {
 
   const truncatedBio = truncateBio(politician.biography, 45);
 
-  const termDates = JSON.parse(politician.termDates);
-
   return (
-    <div className="group relative flex w-full gap-8 overflow-hidden p-8 text-left">
+    <div className="group relative flex w-full gap-8 overflow-hidden text-left">
       <div className="z-10 w-full flex-col gap-8">
         <div className="my-auto flex h-fit flex-col items-center space-x-0 space-y-8 lg:flex-row lg:space-x-8 lg:space-y-0">
           <div className="rounded-full sm:flex-shrink-0">

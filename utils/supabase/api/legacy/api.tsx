@@ -713,6 +713,24 @@ export async function fetchUserLikes(userId) {
   return data;
 }
 
+export async function isStatementLikedByUser(
+  session: Session,
+  statementId: string
+) {
+  const { data, error } = await supabase
+    .from('likes')
+    .select('statement_id')
+    .eq('user_id', session.user.id)
+    .eq('statement_id', statementId);
+
+  if (error) {
+    console.error('Error checking if statement is liked by user:', error);
+    return false;
+  }
+
+  return data.length > 0;
+}
+
 // Fetch user's voted legislations
 export async function fetchUserVotes({ session }) {
   const { data, error } = await supabase
@@ -758,8 +776,9 @@ export async function fetchStatementsByStatementIds(statementIds) {
   return data;
 }
 
-export async function fetchStatementsWithPoliticians() {
+export async function fetchStatementsWithPoliticians(session) {
   try {
+    // Fetch statements
     const { data: statementsData, error: statementError } = await supabase
       .from('statements')
       .select('*');
@@ -769,19 +788,56 @@ export async function fetchStatementsWithPoliticians() {
       return [];
     }
 
-    const statementsWithPoliticians = await Promise.all(
-      statementsData.map(async (statement) => {
-        const politician = await fetchPoliticianById(statement.politicianId);
-        return {
-          ...statement,
-          politician
-        };
-      })
+    // Extract politician IDs
+    const politicianIds = statementsData.map(
+      (statement) => statement.politicianId
     );
 
-    return statementsWithPoliticians;
+    // Fetch politicians
+    const { data: politiciansData, error: politiciansError } = await supabase
+      .from('politicians')
+      .select('*')
+      .in('id', politicianIds);
+
+    if (politiciansError) {
+      console.error('Error fetching politicians', politiciansError);
+      return [];
+    }
+
+    // Fetch likes for the current user
+    const userId = session.user.id; // Replace with the appropriate method to get the current user's ID
+    const { data: likesData, error: likesError } = await supabase
+      .from('likes')
+      .select('statement_id')
+      .eq('user_id', userId);
+
+    if (likesError) {
+      console.error('Error fetching likes: ', likesError);
+      return [];
+    }
+
+    // Combine statements, politicians, and likes
+    const likedStatementIds = new Set(
+      likesData.map((like) => like.statement_id)
+    );
+    const statementsWithPoliticiansAndLikes = statementsData.map(
+      (statement) => {
+        return {
+          ...statement,
+          politician: politiciansData.find(
+            (p) => p.id === statement.politicianId
+          ),
+          likedByUser: likedStatementIds.has(statement.id)
+        };
+      }
+    );
+
+    return statementsWithPoliticiansAndLikes;
   } catch (error) {
-    console.error('Error fetching statements with politicians: ', error);
+    console.error(
+      'Error fetching statements with politicians and likes: ',
+      error
+    );
     return [];
   }
 }
@@ -802,6 +858,7 @@ export async function fetchSlideById(slide_id) {
 }
 
 export async function fetchSlidesById(ids) {
+  // Fetch slides data
   const { data: slidesData, error: slidesError } = await supabase
     .from('slides')
     .select('*')
@@ -812,7 +869,18 @@ export async function fetchSlidesById(ids) {
     return [];
   }
 
-  return slidesData;
+  // Fetch politician data for each slide
+  const slidesWithPoliticianData = await Promise.all(
+    slidesData.map(async (slide) => {
+      if (slide.politician_id) {
+        const politicianData = await fetchPoliticianById(slide.politician_id);
+        return { ...slide, politician: politicianData };
+      }
+      return slide;
+    })
+  );
+
+  return slidesWithPoliticianData;
 }
 
 export async function fetchCarouselWithSlides(carousel_name) {

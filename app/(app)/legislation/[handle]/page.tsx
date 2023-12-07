@@ -21,7 +21,7 @@ import {
   fetchLegislation,
   fetchPoliticians,
   fetchOtherLegislations
-} from '@/utils/supabase/api';
+} from '@/utils/supabase/api/legacy/api';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { ScrollText, Dot, ChevronRight } from 'lucide-react';
 import { cookies } from 'next/headers';

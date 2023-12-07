@@ -12,6 +12,7 @@ import React, { useRef } from 'react';
 import Stars from '@/components/sections/hero/Stars';
 import UFOs from '@/components/sections/hero/UFOs';
 import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 
 export default function MultiLayerParallax() {
   const ref = useRef(null);
@@ -61,33 +62,36 @@ export default function MultiLayerParallax() {
     >
       <motion.div
         style={{ y: textY }}
-        className="relative z-[11] mx-auto flex w-4/6 flex-col gap-4 pb-28 text-primary dark:drop-shadow-2xl sm:px-16 md:max-w-7xl md:gap-8 md:pb-60 lg:px-8 lg:pb-80"
+        className="relative z-[11] mx-auto flex w-full flex-col gap-4 pb-28 text-primary dark:drop-shadow-2xl sm:px-16 md:max-w-7xl md:gap-8 md:pb-60 lg:px-8 lg:pb-80"
       >
-        <h1
-          //@ts-ignore
-          style={{ y: textY }}
-          className="xs:text-5xl relative z-20 max-w-lg text-5xl font-semibold dark:drop-shadow-[0px_0px_3px_rgba(0,0,0,1)] sm:text-left md:max-w-xl md:text-6xl lg:text-7xl"
-        >
-          <span className="sm:whitespace-nowrap">Connecting the </span>{' '}
-          <span className="sm:whitespace-nowrap">aisle on UAP.</span>
-        </h1>
-        <p className="flex max-w-lg flex-col gap-4 rounded-2xl text-left text-base leading-8 text-primary dark:drop-shadow-[0px_0px_3px_rgba(0,0,0,1)] sm:max-w-xl md:w-4/5 md:text-lg">
-          <span className="">
-            Scope out the political scene around the UAP issue with{' '}
-            <span className="font-bold">UAPoli</span>.
-          </span>
-          <span className="">
-            An intuitive platform to keep you up to date on politicians, their
-            statements, and legislation relating to UAP.
-          </span>
-        </p>
-        <Link href="/explore">
-          <button className="rounded-xl bg-gradient-to-r from-[#a972ff] via-[#895dff] to-indigo-500 p-1 shadow-none transition-all duration-300 ease-in-out hover:shadow-[0_0_28px_0px_rgba(178,46,255,0.9)]">
-            <span className="block rounded-lg bg-[#18181B] px-4 py-2 font-semibold text-white transition-colors duration-100 ease-in-out hover:bg-black">
-              Explore
+        <div className="flex w-full flex-col gap-8 px-8 py-16 text-center lg:px-0">
+          <Badge className="mx-auto w-fit" variant="secondary">
+            Rated most intuitive UAP congressional outreach tool
+          </Badge>
+          <h1 className="xs:text-5xl relative z-20 text-center text-5xl font-bold dark:drop-shadow-[0px_0px_3px_rgba(0,0,0,1)] md:text-6xl lg:text-8xl">
+            <span className="sm:whitespace-nowrap">Connecting the </span>{' '}
+            <span className="sm:whitespace-nowrap">
+              aisle on <span className="text-purple-600">UAP</span>.
             </span>
-          </button>
-        </Link>
+          </h1>
+          <p className="mx-auto flex max-w-xl flex-col gap-8 rounded-2xl text-center text-base leading-8 text-primary dark:drop-shadow-[0px_0px_3px_rgba(0,0,0,1)] md:w-4/5 md:text-lg">
+            <span className="">
+              Propelling bipartisan UAP disclosure efforts, by keep you up to
+              date on politicians, their statements, and legislation relating to
+              UAP.
+            </span>
+          </p>
+          <Link href="/explore">
+            <button className="rounded-xl bg-gradient-to-r from-[#a972ff] via-[#895dff] to-indigo-500 p-1 shadow-none transition-all duration-300 ease-in-out hover:shadow-[0_0_28px_0px_rgba(178,46,255,0.9)]">
+              <span className="block rounded-lg bg-[#18181B] px-4 py-2 font-semibold text-white transition-colors duration-100 ease-in-out hover:bg-black">
+                Explore
+              </span>
+            </button>
+          </Link>
+          <p className="text-center underline-offset-2 hover:underline">
+            500+ letters sent to politicians about UAP
+          </p>
+        </div>
       </motion.div>
       <motion.div
         className="absolute inset-0 z-0"
@@ -132,9 +136,9 @@ export default function MultiLayerParallax() {
       <div className="z-10 h-full w-full overflow-visible opacity-60 lg:absolute">
         <Image fill alt="Background blur" src={'/glow-homepage.webp'} />
       </div>
-      <div className="pointer-events-none absolute bottom-0 z-[33] h-2/6 w-full bg-gradient-to-t from-background to-transparent"></div>
-      <div className="pointer-events-none absolute left-0 z-[33] h-full w-1/6 bg-gradient-to-r from-background to-transparent"></div>
-      <div className="pointer-events-none absolute right-0 z-[33] h-full w-1/6 bg-gradient-to-l from-background to-transparent"></div>
+      <div className="pointer-events-none absolute bottom-0 z-[33] h-2/6 w-full bg-gradient-to-t from-black to-transparent"></div>
+      <div className="pointer-events-none absolute left-0 z-[33] h-full w-1/6 bg-gradient-to-r from-black to-transparent"></div>
+      <div className="pointer-events-none absolute right-0 z-[33] h-full w-1/6 bg-gradient-to-l from-black to-transparent"></div>
       <div
         className="pointer-events-none absolute inset-0 -bottom-16 -right-20 z-[32] drop-shadow-[0px_0px_3px_rgba(0,0,0,1)]"
         style={{

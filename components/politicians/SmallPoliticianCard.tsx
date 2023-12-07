@@ -68,22 +68,23 @@ export default function SmallPoliticianCard({
               <div className="flex w-fit flex-col">
                 {/* Politician's position, name, party, and state */}
                 <div className="flex justify-between">
-                  <h3 className="flex-grow text-left text-sm font-extralight uppercase text-primary opacity-60">
-                    {politician.position === 'Representative'
+                  <h3 className="flex-grow text-left text-sm font-light uppercase text-primary opacity-60">
+                    {/* {politician.position === 'Representative'
                       ? 'Rep.'
                       : politician.position === 'Senator'
                       ? 'Sen.'
-                      : politician.position}
+                      : politician.position} */}
+                    {politician.position}
                   </h3>
-                  <p className="text-left text-sm font-extralight text-primary opacity-60">
-                    {formatParty(politician.party)}
-                    <span className="">-{formatState(politician.state)}</span>
-                  </p>
                 </div>
 
                 <h2 className="w-full text-xl font-semibold leading-tight text-primary">
                   {politician.name}
                 </h2>
+                <p className="text-left text-sm font-extralight text-primary opacity-60">
+                  {formatParty(politician.party)}
+                  <span className="">-{formatState(politician.state)}</span>
+                </p>
               </div>
 
               <div className="z-30 flex flex-col gap-2">

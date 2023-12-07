@@ -16,7 +16,7 @@ import {
   fetchPoliticianLegislations,
   fetchPoliticianEvents,
   fetchSimilarPoliticians
-} from '@/utils/supabase/api'; // Import the new functions
+} from '@/utils/supabase/api/politicians'; // Import the new functions
 import PreviewPoliticianCard from '@/components/politicians/PreviewPoliticianCard';
 
 export async function generateMetadata({ params }: { params: any }) {
@@ -91,7 +91,7 @@ export default async function Politician({ params }: { params: any }) {
           key={politician!.name}
         >
           {legislations.map((legislation) => (
-            <div className="w-fit snap-start" key={legislation.title}>
+            <div className="w-fit snap-start" key={legislation.id}>
               <SmallLegislationCard
                 legislation={legislation}
                 index={undefined}

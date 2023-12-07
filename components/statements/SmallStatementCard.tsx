@@ -1,5 +1,3 @@
-'use client';
-
 import StatementIcon from '@/components/icons/StatementIcon';
 import LikeButton from '@/components/interaction/LikeButton';
 import PoliticiansPreview from '@/components/politicians/PoliticiansPreview';
@@ -77,13 +75,11 @@ export default function SmallStatementCard({
           </p>
         </Link>
 
-        {session && (
-          <LikeButton
-            statementId={statement.id}
-            session={session}
-            initialLiked={false}
-          />
-        )}
+        {/* <LikeButton
+          statementId={statement.id}
+          session={session}
+          initialLiked={false}
+        /> */}
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import PoliticianForm from '@/components/forms/CreatePoliticianForm';
-import { fetchAllPoliticians } from '@/utils/supabase/api';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';

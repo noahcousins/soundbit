@@ -37,7 +37,7 @@ export const metadata = {
     'A bipartisan congressional outreach platform advocating for UAP disclosure.'
 };
 
-export default async function Account() {
+export default async function Profile() {
   const [session, userDetails, subscription] = await Promise.all([
     getSession(),
     getUserDetails(),
@@ -177,57 +177,27 @@ export default async function Account() {
 
   return (
     <section className="flex w-full flex-col gap-16">
-      <div className="flex w-full flex-col content-between justify-between">
-        <h1 className="text-4xl font-bold">Account</h1>
-        <p className="text-lg">Edit your account on UAPoli.</p>
+      <div className="flex w-full justify-between">
+        {' '}
+        <div className="flex w-full flex-col">
+          <h1 className="text-4xl font-bold">Profile</h1>
+          <p className="text-lg">Edit your profile on UAPoli.</p>
+        </div>
+        <div className="flex w-full content-end gap-4 text-right">
+          <h2 className="text-4xl font-light">
+            Hello,{' '}
+            <span className="font-semibold">
+              {profileData
+                ? profileData.full_name || session.user.email
+                : 'Loading...'}
+            </span>
+          </h2>
+        </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <h2 className="text-4xl font-light">
-          Hello,{' '}
-          <span className="font-semibold">
-            {profileData
-              ? profileData.full_name || session.user.email
-              : 'Loading...'}
-          </span>
-        </h2>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="w-24" variant="outline">
-              Edit Profile
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
-              <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
-              </DialogDescription>
-            </DialogHeader>
-            {/*@ts-ignore */}
-            <AccountForm session={session} />
-          </DialogContent>
-        </Dialog>
-      </div>
+
       <div className="">
         <p className="text-2xl font-light">You have {statementCount} sends.</p>
       </div>
-      <Card
-        title="Your Plan"
-        description={
-          subscription
-            ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
-            : 'You are not currently subscribed to any plan.'
-        }
-        footer={<ManageSubscriptionButton session={session} />}
-      >
-        <div className="mb-4 mt-8 text-xl font-semibold">
-          {subscription ? (
-            `${subscriptionPrice}/${subscription?.prices?.interval}`
-          ) : (
-            <Link href="/">Choose your plan</Link>
-          )}
-        </div>
-      </Card>
       <div className="flex w-full">
         <LikesSection session={session} userLikes={userLikesData} />
       </div>
@@ -243,21 +213,6 @@ interface Props {
   description?: string;
   footer?: ReactNode;
   children: ReactNode;
-}
-
-function Card({ title, description, footer, children }: Props) {
-  return (
-    <div className="w-full max-w-3xl rounded-md border border-zinc-700">
-      <div className="px-5 py-4">
-        <h3 className="mb-1 text-2xl font-medium">{title}</h3>
-        <p className="text-zinc-300">{description}</p>
-        {children}
-      </div>
-      <div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500">
-        {footer}
-      </div>
-    </div>
-  );
 }
 
 async function LikesSection({

@@ -11,15 +11,38 @@ import {
   fetchPoliticiansByIds,
   fetchCarouselWithSlides,
   fetchSlidesById
-} from '@/utils/supabase/api';
+} from '@/utils/supabase/api/legacy/api';
+import { Session } from '@supabase/supabase-js';
 import React from 'react';
+
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { cookies } from 'next/headers';
 
 export const revalidate = 0;
 
 export default async function Statements() {
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        }
+      }
+    }
+  );
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
   // Fetching statements data
-  const statementsWithPoliticians = await fetchStatementsWithPoliticians();
-  console.log(statementsWithPoliticians);
+  const statementsWithPoliticians = await fetchStatementsWithPoliticians(
+    session
+  );
 
   const politicianIds = statementsWithPoliticians.flatMap(
     (statement) => statement.politicianId
@@ -63,6 +86,8 @@ export default async function Statements() {
 
   const top3Politicians = await fetchPoliticiansByIds(top3PoliticianIds);
 
+  console.log(session, 'cnanan');
+
   return (
     <main className="relative flex min-h-screen w-full flex-col items-start gap-16 lg:gap-24">
       <div className="bg-glow-3 absolute">
@@ -82,7 +107,7 @@ export default async function Statements() {
               statement={statement}
               index={undefined}
               loading={undefined}
-              session={undefined}
+              session={session}
             />
           </div>
         ))}

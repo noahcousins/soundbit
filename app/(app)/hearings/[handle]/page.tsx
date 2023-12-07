@@ -1,14 +1,14 @@
-import PoliticianBlip from "@/components/politicians/PoliticianBlip";
-import Breadcrumbs from "@/components/util/Breadcrumbs";
-import EventCard from "@/components/politicians/EventCard";
-import VerticalGallery from "@/components/sections/VerticalGallery";
+import PoliticianBlip from '@/components/politicians/PoliticianBlip';
+import Breadcrumbs from '@/components/util/Breadcrumbs';
+import EventCard from '@/components/politicians/EventCard';
+import VerticalGallery from '@/components/sections/VerticalGallery';
 import {
   fetchEvent,
   fetchPoliticians,
-  fetchOtherEvents,
-} from "@/utils/supabase/api"; // Import functions from your API file
+  fetchOtherEvents
+} from '@/utils/supabase/api/legacy/api'; // Import functions from your API file
 
-import { MapPin } from "lucide-react";
+import { MapPin } from 'lucide-react';
 
 export const revalidate = 0;
 
@@ -27,7 +27,7 @@ export default async function Event({ params }: { params: any }) {
     <main className="mx-auto flex max-w-screen-2xl flex-col gap-24 py-8">
       <div className="flex flex-col gap-8">
         <Breadcrumbs
-          items={[{ name: "Events", link: "/events" }, { name: event!.title }]}
+          items={[{ name: 'Events', link: '/events' }, { name: event!.title }]}
         />
         <div className="flex flex-col gap-8 lg:flex-row">
           <div className="border-scale-500 hover:border-scale-700 dark:bg-scale-300 group relative flex w-full gap-8 overflow-hidden rounded-2xl border-[1px] border-white border-opacity-10 p-8 text-left transition-all duration-100 hover:border-opacity-50 lg:w-3/4">
@@ -49,10 +49,10 @@ export default async function Event({ params }: { params: any }) {
                 <div className="flex flex-col gap-2">
                   <h3 className="w-3/4 text-4xl font-bold">{event!.title}</h3>
                   <p className="text-base">
-                    {new Date(event!.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
+                    {new Date(event!.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
                     })}
                   </p>
                 </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, buttonVariants } from '@/components/ui/button';
-import { fetchPoliticianById } from '@/utils/supabase/api';
+import { fetchPoliticianById } from '@/utils/supabase/api/legacy/api';
 import { MoveLeft, MoveRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
@@ -25,23 +25,10 @@ export default function Carousel({ slides }: { slides: any }) {
 
   const swiperSlideDur = 3000;
 
-  useEffect(() => {
-    const fetchPolitician = async (id: string) => {
-      const data = await fetchPoliticianById(id);
-      setPoliticians((prev) => ({ ...prev, [id]: data }));
-    };
-
-    // Fetch for each slide's politician_id
-    slides.forEach((slide: any) => {
-      //@ts-ignore
-      if (slide?.politician_id && !politicians[slide.politician_id]) {
-        fetchPolitician(slide.politician_id);
-      }
-    });
-  }, [slides]);
+  console.log(slides, 'llll');
 
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <Swiper
         spaceBetween={0}
         loop={true}
@@ -67,7 +54,7 @@ export default function Carousel({ slides }: { slides: any }) {
         }}
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         ref={swiperRef}
-        className="rounded-2xl w-full h-full"
+        className="h-full w-full rounded-2xl"
         onSlideChangeTransitionEnd={(swiper) => {
           setCurrentPage(swiper.realIndex); // Update the current page when the transition ends
         }}
@@ -88,17 +75,15 @@ export default function Carousel({ slides }: { slides: any }) {
               </div>
               <div className="overlay absolute inset-0 z-[1] bg-gradient-to-r from-background to-transparent"></div>
 
-              <div className="z-[2] flex gap-8 h-full w-full flex-col justify-between p-12">
+              <div className="z-[2] flex h-full w-full flex-col justify-between gap-8 p-12">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-4xl font-semibold line-clamp-2">
+                  <h3 className="line-clamp-2 text-4xl font-semibold">
                     {slide?.title}
                   </h3>
                 </div>
-                {/* @ts-ignore */}
-                {politicians[slide.politician_id] && (
+                {slide.politician_id && (
                   <PoliticianBlip
-                    //@ts-ignore
-                    politician={politicians[slide.politician_id]}
+                    politician={slide.politician}
                     isSmall={true}
                   />
                 )}

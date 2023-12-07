@@ -8,7 +8,7 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
 export const metadata = {
-  title: 'Next.js and Supabase Starter Kit',
+  title: 'UAPoli',
   description: 'The fastest way to build apps with Next.js and Supabase'
 };
 

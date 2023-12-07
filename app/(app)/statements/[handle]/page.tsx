@@ -13,13 +13,13 @@ import Breadcrumbs from '@/components/util/Breadcrumbs';
 import ValueColoredBlob from '@/components/util/ValueColoredBlob';
 // Import functions from your API file
 import { getBackgroundColor } from '@/utils/formatUtils';
-import { checkLiked } from '@/utils/supabase/api';
+import { checkLiked } from '@/utils/supabase/api/legacy/api';
 
 import {
   fetchStatement,
   fetchStatementPolitician,
   fetchOtherStatements
-} from '@/utils/supabase/api';
+} from '@/utils/supabase/api/legacy/api';
 // Adjust the path accordingly
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
@@ -82,17 +82,17 @@ export default async function Statement({ params }: { params: any }) {
         </div>
 
         <div className="flex w-full flex-col gap-8">
-          <div className="flex flex-col justify-center gap-8 lg:flex-row">
-            <div className="relative flex w-full flex-col gap-6 lg:w-1/2">
+          <div className="flex flex-col justify-center gap-24">
+            <div className="relative flex w-full flex-col gap-6">
               <div className="absolute -left-11 -top-12 select-none">
                 <span className="text-scale-600 text-[160px] leading-none text-primary/25">
                   &ldquo;
                 </span>
               </div>
-              <blockquote className="z-10 max-w-lg text-xl lg:text-3xl">
+              <blockquote className="z-10 text-xl lg:text-3xl">
                 {statement?.quote}
               </blockquote>
-              <div className="flex w-full max-w-lg justify-between">
+              <div className="flex w-full justify-between">
                 <PoliticianBlip politician={politician} isSmall={true} />{' '}
                 <LikeButton
                   initialLiked={liked}
@@ -102,7 +102,7 @@ export default async function Statement({ params }: { params: any }) {
               </div>
             </div>
 
-            <div className="flex w-full flex-col lg:w-1/2">
+            <div className="flex w-full flex-col">
               <p className="text-sm font-bold uppercase">
                 {new Date(statement!.date!).toLocaleDateString('en-US', {
                   year: 'numeric',

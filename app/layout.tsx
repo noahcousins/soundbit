@@ -22,7 +22,7 @@ export default function RootLayout({
       <body
         className={`select-none bg-background focus-visible:ring-transparent dark:bg-[#010101]`}
       >
-        <main className="mx-auto flex min-h-screen max-w-[1600px] flex-col items-center">
+        <main className="mx-auto flex min-h-screen max-w-[1280px] flex-col items-center">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
