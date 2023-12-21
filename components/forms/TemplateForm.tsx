@@ -87,7 +87,7 @@ export default function TemplateForm({
       <div className="mx-auto flex flex-col items-center gap-2">
         <Select onValueChange={(value) => handleTemplateChange(value)}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Template" />
+            <SelectValue placeholder={templates.templatesData.issue} />
           </SelectTrigger>
           <SelectContent>
             {templates.templatesData.map((template: any) => (

@@ -187,3 +187,20 @@
 }
 
 /* end Swiper */
+
+/* Border */
+
+.border-gradient {
+  border: 1px solid transparent;
+  background: padding-box linear-gradient(rgb(30 41 59), rgb(30 41 59)),
+    border-box linear-gradient(rgb(255 255 255), rgb(255 255 255 / 0.1));
+}
+
+.image-no-drag {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

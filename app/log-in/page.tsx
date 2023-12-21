@@ -1,7 +1,31 @@
 import Link from 'next/link';
 import Messages from './messages';
 
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { Button } from '@/components/ui/button';
+
 export default function Login() {
+  const cookieStore = cookies();
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        }
+      }
+    }
+  );
+
+  async function signInWithSpotify() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'spotify'
+    });
+  }
+
   return (
     <div className="mx-auto my-28 flex w-full flex-col justify-center gap-2 px-8 sm:max-w-md">
       {/* <Link
@@ -58,6 +82,7 @@ export default function Login() {
         >
           Sign Up
         </button>
+
         <Messages />
       </form>
     </div>

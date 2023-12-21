@@ -59,7 +59,7 @@ export default function Carousel({ slides }: { slides: any }) {
           setCurrentPage(swiper.realIndex); // Update the current page when the transition ends
         }}
       >
-        {slides.map((slide: any, index: any) => (
+        {slides.map((slide: any, index: number) => (
           <SwiperSlide
             className="relative z-20 flex w-full shrink-0 flex-wrap items-center justify-items-center overflow-hidden"
             key={index}
@@ -145,7 +145,7 @@ export default function Carousel({ slides }: { slides: any }) {
           current={currentPage}
           total={totalPage}
           swiperSlideDur={swiperSlideDur}
-          onClick={(index: any) =>
+          onClick={(index: number) =>
             //@ts-ignore
             swiperRef.current!.swiper.slideToLoop(index, 500, true)
           }

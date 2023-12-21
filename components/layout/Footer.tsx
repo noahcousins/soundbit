@@ -25,9 +25,9 @@ export default function Footer() {
 
   return (
     <footer className="flex w-full flex-col justify-center gap-2 border-t border-t-foreground/10 p-8 text-center text-xs">
-      <div className="flex w-full justify-between">
-        <div className="flex flex-col gap-4 text-left">
-          <Link className="flex" href="/">
+      <div className="flex w-full flex-col justify-between gap-8 sm:flex-row sm:gap-0">
+        <div className="order-2 flex w-full flex-col gap-4 text-left sm:order-1">
+          <Link className="mx-auto flex sm:mx-0" href="/">
             <Image
               priority
               alt="UAPoli logo"
@@ -36,10 +36,10 @@ export default function Footer() {
               src={UAPoliLogo}
             />
           </Link>
-          <p className="text-light w-36 text-primary/90">
+          <p className="sm:text-light mx-auto w-36 text-center text-primary/90 sm:mx-0 sm:text-left">
             Propelling bipartisan UAP disclosure efforts in DC.
           </p>
-          <p className="flex items-center gap-1">
+          <p className="mx-auto flex items-center gap-1 sm:mx-0">
             Powered by{' '}
             <a
               href="https://twitter.com/CreditCardOnly"
@@ -60,24 +60,20 @@ export default function Footer() {
             </a>
           </p>
         </div>
-        <div className="">
-          <ul className="flex h-full flex-col justify-between text-left text-sm">
+        <div className="order-1 flex h-full w-full flex-col justify-between gap-8 sm:order-2 sm:flex-row">
+          <ul className="flex h-full flex-col justify-between text-center text-xl sm:text-left sm:text-sm">
             <li className="">Outreach</li>
             <li className="">Explore</li>
             <li className="">How to Use</li>
             <li className="">Learn</li>
           </ul>
-        </div>
-        <div className="">
-          <ul className="flex h-full flex-col justify-between text-left text-sm">
+          <ul className="flex h-full flex-col justify-between text-center text-xl sm:text-left sm:text-sm">
             <li className="">Politicians</li>
             <li className="">Statements</li>
             <li className="">Legislation</li>
             <li className="">Hearings</li>
           </ul>
-        </div>
-        <div className="">
-          <ul className="flex h-full flex-col justify-between text-left text-sm">
+          <ul className="flex h-full flex-col justify-between text-center text-xl sm:text-left sm:text-sm">
             <li className="">Newsroom</li>
             <li className="">Account</li>
             <li className="">About Us</li>

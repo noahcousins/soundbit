@@ -11,6 +11,6 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
-    domains: ['wljbezmnwraxpdkkobxg.supabase.co'] // Add your domain here
+    domains: ['i.scdn.co', 'wiigbntntwayaoxtkrjv.supabase.co']
   }
 };

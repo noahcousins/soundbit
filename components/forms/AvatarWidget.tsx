@@ -29,8 +29,11 @@ export default function Avatar({
       try {
         const { data, error } = await supabase.storage
           .from('avatars')
-          .download(path);
+          .download(`${path}`);
+
+        console.log(data, 'plkekekek');
         if (error) {
+          console.log(error, 'eorororororo');
           throw error;
         }
 
@@ -86,7 +89,7 @@ export default function Avatar({
         <Image
           width={size}
           height={size}
-          src={avatarUrl}
+          src={url}
           alt="Avatar"
           className="avatar image"
           style={{ height: size, width: size }}

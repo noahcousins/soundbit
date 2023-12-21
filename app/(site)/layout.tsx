@@ -3,6 +3,7 @@ import Navigation from '@/components/layout/Navigation';
 import Sidebar from '@/components/layout/Sidebar';
 
 import { Toaster } from '@/components/ui/toaster';
+import Footer from '@/components/layout/Footer';
 
 export const metadata = {
   title: 'UAPoli',
@@ -16,7 +17,7 @@ export default function SiteLayout({
 }) {
   return (
     <div className="flex w-full flex-col">
-      <Navigation /> <div className="flex w-full">{children}</div>
+      <Navigation /> <div className="flex w-full">{children}</div> <Footer />
     </div>
   );
 }

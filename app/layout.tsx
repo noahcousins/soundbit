@@ -6,6 +6,9 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { GeistSans } from 'geist/font';
 
+import { WaveSurferProvider } from '@/context/WavesurferContent';
+import { SoundPlayerProvider } from '@/context/SoundPlayerContext';
+
 export const metadata = {
   title: 'UAPoli',
   description:
@@ -23,15 +26,18 @@ export default function RootLayout({
         className={`select-none bg-background focus-visible:ring-transparent dark:bg-[#010101]`}
       >
         <main className="mx-auto flex min-h-screen max-w-[1280px] flex-col items-center">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="flex w-full">{children}</div>
-            <Footer />
-          </ThemeProvider>
+          <SoundPlayerProvider>
+            <WaveSurferProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <div className="flex w-full">{children}</div>
+              </ThemeProvider>
+            </WaveSurferProvider>
+          </SoundPlayerProvider>
         </main>
         <Toaster />
       </body>

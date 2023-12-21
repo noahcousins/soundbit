@@ -85,7 +85,7 @@ const GridSection = () => {
         </h2>
       </div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
-        {components.map((item: any, index: any) => {
+        {components.map((item: any, index: number) => {
           return (
             <motion.div
               key={index}

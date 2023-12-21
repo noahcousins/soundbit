@@ -241,7 +241,7 @@ export default function Pricing({
                   </p>
                   {benefits.length > 0 && (
                     <ul className="mt-2 flex flex-col gap-2 text-zinc-300">
-                      {benefits.map((benefit: any, index: any) => (
+                      {benefits.map((benefit: any, index: number) => (
                         <li
                           className="flex items-center gap-2 text-sm"
                           key={index}

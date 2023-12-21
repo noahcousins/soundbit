@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ChevronRight } from "lucide-react";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 export default function Breadcrumbs({ items }: { items: any }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -19,9 +19,9 @@ export default function Breadcrumbs({ items }: { items: any }) {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -61,14 +61,14 @@ export default function Breadcrumbs({ items }: { items: any }) {
             </li>
           );
         })
-        .reduce((prev: any, curr: any, index: any, array: any) => {
+        .reduce((prev: any, curr: any, index: number, array: any) => {
           if (index === array.length - 1) {
             return [...prev, curr];
           } else {
             return [
               ...prev,
               curr,
-              <ChevronRight size={16} className="text-primary" key={index} />,
+              <ChevronRight size={16} className="text-primary" key={index} />
             ];
           }
         }, [])}

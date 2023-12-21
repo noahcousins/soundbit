@@ -22,10 +22,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { ScrollArea } from '../ui/scroll-area';
 
 const profileSchema = z.object({
-  handle: z.string().min(1, 'handle is required'),
-  artist_bio: z.string().min(1, 'bio is required').optional(),
-  artist_name: z.string().min(1, 'Full Name is required'),
-  avatar_url: z.string().url({ message: 'Invalid URL format' }).optional(),
   facebook: z.string().url({ message: 'Invalid URL format' }).optional(),
   instagram: z.string().url({ message: 'Invalid URL format' }).optional(),
   twitter: z.string().url({ message: 'Invalid URL format' }).optional(),
@@ -57,10 +53,6 @@ export default function AccountForm({
     try {
       setLoading(true);
       if (initialFormData) {
-        form.setValue('handle', initialFormData.handle);
-        form.setValue('artist_bio', initialFormData.artist_bio);
-        form.setValue('artist_name', initialFormData.artist_name);
-        form.setValue('avatar_url', initialFormData.avatar_url);
         form.setValue('facebook', initialFormData.facebook);
         form.setValue('instagram', initialFormData.instagram);
         form.setValue('twitter', initialFormData.twitter);
@@ -83,11 +75,6 @@ export default function AccountForm({
 
       const { error } = await supabase.from('sites').upsert([
         {
-          user_id: user?.id,
-          artist_name: formData.artist_name,
-          handle: formData.handle,
-          artist_bio: formData.artist_bio,
-          avatar_url: form.watch('avatar_url'), // Retain the existing avatar_url
           updated_at: new Date().toISOString(),
           facebook: formData.facebook,
           instagram: formData.instagram,
@@ -121,80 +108,6 @@ export default function AccountForm({
       <form onSubmit={handleSubmit}>
         {/* <ScrollArea className="h-[500px] w-[350px] rounded-md border p-4"> */}
         <div className="flex flex-col gap-4">
-          <Avatar
-            uid={user.id}
-            url={form.watch('avatar_url')}
-            size={150}
-            onUpload={(url: string) => {
-              form.setValue('avatar_url', url);
-              updateProfile({
-                artist_name: form.getValues('artist_name'),
-                handle: form.getValues('handle'),
-                artist_bio: form.getValues('artist_bio'),
-                avatar_url: url,
-                facebook: form.getValues('facebook'),
-                instagram: form.getValues('instagram'),
-                twitter: form.getValues('twitter'),
-                wikipedia: form.getValues('wikipedia')
-              });
-            }}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <div>
-                <label htmlFor="email">Email</label>
-                <Input
-                  id="email"
-                  disabled
-                  placeholder={`${session?.user.email}`}
-                />
-                <FormMessage placeholder={field.name} />
-              </div>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="artist_name"
-            render={({ field }) => (
-              <div>
-                <label htmlFor="fullName">Full Name</label>
-                <Input
-                  id="fullName"
-                  placeholder="Enter your full name"
-                  {...field}
-                />
-                <FormMessage placeholder={field.name} />
-              </div>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="handle"
-            render={({ field }) => (
-              <div>
-                <label htmlFor="handle">handle</label>
-                <Input id="handle" placeholder="Enter your handle" {...field} />
-                <FormMessage placeholder={field.name} />
-              </div>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="artist_bio"
-            render={({ field }) => (
-              <div>
-                <label htmlFor="artist_bio">artist_bio</label>
-                <Input
-                  id="artist_bio"
-                  placeholder="Enter your artist_bio URL"
-                  {...field}
-                />
-                <FormMessage placeholder={field.name} />
-              </div>
-            )}
-          />
           <FormField
             control={form.control}
             name="facebook"
@@ -271,11 +184,10 @@ export default function AccountForm({
               type="submit"
               className="mr-0 w-1/3"
             >
-              Update Profile
+              Update Links
             </Button>
           </div>
         </div>
-        {/* </ScrollArea> */}
       </form>
     </Form>
   );
