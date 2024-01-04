@@ -76,64 +76,55 @@ const GridSection = () => {
   }
 
   return (
-    <>
-      <div className="flex flex-col items-center text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl lg:text-6xl">
-          <span className="">Closest thing</span>
-          <br />
-          <span className="text-purple-600">to a SCIF</span>.
-        </h2>
-      </div>
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
-        {components.map((item: any, index: number) => {
-          return (
+    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+      {components.map((item: any, index: number) => {
+        return (
+          <motion.div
+            key={index}
+            onMouseMove={handleMouseMove}
+            className="group relative isolate flex flex-1 flex-col rounded-xl shadow"
+          >
             <motion.div
-              key={index}
-              onMouseMove={handleMouseMove}
-              className="group relative isolate flex flex-1 flex-col rounded-xl shadow"
-            >
-              <motion.div
-                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
-                style={{
-                  background: useMotionTemplate`
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+              style={{
+                background: useMotionTemplate`
                     radial-gradient(
                       650px circle at ${mouseX}px ${mouseY}px,
-                      rgba(147, 51, 234, .14),
+                      rgba(255, 46, 1, .14),
                       transparent 80%
                     )
                   `
-                }}
-              />
-              <div
-                key={index}
-                className={`background-gradient before:rounded-[13px]before:lg:block group relative isolate flex flex-1 flex-col rounded-xl shadow ring-1 ring-zinc-600/50 transition-all duration-100 ease-in-out before:absolute before:-inset-[2px] before:z-[-1] before:hidden before:h-[calc(100%+4px)] before:w-[calc(100%+4px)] hover:ring-purple-600/100`}
-              >
-                <div className="flex flex-1 flex-col divide-y  overflow-hidden rounded-xl  transition-[background-opacity] ">
-                  <div className="flex flex-1 flex-col gap-x-8 gap-y-4 rounded-xl px-4 py-5 dark:bg-zinc-900/50 sm:p-6">
-                    <Link href={item.href}>
-                      <div className="absolute inset-0"></div>
-                    </Link>
-                    <div className="flex items-center gap-2">
-                      <item.icon
-                        className="h-4 w-4 text-purple-600"
-                        aria-hidden="true"
-                      />
+              }}
+            />
+            <div
+              key={index}
+              className={`background-gradient before:rounded-[13px]before:lg:block group relative isolate flex flex-1 flex-col rounded-xl shadow ring-1 ring-zinc-600/50 transition-all duration-100 ease-in-out before:absolute before:-inset-[2px] before:z-[-1] before:hidden before:h-[calc(100%+4px)] before:w-[calc(100%+4px)] hover:ring-[#FF2E01]/100`}
+            >
+              <div className="flex flex-1 flex-col divide-y  overflow-hidden rounded-xl  transition-[background-opacity] ">
+                <div className="flex flex-1 flex-col gap-x-8 gap-y-4 rounded-xl px-4 py-5 dark:bg-zinc-900/50 sm:p-6">
+                  <Link href={item.href}>
+                    <div className="absolute inset-0"></div>
+                  </Link>
+                  <div className="flex items-center gap-2">
+                    <item.icon
+                      className="h-4 w-4 text-[#FF2E01]"
+                      aria-hidden="true"
+                    />
 
-                      <p className="truncate text-base font-bold text-gray-900 dark:text-white">
-                        {item.title}
-                      </p>
-                    </div>
-                    <p className="mt-1 text-[15px] text-gray-500 dark:text-gray-400">
-                      {item.description}
+                    <p className="truncate text-base font-bold text-gray-900 dark:text-white">
+                      {item.title}
                     </p>
                   </div>
+                  <p className="mt-1 text-[15px] text-gray-500 dark:text-gray-400">
+                    {item.description}
+                  </p>
                 </div>
               </div>
-            </motion.div>
-          );
-        })}
-      </div>
-    </>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
   );
 };
 

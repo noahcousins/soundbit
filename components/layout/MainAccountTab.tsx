@@ -20,10 +20,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { createBrowserClient } from '@supabase/ssr';
 import {
-  Cloud,
-  CreditCard,
+  LayoutTemplate,
   Shield,
-  Keyboard,
+  Settings2,
   LifeBuoy,
   LogOut,
   Mail,
@@ -42,10 +41,12 @@ import React, { useState, useEffect } from 'react';
 export default function MainAccountTab({
   sessionUser,
   profile,
+  siteData,
   userRole
 }: {
   sessionUser: any;
   profile: any;
+  siteData: any;
   userRole: any;
 }) {
   const fallbackInitials =
@@ -114,26 +115,21 @@ export default function MainAccountTab({
               </Avatar>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="z-[1000] w-56">
+          <DropdownMenuContent className="z-[1000] mr-3 w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <Link href={'/profile'}>
+              <Link href={siteData ? `/${siteData.handle}` : '/welcome'}>
                 <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
+                  <LayoutTemplate className="mr-2 h-4 w-4" />
+                  <span>My Site</span>
                   {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
                 </DropdownMenuItem>
               </Link>
-              {/* <DropdownMenuItem>
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Billing</span>
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem> */}
               <Link href={'/settings'}>
                 <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
+                  <Settings2 className="mr-2 h-4 w-4" />
+                  <span>Customize</span>
                   {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
                 </DropdownMenuItem>
               </Link>

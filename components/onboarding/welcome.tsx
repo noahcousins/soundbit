@@ -80,7 +80,7 @@ export default async function Welcome() {
     console.log('Error: No artist name found for the user.');
     return (
       <div className="">
-        <h1>What is your artist name?</h1>
+        <h1 className="font-grtsk-giga text-xl font-bold"></h1>
         <ArtistInput onSubmit={addArtistName} />
       </div>
     );
@@ -92,8 +92,7 @@ export default async function Welcome() {
   const nameData = await artistList.json();
 
   return (
-    <div className="">
-      <h1>What is your artist name?</h1>
+    <div className="flex w-full overflow-visible">
       <ArtistInput onSubmit={addArtistName} />
     </div>
   );

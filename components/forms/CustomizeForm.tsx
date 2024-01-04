@@ -22,6 +22,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { ScrollArea } from '../ui/scroll-area';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Cover from './CoverWidget';
 
 const profileSchema = z.object({
   handle: z.string().min(1, 'handle is required'),
@@ -43,6 +44,7 @@ export default function CustomizeForm({
   initialFormData: any;
   defaultMusicTabValue: any;
 }) {
+  console.log(initialFormData, 'dkdkdkkd11111');
   const form = useForm({
     resolver: zodResolver(profileSchema)
   });
@@ -85,20 +87,25 @@ export default function CustomizeForm({
     try {
       setLoading(true);
 
-      const { error } = await supabase.from('sites').upsert([
-        {
-          user_id: user?.id,
-          artist_name: formData.artist_name,
-          handle: formData.handle,
-          artist_bio: formData.artist_bio,
-          avatar_url: form.watch('avatar_url'), // Retain the existing avatar_url
-          updated_at: new Date().toISOString(),
-          facebook: formData.facebook,
-          instagram: formData.instagram,
-          twitter: formData.twitter,
-          wikipedia: formData.wikipedia
-        }
-      ]);
+      const { error } = await supabase
+        .from('sites')
+        .upsert(
+          {
+            user_id: user?.id,
+            artist_name: formData.artist_name,
+            handle: formData.handle,
+            artist_bio: formData.artist_bio,
+            avatar_url: form.watch('avatar_url'), // Retain the existing avatar_url
+            cover_url: form.watch('cover_url'), // Retain the existing avatar_url
+            // updated_at: new Date().toISOString(),
+            facebook: formData.facebook,
+            instagram: formData.instagram,
+            twitter: formData.twitter,
+            wikipedia: formData.wikipedia
+          },
+          { onConflict: 'user_id' }
+        )
+        .select();
 
       if (error) throw error;
       toast({
@@ -106,11 +113,11 @@ export default function CustomizeForm({
         description: 'Your profile has been updated.'
       });
     } catch (error) {
-      console.log('ahhhhh fahk');
+      console.log('ahhhhh fahk', error);
       toast({
         variant: 'destructive',
         title: 'Error!',
-        description: 'Error updating your profile.'
+        description: 'Error updating your profile@@@@.'
       });
     } finally {
       setLoading(false);
@@ -123,7 +130,7 @@ export default function CustomizeForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit}>
+      <form className="mx-auto flex flex-col gap-4" onSubmit={handleSubmit}>
         <Button
           onClick={() =>
             updateProfile({
@@ -137,38 +144,65 @@ export default function CustomizeForm({
             })
           }
           type="submit"
-          className="mr-0 w-1/3"
+          className="mx-auto w-fit"
         >
           Update Profile
         </Button>
-        <Tabs defaultValue="general" className="w-[400px]">
-          <TabsList>
+        <Tabs
+          defaultValue="general"
+          className="mx-auto flex w-full flex-col gap-4"
+        >
+          <TabsList className="mx-auto">
             <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="theme">Theme</TabsTrigger>
-            <TabsTrigger value="music">Music</TabsTrigger>
+            <TabsTrigger disabled value="theme">
+              Theme
+            </TabsTrigger>
+            <TabsTrigger disabled value="music">
+              Music
+            </TabsTrigger>
             <TabsTrigger value="links">Links</TabsTrigger>
           </TabsList>
           <TabsContent value="general">
-            {' '}
-            <Avatar
-              uid={user.id}
-              url={form.watch('avatar_url')}
-              size={150}
-              onUpload={(url: string) => {
-                console.log(url, 'url heheheh');
-                form.setValue('avatar_url', url);
-                updateProfile({
-                  artist_name: form.getValues('artist_name'),
-                  handle: form.getValues('handle'),
-                  artist_bio: form.getValues('artist_bio'),
-                  avatar_url: url,
-                  facebook: form.getValues('facebook'),
-                  instagram: form.getValues('instagram'),
-                  twitter: form.getValues('twitter'),
-                  wikipedia: form.getValues('wikipedia')
-                });
-              }}
-            />
+            <div className="flex flex-col items-center gap-8 md:flex-row">
+              <Avatar
+                uid={user.id}
+                url={initialFormData.avatar_url}
+                size={150}
+                onUpload={(url: string) => {
+                  form.setValue('avatar_url', url);
+                  updateProfile({
+                    artist_name: form.getValues('artist_name'),
+                    handle: form.getValues('handle'),
+                    artist_bio: form.getValues('artist_bio'),
+                    avatar_url: url,
+                    facebook: form.getValues('facebook'),
+                    instagram: form.getValues('instagram'),
+                    twitter: form.getValues('twitter'),
+                    wikipedia: form.getValues('wikipedia')
+                  });
+                }}
+              />
+
+              <Cover
+                uid={user.id}
+                url={initialFormData.cover_url}
+                size={150}
+                onUpload={(url: string) => {
+                  form.setValue('cover_url', url);
+                  updateProfile({
+                    artist_name: form.getValues('artist_name'),
+                    handle: form.getValues('handle'),
+                    artist_bio: form.getValues('artist_bio'),
+                    cover_url: url,
+                    facebook: form.getValues('facebook'),
+                    instagram: form.getValues('instagram'),
+                    twitter: form.getValues('twitter'),
+                    wikipedia: form.getValues('wikipedia')
+                  });
+                }}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="email"
@@ -231,8 +265,8 @@ export default function CustomizeForm({
             />
           </TabsContent>
           <TabsContent value="theme">
-            <Tabs defaultValue="default" className="w-[400px]">
-              <TabsList>
+            <Tabs defaultValue="default" className="flex w-[400px] flex-col">
+              <TabsList className="mx-auto">
                 <TabsTrigger value="default">Default</TabsTrigger>
                 <TabsTrigger value="modern">Modern</TabsTrigger>
                 <TabsTrigger value="underground">Underground</TabsTrigger>
@@ -247,8 +281,8 @@ export default function CustomizeForm({
             </Tabs>
           </TabsContent>
           <TabsContent value="music">
-            <Tabs defaultValue={defaultMusicTabValue} className="w-[400px]">
-              <TabsList>
+            <Tabs defaultValue="default" className="flex w-[400px] flex-col">
+              <TabsList className="mx-auto">
                 <TabsTrigger value="catalog">Catalog</TabsTrigger>
                 <TabsTrigger value="top_tracks">Top Tracks</TabsTrigger>
                 <TabsTrigger disabled value="both">
@@ -264,8 +298,7 @@ export default function CustomizeForm({
               </TabsContent>
             </Tabs>
           </TabsContent>
-          <TabsContent value="links">
-            {' '}
+          <TabsContent className="flex flex-col gap-4" value="links">
             <FormField
               control={form.control}
               name="facebook"

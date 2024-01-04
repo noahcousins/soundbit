@@ -59,7 +59,6 @@ export default async function Handle() {
 
   return (
     <div className="">
-      <h1>What is your artist handle?</h1>
       <HandleInput onSubmit={addArtistHandle} />
     </div>
   );

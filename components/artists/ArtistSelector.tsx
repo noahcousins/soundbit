@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
+import { User } from 'lucide-react';
+
 import { redirect, useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,7 +39,7 @@ const ArtistSelector = ({
   session: any;
 }) => {
   const [selectedArtistId, setSelectedArtistId] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(artistSchema)
   });
@@ -48,13 +50,17 @@ const ArtistSelector = ({
 
   const router = useRouter();
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
+    setIsLoading(true);
     const formData = new FormData();
     for (const key of Object.keys(data)) {
       formData.append(key, data[key]);
     }
 
+    // Simulate API request delay for demonstration purposes
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Replace this with your actual async action
     onSubmit(formData);
+    setIsLoading(false);
     form.reset();
   };
 
@@ -114,34 +120,54 @@ const ArtistSelector = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-8 text-center"
+      >
+        <FormLabel className="max-w-sm text-center font-grtsk-giga text-2xl font-bold">
+          Select your Spotify profile
+        </FormLabel>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {artists.map((artist: any, index: number) => {
+            const isSelected = artist.id === selectedArtistId;
+
             return (
               <FormItem
-                className="flex items-center space-x-3 space-y-0"
+                className={`flex items-center space-x-3 space-y-0 `}
                 key={index}
               >
                 <FormControl>
                   <div
-                    className="flex cursor-pointer flex-col gap-4 rounded-lg bg-primary/5 p-4 shadow-lg hover:bg-primary/10 active:bg-primary/25"
+                    className={`${
+                      isSelected ? 'bg-primary/25' : 'bg-primary/5'
+                    } flex cursor-pointer flex-col gap-4 rounded-lg p-4 shadow-lg hover:bg-primary/10 active:bg-primary/25`}
                     onClick={() => setSelectedArtistId(artist.id)}
                   >
-                    <div
-                      className="aspect-square h-[200px] w-[200px] rounded-full"
-                      style={{
-                        position: 'relative',
-                        overflow: 'hidden',
-                        height: '200px'
-                      }}
-                    >
-                      <Image
-                        src={artist.imageUrl}
-                        alt="Image"
-                        fill={true}
-                        style={{ objectFit: 'cover' }}
-                      />
-                    </div>
+                    {artist.imageUrl ? (
+                      <div
+                        className="aspect-square h-[200px] w-[200px] rounded-full"
+                        style={{
+                          position: 'relative',
+                          overflow: 'hidden',
+                          height: '200px'
+                        }}
+                      >
+                        <Image
+                          src={artist.imageUrl}
+                          alt="Image"
+                          fill={true}
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative aspect-square h-[200px] w-[200px] overflow-hidden rounded-full bg-primary/5">
+                        <User
+                          size={96}
+                          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-foreground"
+                        />
+                      </div>
+                    )}
+
                     <h3 className="line-clamp-1 text-center text-lg font-semibold">
                       {artist.name}
                     </h3>
@@ -151,30 +177,13 @@ const ArtistSelector = ({
             );
           })}
         </div>
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input
-                  className="hidden"
-                  value={selectedArtistId}
-                  placeholder="Artist's name"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <input
           type="hidden"
           value={selectedArtistId}
           {...form.register('id')} // Register the hidden input for the artist ID
         />
         <Button onClick={getBio} type="submit">
-          Select Artist
+          {isLoading ? 'Loading...' : 'Select Artist'}
         </Button>
       </form>
     </Form>

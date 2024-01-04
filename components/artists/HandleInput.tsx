@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { redirect, useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -24,18 +24,24 @@ const handleSchema = z.object({
 });
 
 function HandleInput({ onSubmit }: { onSubmit: Function }) {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(handleSchema)
   });
 
   const router = useRouter();
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
+    setIsLoading(true);
     const formData = new FormData();
     for (const key of Object.keys(data)) {
       formData.append(key, data[key]);
     }
+
+    // Simulate API request delay for demonstration purposes
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Replace this with your actual async action
     onSubmit(formData);
+    setIsLoading(false);
     form.reset();
   };
 
@@ -47,7 +53,9 @@ function HandleInput({ onSubmit }: { onSubmit: Function }) {
           name="handle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Handle</FormLabel>
+              <FormLabel className="font-grtsk-giga text-2xl font-bold">
+                Pick your artist handle
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Your site handle" {...field} />
               </FormControl>
@@ -56,7 +64,7 @@ function HandleInput({ onSubmit }: { onSubmit: Function }) {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit"> {isLoading ? 'Loading...' : 'Submit'}</Button>
       </form>
     </Form>
   );

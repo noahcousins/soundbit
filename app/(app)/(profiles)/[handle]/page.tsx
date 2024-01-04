@@ -1,34 +1,20 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { getSession } from '@/app/supabase-server';
-import { Session } from '@supabase/supabase-js';
 import {
   searchArtistAlbums,
   searchArtistById,
   searchArtistTopTracks
 } from '@/lib/spotify';
-import Image from 'next/image';
 
 import { Separator } from '@/components/ui/separator';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog';
-
-import { Button } from '@/components/ui/button';
-import TestButton from '@/components/artists/TestButton';
 import TopTrackCard from '@/components/tracks/TopTrackCard';
 import ArtistDetails from '@/components/artists/ArtistDetails';
 import AlbumCard from '@/components/tracks/AlbumCard';
 import SingleCard from '@/components/tracks/SingleCard';
 import CardGrid from '@/components/artists/CardGrid';
-import AccountForm from '@/components/forms/AccountForm';
+import Link from 'next/link';
 
 export const revalidate = 0;
 
@@ -131,24 +117,28 @@ export default async function Profile({ params }: { params: any }) {
           </CardGrid>
         )}
 
-        <Separator className="" />
-
         {artistAlbumsData && (
-          <CardGrid title="Albums">
-            {artistAlbumsData.items.map((album: any, index: number) => (
-              <AlbumCard key={album.id} album={album} />
-            ))}
-          </CardGrid>
+          <>
+            <Separator className="" />
+
+            <CardGrid title="Albums">
+              {artistAlbumsData.items.map((album: any, index: number) => (
+                <AlbumCard key={album.id} album={album} />
+              ))}
+            </CardGrid>
+          </>
         )}
 
-        <Separator className="" />
-
         {artistSinglesData && (
-          <CardGrid title="Albums">
-            {artistSinglesData.items.map((single: any, index: number) => (
-              <SingleCard key={single.id} single={single} />
-            ))}
-          </CardGrid>
+          <>
+            <Separator className="" />
+
+            <CardGrid title="Albums">
+              {artistSinglesData.items.map((single: any, index: number) => (
+                <SingleCard key={single.id} single={single} />
+              ))}
+            </CardGrid>
+          </>
         )}
       </div>
       {artistData && (
@@ -156,9 +146,12 @@ export default async function Profile({ params }: { params: any }) {
           <p className="mx-auto text-sm uppercase">
             {artistData.name} © ALL RIGHTS RESERVED
           </p>
-          <p className="text-xs">
-            made with <span className="font-bold">soundbit</span>
-          </p>
+          <Link href="/">
+            <p className="text-xs">
+              made with
+              <span className="pl-1 font-grtsk-giga font-bold">soundbit</span>
+            </p>
+          </Link>
         </div>
       )}
     </main>

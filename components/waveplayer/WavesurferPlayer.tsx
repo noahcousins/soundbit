@@ -1,142 +1,78 @@
-'use client';
-
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import WaveSurfer from 'wavesurfer.js';
+import { useWaveSurfer } from '@/context/WaveSurferContext'; // Update the path based on your project structure
 
 export default function WavePlayer({
   url,
-  paused,
-  filename = '',
-  barHeight = 1,
-  onLoad,
-  onFinish,
-  onCreate,
-  onPlay,
-  media,
-  onReady,
-  resetOnPause = false,
-  waveColor = '#737373',
-  progressColor = '#fafafa',
-  autoplay = false
+  paused
 }: {
   url: string;
   paused: any;
-  filename: any;
-  barHeight: number;
-  onLoad: any;
-  onFinish: any;
-  onPlay: any;
-  onCreate: any;
-  onReady: any;
-  media: any;
-  resetOnPause: boolean;
-  waveColor: string;
-  progressColor: string;
-  autoplay: boolean;
 }) {
-  const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const wavesurferRef = useRef<null | WaveSurfer>(null);
+  const wavesurferRef = useRef<WaveSurfer | null>(null);
+  const { activeWaveSurfer, setWaveSurfer } = useWaveSurfer();
 
-  const id =
-    url.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '') +
-    filename
-      .replace(/\s/g, '')
-      .replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '')
-      .replaceAll('.', '');
+  const id = url.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
+
+  const getPlayerParams = () => {
+    if (!wavesurferRef.current) return null;
+
+    return {
+      media: wavesurferRef.current.getMediaElement(),
+      peaks: wavesurferRef.current.exportPeaks()
+    };
+  };
 
   useEffect(() => {
-    if (wavesurferRef.current) {
-      wavesurferRef.current.destroy();
-    }
-    if (!url) return;
-
-    let height = 54 * barHeight;
-    if (window.screen.width < 800) {
-      height = 30 * barHeight;
-    }
-
-    async function loadWavesurfer() {
-      setLoading(true);
-      const WaveSurfer = (await import('wavesurfer.js')).default;
-      //Below if statement fixes double wave render issue
+    async function loadWaveSurfer() {
       if (url && !wavesurferRef.current) {
-        wavesurferRef.current = WaveSurfer.create({
-          container: '#' + id,
-          normalize: true,
-          hideScrollbar: true,
-          barGap: 2,
-          barHeight: 3,
-          barWidth: 4,
-          height,
-          cursorWidth: 0,
-          waveColor: '#8C43FF',
-          progressColor: '#ffffff',
-          barRadius: 8
-        });
-        if (onCreate) onCreate(wavesurferRef.current);
-        wavesurferRef.current.load(url);
-        wavesurferRef.current.on('ready', () => {
-          setLoading(false);
-          if (autoplay) wavesurferRef.current?.play();
-          onLoad({ duration: wavesurferRef.current?.getDuration() });
-        });
-        wavesurferRef.current.on('finish', () => {
-          if (onFinish) onFinish();
-        });
+        const WaveSurfer = (await import('wavesurfer.js')).default;
+        if (url && !wavesurferRef.current) {
+          wavesurferRef.current = WaveSurfer.create({
+            container: `#${id}`,
+            normalize: true,
+            hideScrollbar: true,
+            barGap: 0,
+            height: 24,
+            barHeight: 3,
+            barWidth: 0,
+            cursorWidth: 0,
+            waveColor: '#FF2E01',
+            progressColor: '#ffffff',
+            barRadius: 1
+          });
+
+          wavesurferRef.current.load(url);
+        }
       }
     }
 
-    loadWavesurfer();
+    loadWaveSurfer();
 
-    if (wavesurferRef.current) {
-      const getPlayerParams = () => ({
-        media: wavesurferRef.current?.getMediaElement(),
-        peaks: wavesurferRef.current?.exportPeaks()
-      });
-
-      const subscriptions = [
-        wavesurferRef.current.on('ready', () => {
-          if (onReady) onReady(getPlayerParams());
-          setIsPlaying(!!wavesurferRef.current?.isPlaying());
-        }),
-        wavesurferRef.current.on('play', () => {
-          if (onPlay) {
-            onPlay((prev: any) => {
-              const newParams = getPlayerParams();
-              if (!prev || prev.media !== newParams.media) {
-                if (prev) {
-                  prev.media.pause();
-                  prev.media.currentTime = 0;
-                }
-                return newParams;
-              }
-              return prev;
-            });
-          }
-          setIsPlaying(true);
-        }),
-        wavesurferRef.current.on('pause', () => setIsPlaying(false))
-      ];
-
-      return () => {
-        subscriptions.forEach((unsub) => unsub());
-      };
-    }
-  }, [url, barHeight, waveColor, progressColor, onReady, onPlay]);
+    return () => {
+      if (wavesurferRef.current) {
+        wavesurferRef.current.destroy();
+        wavesurferRef.current = null;
+      }
+    };
+  }, [url]);
 
   useEffect(() => {
     if (!wavesurferRef.current) return;
+
     if (paused) {
-      if (resetOnPause) {
-        wavesurferRef.current.stop();
-      } else {
-        wavesurferRef.current.pause();
-      }
+      wavesurferRef.current.pause();
     } else {
+      if (activeWaveSurfer && activeWaveSurfer !== wavesurferRef.current) {
+        activeWaveSurfer.stop();
+      }
       wavesurferRef.current.play();
+      setWaveSurfer(wavesurferRef.current);
+      // Accessing media and peaks here:
+      const newParams = getPlayerParams();
+      console.log(newParams, 'medisiaiaiai'); // Use these values as needed
     }
-  }, [paused, resetOnPause]);
+  }, [paused]);
 
   return (
     <div className="relative h-full w-full">

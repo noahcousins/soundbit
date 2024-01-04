@@ -3,38 +3,31 @@
 import Paywall from '@/components/layout/Paywall';
 
 import PlayerSheet from '@/components/audio/PlayerSheet';
-import { PlayerProvider, usePlayer } from '@/context/PlayerContext';
+import { WaveSurferProvider } from '@/context/WaveSurferContext';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <PlayerProvider>
-      <div className="flex w-full">
-        {/* <Sidebar /> */}
-        {/* <div className="flex w-full flex-col lg:w-5/6"> */}
+    <WaveSurferProvider>
+      <div className="flex w-full bg-[#0d0d0d] tracking-tighter">
         <div className="flex w-full flex-col">
-          <PlayerContainer />
-
+          {/* <PlayerContainer /> */}
           <div className="relative flex w-full px-4 py-8 lg:px-8">
-            {/* Use the Paywall component */}
-            {/* {!isUserLoggedIn && <Paywall />} */}
-            {/* Render the content */}
             {children}
           </div>
         </div>
       </div>
-    </PlayerProvider>
+    </WaveSurferProvider>
   );
 }
 
-function PlayerContainer() {
-  const { isOpen, setIsOpen, track } = usePlayer();
+// function PlayerContainer() {
 
-  return (
-    <PlayerSheet
-      open={isOpen}
-      setIsOpen={setIsOpen}
-      onClose={() => setIsOpen(false)}
-      track={track}
-    />
-  );
-}
+//   return (
+//     <PlayerSheet
+//       open={isOpen}
+//       setIsOpen={setIsOpen}
+//       onClose={() => setIsOpen(false)}
+//       track={track}
+//     />
+//   );
+// }

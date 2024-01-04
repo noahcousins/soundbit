@@ -17,14 +17,15 @@ export default function AuthButtons() {
   );
   return (
     <div className="flex-col gap-4 md:flex">
-      <div className="flex gap-4 whitespace-nowrap">
-        <Link href="/log-in" className={buttonVariants({ variant: 'outline' })}>
+      <div className="flex items-center gap-4 whitespace-nowrap">
+        <Link className="text-sm hover:underline" href="/log-in">
           Log in
         </Link>
-        <Button asChild>
-          <Link className="hidden whitespace-nowrap md:block" href="/sign-up">
-            Sign up
-          </Link>
+        <Button
+          className="z-[999] mx-auto w-fit scale-100 rounded-full bg-[#FF2E01] p-4 text-sm font-normal text-white transition-transform duration-200 ease-in-out hover:scale-105 hover:bg-[#e00000] active:scale-100 active:bg-[#FF2E01]"
+          asChild
+        >
+          <Link href="/sign-up">Sign up</Link>
         </Button>
       </div>
     </div>

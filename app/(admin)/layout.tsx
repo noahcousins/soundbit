@@ -9,11 +9,6 @@ import { redirect } from 'next/navigation';
 
 // Import useRouter
 
-export const metadata = {
-  title: 'UAPoli',
-  description: 'The most comprehensive resource for UAP politics'
-};
-
 export default async function AdminLayout({ children }: { children: any }) {
   const cookieStore = cookies();
 

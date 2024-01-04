@@ -24,29 +24,29 @@ export default function Avatar({
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    async function downloadImage(path: string) {
-      try {
-        const { data, error } = await supabase.storage
-          .from('avatars')
-          .download(`${path}`);
+  // useEffect(() => {
+  //   async function downloadImage(path: string) {
+  //     try {
+  //       const { data, error } = await supabase.storage
+  //         .from('avatars')
+  //         .download(`${path}`);
 
-        console.log(data, 'plkekekek');
-        if (error) {
-          console.log(error, 'eorororororo');
-          throw error;
-        }
+  //       console.log(data, 'plkekekek');
+  //       if (error) {
+  //         console.log(error, 'eorororororo');
+  //         throw error;
+  //       }
 
-        const url = URL.createObjectURL(data);
-        console.log(url, 'url here');
-        setAvatarUrl(url);
-      } catch (error) {
-        console.log('Error downloading image: ', error);
-      }
-    }
+  //       const url = URL.createObjectURL(data);
+  //       console.log(url, 'url here');
+  //       setAvatarUrl(url);
+  //     } catch (error) {
+  //       console.log('Error downloading image: ', error);
+  //     }
+  //   }
 
-    if (url) downloadImage(url);
-  }, [url, supabase]);
+  //   if (url) downloadImage(url);
+  // }, [url, supabase]);
 
   const openFileInput = () => {
     if (fileInputRef.current) {
@@ -61,10 +61,11 @@ export default function Avatar({
       if (!event.target.files || event.target.files.length === 0) {
         throw new Error('You must select an image to upload.');
       }
+      const timestamp = new Date().toISOString();
 
       const file = event.target.files[0];
       const fileExt = file.name.split('.').pop();
-      const filePath = `${uid}-${Math.random()}.${fileExt}`;
+      const filePath = `${uid}-${timestamp}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('avatars')
@@ -83,31 +84,33 @@ export default function Avatar({
     }
   };
 
+  console.log(url, 'lord help me');
+
   return (
-    <div className="mx-auto flex flex-col gap-4">
-      {avatarUrl ? (
+    <div className="flex flex-col gap-4 text-center">
+      {url ? (
         <Image
           width={size}
+          onClick={openFileInput}
           height={size}
-          src={url}
+          src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${url}`}
           alt="Avatar"
-          className="avatar image"
+          className="avatar image mx-auto cursor-pointer rounded-full"
           style={{ height: size, width: size }}
         />
       ) : (
         <div
-          className="avatar no-image"
+          className="avatar no-image mx-auto rounded-full bg-white/5"
           style={{ height: size, width: size }}
         />
       )}
       <div className="mx-auto flex w-full" style={{ width: size }}>
-        <Button
+        {/* <Button
           className="mx-auto"
           variant={'secondary'}
-          onClick={openFileInput}
         >
           {uploading ? 'Uploading ...' : 'Upload'}
-        </Button>
+        </Button> */}
         <input
           ref={fileInputRef}
           style={{

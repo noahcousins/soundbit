@@ -1,10 +1,12 @@
 'use client';
 
+import { motion } from 'framer-motion';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { FaPlay, FaPause } from 'react-icons/fa';
-import { usePlayer } from '@/context/PlayerContext';
+import { useWaveSurfer } from '@/context/WaveSurferContext';
 
 import {
   Tooltip,
@@ -15,7 +17,7 @@ import {
 
 import { Disc3 } from 'lucide-react'; // Update the path accordingly
 
-import { SetStateAction, useEffect, useState } from 'react';
+import { useState } from 'react';
 import WavePlayer from '../waveplayer/WavesurferPlayer';
 
 export default function TopTrackCard({
@@ -26,84 +28,53 @@ export default function TopTrackCard({
   index: number;
 }) {
   const [paused, setPaused] = useState(true);
-  const [player, setPlayer] = useState<any>(null);
-  const [playingTrack, setPlayingTrack] = useState<any>(null);
+  const { activePlayer, setPlayer } = useWaveSurfer();
 
-  const [playEnabled, setPlayEnabled] = useState(false);
-
-  console.log(track, 'djdjdjj');
-
-  const { setTrack, setIsOpen, setCurrentPlayer } = usePlayer();
-
-  const [playing, setPlaying] = useState(false);
-  const [audio, setAudio] = useState(null);
-
-  const hasPreview = track.url !== null;
-
-  const togglePlayPause = () => {
-    // Check if audio is initialized
-    if (!audio) {
-      console.error('Audio not initialized');
-      return;
-    }
-
-    if (playing) {
-      audio.pause();
-      setPlayingTrack(null);
-    } else {
-      audio.play();
-    }
-    setPlaying(!playing);
-  };
-
-  function playPreview() {
+  const playPreview = () => {
     if (paused) {
       setPaused(false);
-      // if (currentPlayer && !currentPlayer.isDestroyed && player) {
-      //   if (
-      //     currentPlayer.isPlaying() &&
-      //     player.container.id !== currentPlayer.container.id
-      //   ) {
-      //     currentPlayer.seekTo(0.9999);
-      //   }
-      // }
-      setCurrentPlayer(player);
-      setIsOpen(true);
-      setTrack({
-        name: track.name,
-        preview_url: track.preview_url,
-        artist: track.artists[0].name,
-        image: track.album.images[0].url,
-        productLink: 'linkypoo'
-      });
+      setPlayer(track.preview_url);
     } else {
       setPaused(true);
+      setPlayer(null);
     }
-  }
+  };
+
+  const wavePlayerVariants = {
+    hidden: {
+      y: '100%',
+      opacity: 1
+    },
+    visible: {
+      y: '0%',
+      opacity: 1,
+      transition: {
+        type: 'tween',
+        stiffness: 150,
+        damping: 20
+      }
+    }
+  };
 
   return (
     <div className="group flex w-full flex-col gap-4 text-left">
-      {/* <Link
-        className="relative flex"
-        target="_blank"
-        href={track.external_urls.spotify}
-      > */}
-      <div className="relative flex">
+      <div className="relative flex overflow-hidden">
         <Image
           alt={track.name}
           height={200}
-          className="image-no-drag w-full rounded-sm transition-transform duration-100 ease-in-out group-hover:scale-105"
+          className="image-no-drag w-full overflow-hidden rounded-sm transition-transform duration-100 ease-in-out group-hover:scale-105"
           width={200}
           src={track.album.images[0].url}
         />
-
         <button
           onClick={playPreview}
-          className={`absolute inset-1/2 h-1/3 w-1/3 translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-white shadow-lg transition-transform duration-100 ease-in-out hover:scale-105 hover:bg-gray-300 ${
-            playing || !paused ? 'flex' : 'hidden group-hover:flex' // Update this line
+          className={`absolute inset-1/2 z-10 h-1/3 w-1/3 translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-white shadow-lg transition-transform duration-100 ease-in-out hover:scale-105 hover:bg-gray-300 ${
+            activePlayer === track.preview_url
+              ? 'flex'
+              : 'hidden group-hover:flex'
           }`}
         >
-          {playing || !paused ? ( // Update this line
+          {activePlayer === track.preview_url ? (
             <FaPause
               size={16}
               className="ml-1 h-[12px] w-[12px] text-background sm:h-[45%] sm:w-[45%]"
@@ -115,9 +86,15 @@ export default function TopTrackCard({
             />
           )}
         </button>
+        <motion.div
+          className="absolute bottom-0 z-0 w-full -translate-x-1/2 bg-black/80 p-1 backdrop-blur-lg"
+          initial="hidden"
+          animate={activePlayer === track.preview_url ? 'visible' : 'hidden'}
+          variants={wavePlayerVariants}
+        >
+          <WavePlayer paused={paused} url={track.preview_url} />
+        </motion.div>
       </div>
-      {/* </Link> */}
-
       <div className="flex flex-col gap-1">
         <Link target="_blank" href={track.external_urls.spotify}>
           <TooltipProvider>
@@ -137,24 +114,6 @@ export default function TopTrackCard({
             <span className="line-clamp-1">{track.album.name}</span>
           </p>
         </Link>
-      </div>
-      <div className="h-full w-full items-center">
-        <WavePlayer
-          autoplay={false}
-          paused={paused}
-          url={track.preview_url}
-          filename={track.name}
-          barHeight={0.5}
-          media="null"
-          onFinish={() => setPaused(true)}
-          onLoad={() => setPlayEnabled(true)}
-          onCreate={(p: SetStateAction<null>) => setPlayer(p)}
-          resetOnPause
-          onPlay={setCurrentPlayer}
-          onReady={index === 0 ? setCurrentPlayer : undefined}
-          waveColor="#ffffff80"
-          progressColor="#ffffff"
-        />
       </div>
     </div>
   );

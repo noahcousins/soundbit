@@ -87,7 +87,6 @@ export default async function Next() {
         console.error('Error adding artist id:', error);
       } else {
         console.log('Artist id added');
-
         redirect('/handle');
       }
     }
@@ -95,7 +94,7 @@ export default async function Next() {
 
   return (
     <div className="">
-      <h1>Select your Spotify profile</h1>
+      {/* <h1>Select your Spotify profile</h1> */}
       <ArtistSelector
         session={session}
         onSubmit={addArtistId}

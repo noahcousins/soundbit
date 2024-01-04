@@ -72,12 +72,12 @@ async function getBio(req: NextRequest, res: NextApiResponse) {
     // Upload avatar with a unique file name
     await supabase.storage
       .from('avatars')
-      .upload(`public/${userId}_${timestamp}.jpg`, blob1);
+      .upload(`${userId}_${timestamp}.jpg`, blob1);
 
     // Upload cover with a unique file name
     await supabase.storage
       .from('covers')
-      .upload(`public/${userId}_${timestamp}.jpg`, blob2);
+      .upload(`${userId}_${timestamp}.jpg`, blob2);
 
     const { data: avatarData } = supabase.storage
       .from('avatars')
@@ -90,7 +90,12 @@ async function getBio(req: NextRequest, res: NextApiResponse) {
     const reformatUrl = function (url: string) {
       const parts = url.split('/');
       parts.splice(parts.length - 1, 0, 'public');
-      return parts.join('/');
+
+      const fullPath = parts.join('/');
+      const pathSegments = fullPath.split('/');
+      const path = pathSegments[pathSegments.length - 1];
+
+      return path;
     };
 
     const avatarNewUrl = avatarData.publicUrl;

@@ -29,12 +29,6 @@ import { Label } from '@/components/ui/label';
 import { UUID } from 'crypto';
 import HorizontalGallery from '@/components/sections/HorizontalGallery';
 
-export const metadata = {
-  title: 'My Account | UAPoli',
-  description:
-    'A bipartisan congressional outreach platform advocating for UAP disclosure.'
-};
-
 export default async function Profile() {
   const [session, userDetails, subscription] = await Promise.all([
     getSession(),

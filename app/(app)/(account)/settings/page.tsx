@@ -26,17 +26,9 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SmallStatementCard from '@/components/statements/SmallStatementCard';
 import { UUID } from 'crypto';
 import HorizontalGallery from '@/components/sections/HorizontalGallery';
-import LegislationCard from '@/components/legislation/SmallLegislationCard';
 import ModeToggle from '@/components/ModeToggle';
-
-export const metadata = {
-  title: 'My Account | UAPoli',
-  description:
-    'A bipartisan congressional outreach platform advocating for UAP disclosure.'
-};
 
 export default async function Settings() {
   const [session, userDetails, subscription] = await Promise.all([
