@@ -46,14 +46,14 @@ export default async function Next() {
   const artistList = await searchSpotifyByArtist(userArtistName, 3, 0);
   const nameData = await artistList.json();
 
-  const artists = nameData.artists.items.map(
+  const artists = nameData?.artists?.items.map(
     (artist: { name: any; images: { url: any }[]; id: any }) => ({
       name: artist.name,
       imageUrl: artist.images[0]?.url,
       id: artist.id
     })
   );
-  const names = nameData.artists.items.map((item: any) => item.name);
+  const names = nameData?.artists?.items?.map((item: any) => item.name);
 
   const addArtistId = async (formData: FormData, session: Session) => {
     'use server';

@@ -111,7 +111,7 @@ export default async function Profile({ params }: { params: any }) {
       <div className="mx-auto flex w-full flex-col gap-4 md:w-[736px]">
         {artistTopTracksData && (
           <CardGrid title="Top Tracks">
-            {artistTopTracksData.tracks.map((track: any, index: number) => {
+            {artistTopTracksData?.tracks?.map((track: any, index: number) => {
               return <TopTrackCard track={track} key={index} index={index} />;
             })}
           </CardGrid>
@@ -122,7 +122,7 @@ export default async function Profile({ params }: { params: any }) {
             <Separator className="" />
 
             <CardGrid title="Albums">
-              {artistAlbumsData.items.map((album: any, index: number) => (
+              {artistAlbumsData?.items?.map((album: any, index: number) => (
                 <AlbumCard key={album.id} album={album} />
               ))}
             </CardGrid>
