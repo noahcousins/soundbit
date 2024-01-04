@@ -1,12 +1,5 @@
 'use client';
 
-import ModeToggle from '@/components/ModeToggle';
-import NavLink from '@/components/layout/NavLink';
-import SidebarAuthButtons from '@/components/layout/SidebarAuthButtons';
-import SignOutButton from '@/components/layout/SignOutButton';
-import SidebarContent from '@/components/layout/sidebar/SidebarContent';
-import { buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import {
   Sheet,
   SheetContent,
@@ -15,21 +8,8 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
-import {
-  Users2,
-  ScrollText,
-  Compass,
-  Mic,
-  Text,
-  Settings,
-  Gavel
-} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { useState } from 'react';
-import WavePlayer from '../waveplayer/WavesurferPlayer';
 
 export default function PlayerSheet({
   open,
