@@ -1,10 +1,5 @@
-import ModeToggle from '@/components/ModeToggle';
-import NavLink from '@/components/layout/NavLink';
-import SidebarAuthButtons from '@/components/layout/SidebarAuthButtons';
-import SignOutButton from '@/components/layout/SignOutButton';
 import SidebarContent from '@/components/layout/sidebar/SidebarContent';
-import { buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+
 import {
   Users2,
   ScrollText,
