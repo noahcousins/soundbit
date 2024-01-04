@@ -7,7 +7,6 @@ import Pricing from '@/components/Pricing';
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import GridSection from '@/components/sections/GridSection';
 
 import Hero from '@/components/sections/Hero';
 import FeatureGrid from '@/components/sections/FeatureGrid';
