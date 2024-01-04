@@ -64,9 +64,9 @@ const ArtistSelector = ({
     form.reset();
   };
 
-  if (!artistNameData || artistNameData.length === 0) {
-    return <div>Error: No artist name found for the user.</div>;
-  }
+  // if (!artistNameData || artistNameData.length === 0) {
+  //   return <div>Error: No artist name found for the user.</div>;
+  // }
 
   const artists = artistNameData.map(
     (artist: { name: string; imageUrl: string; id: string }) => ({

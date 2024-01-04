@@ -94,11 +94,6 @@ export default async function Next() {
     }
   };
 
-  if (!artists) {
-    // If artists data is not available yet, return null or a loading indicator
-    return <div>Loading...</div>; // You can use a loading indicator or message
-  }
-
   return (
     <div className="">
       {/* <h1>Select your Spotify profile</h1> */}
