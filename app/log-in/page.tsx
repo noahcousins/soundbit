@@ -21,9 +21,17 @@ export default function Login() {
   );
 
   return (
-    <div className="mx-auto my-28 flex w-full flex-col justify-center gap-2 px-8 sm:max-w-md">
+    <div className="mx-auto my-28 flex h-fit w-full flex-col justify-center gap-4 px-8 sm:max-w-md">
+      <Link className="flex cursor-pointer" href="/">
+        <h1 className="text mx-auto text-center font-grtsk-giga text-4xl font-bold">
+          soundbit.
+        </h1>
+      </Link>
+      <h2 className="text-center text-xl font-medium">
+        Create your free account
+      </h2>
       <form
-        className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground"
+        className="flex h-full w-full flex-1 flex-col justify-center gap-4 text-foreground"
         action="/auth/sign-in"
         method="post"
       >
@@ -31,7 +39,7 @@ export default function Login() {
           Email
         </label>
         <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
+          className="rounded-md border bg-inherit px-4 py-2"
           name="email"
           placeholder="you@example.com"
           required
@@ -40,23 +48,24 @@ export default function Login() {
           Password
         </label>
         <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
+          className="rounded-md border bg-inherit px-4 py-2"
           type="password"
           name="password"
           placeholder="••••••••"
           required
         />
-        <button className="mb-2 rounded-md bg-[#FF2E01] px-4 py-2 text-foreground">
-          Sign In
-        </button>
-        <button
-          formAction="/auth/sign-up"
-          className="mb-2 rounded-md border border-foreground/20 px-4 py-2 text-foreground"
-        >
-          Sign Up
+        {/* <p className="text-left text-sm">Forgot your password?</p> */}
+        <button className="mb-2 rounded-md bg-[#FF2E01] px-4 py-2 tracking-tighter text-foreground">
+          Continue
         </button>
         <Messages />
       </form>
+      <p className="text-left text-sm">
+        Need an account?{' '}
+        <Link href={'/sign-up'}>
+          <span className="font-semibold">Sign up</span>
+        </Link>
+      </p>
     </div>
   );
 }

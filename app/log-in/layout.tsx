@@ -10,8 +10,8 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex w-full">{children}</div>
+    <div className="flex h-full w-full flex-col">
+      <div className="flex h-full w-full">{children}</div>
     </div>
   );
 }
