@@ -11,6 +11,8 @@ import { Session } from '@supabase/supabase-js';
 import HandleInput from '@/components/artists/HandleInput';
 import { redirect } from 'next/navigation';
 
+export const revalidate = 0;
+
 export default async function Next() {
   const cookieStore = cookies();
   const supabase = createServerClient(
@@ -91,6 +93,11 @@ export default async function Next() {
       }
     }
   };
+
+  if (!artists) {
+    // If artists data is not available yet, return null or a loading indicator
+    return <div>Loading...</div>; // You can use a loading indicator or message
+  }
 
   return (
     <div className="">
