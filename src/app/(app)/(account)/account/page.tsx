@@ -140,16 +140,11 @@ export default async function Account() {
         {' '}
         <div className="flex w-full flex-col">
           <h1 className="text-4xl font-bold">Settings</h1>
-          <p className="text-lg">Edit your account settings on UAPoli.</p>
+          <p className="text-lg">Edit your account settings on soundbit.</p>
         </div>
         <div className="flex w-full content-end gap-4 text-right">
           <h2 className="text-4xl font-light">
-            Hello,{' '}
-            <span className="font-semibold">
-              {profileData
-                ? profileData.full_name || session.user.email
-                : 'Loading...'}
-            </span>
+            Hello, <span className="font-semibold">{session.user.email}</span>
           </h2>
           <Dialog>
             <DialogTrigger asChild>
