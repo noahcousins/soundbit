@@ -18,8 +18,8 @@ const people = [
 
 export default function FeatureGrid() {
   return (
-    <section className="mx-auto grid max-w-screen-xl grid-cols-1 gap-8 pb-16 lg:grid-cols-3 lg:gap-16">
-      <article className="group flex h-80 w-96 flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background">
+    <section className="mx-auto grid max-w-screen-xl grid-cols-1 gap-8 px-4 pb-16 lg:grid-cols-3 lg:gap-16 xl:px-0">
+      <article className="group flex h-80 w-full flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background lg:w-96">
         <div className="relative flex h-1/2 items-center justify-center overflow-hidden border-b-[1px] border-white/40 bg-gradient-radial from-white/5 to-[#181818] transition-all duration-200 ease-in-out">
           <div className="absolute flex h-[100px] w-[100px] items-center justify-center rounded-full border-[1px] border-[#FF2E01] bg-[#631301] transition-all duration-200 ease-in-out group-hover:h-[140px] group-hover:w-[140px]">
             <Disc3
@@ -45,7 +45,7 @@ export default function FeatureGrid() {
           </p>
         </div>
       </article>
-      <article className="group flex h-80 w-96 flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background">
+      <article className="group flex h-80 w-full flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background lg:w-96">
         <div className="relative h-1/2 overflow-hidden border-b-[1px] border-white/40 bg-gradient-radial from-white/5 to-[#181818] px-4 pt-4 transition-all duration-200 ease-in-out group-hover:px-6 group-hover:pt-6">
           <div className="grid h-full w-full grid-cols-5 items-center justify-center gap-2 rounded-t-lg bg-[#FF2E01] p-4">
             {Array.from({ length: 10 }, (_, index) => (
@@ -73,7 +73,7 @@ export default function FeatureGrid() {
           </p>
         </div>
       </article>
-      <article className="group flex h-80 w-96 flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background">
+      <article className="group flex h-80 w-full flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background lg:w-96">
         <div className="relative flex h-1/2 flex-col items-center justify-center gap-2 overflow-hidden border-b-[1px] border-white/40 bg-gradient-radial from-white/5 to-[#181818] transition-all duration-200 ease-in-out">
           <div className="flex -translate-x-14 flex-row gap-2 transition-transform duration-200 group-hover:-translate-x-4">
             {people.slice(0, 4).map((person: any, index: number) => (

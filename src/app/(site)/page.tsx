@@ -1,15 +1,15 @@
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+
 import {
   getSession,
   getSubscription,
   getActiveProductsWithPrices
 } from '@/src/app/supabase-server';
-import Pricing from '@/src/components/pricing/Pricing';
-
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { cookies } from 'next/headers';
 
 import Hero from '@/src/components/sections/Hero';
 import FeatureGrid from '@/src/components/sections/FeatureGrid';
+import Pricing from '@/src/components/pricing/Pricing';
 
 export default async function Home() {
   const [session, products, subscription] = await Promise.all([
@@ -49,9 +49,15 @@ export default async function Home() {
   }
 
   return (
-    <div className={'flex w-full flex-col gap-8 px-4 xl:px-0'}>
+    <div className={'flex w-full flex-col'}>
       <Hero profileData={profileData} />
       <FeatureGrid />
+      <Pricing
+        session={session}
+        user={session?.user}
+        products={products}
+        subscription={subscription}
+      />
     </div>
   );
 }
