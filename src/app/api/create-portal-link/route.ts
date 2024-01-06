@@ -1,7 +1,6 @@
-import { Database } from '@/types_db';
-import { getURL } from '@/src/utils/helpers';
-import { stripe } from '@/src/utils/stripe';
-import { createOrRetrieveCustomer } from '@/src/utils/supabase-admin';
+import { getURL } from '@/utils/helpers';
+import { stripe } from '@/utils/stripe';
+import { createOrRetrieveCustomer } from '@/utils/supabase-admin';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 

@@ -1,4 +1,4 @@
-import NavLink from '@/src/components/layout/NavLink';
+import NavLink from '@/components/layout/NavLink';
 
 import {
   Megaphone,
@@ -21,7 +21,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger
-} from '@/src/components/ui/accordion';
+} from '@/components/ui/accordion';
 
 const topMiddleRoutes = [
   {

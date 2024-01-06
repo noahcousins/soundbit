@@ -15,7 +15,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
-} from '@/src/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 
 import {
   Cloud,

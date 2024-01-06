@@ -5,11 +5,11 @@ import {
   getSession,
   getSubscription,
   getActiveProductsWithPrices
-} from '@/src/app/supabase-server';
+} from '@/app/supabase-server';
 
-import Hero from '@/src/components/sections/Hero';
-import FeatureGrid from '@/src/components/sections/FeatureGrid';
-import Pricing from '@/src/components/pricing/Pricing';
+import Hero from '@/components/sections/Hero';
+import FeatureGrid from '@/components/sections/FeatureGrid';
+import Pricing from '@/components/pricing/Pricing';
 
 export default async function Home() {
   const [session, products, subscription] = await Promise.all([

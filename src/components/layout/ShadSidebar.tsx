@@ -1,8 +1,8 @@
 //@ts-nocheck
 
-import { Button } from '@/src/components/ui/button';
-import { ScrollArea } from '@/src/components/ui/scroll-area';
-import { cn } from '@/src/lib/utils';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 
 // import { Playlist } from "../data/playlists"
 

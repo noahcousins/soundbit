@@ -1,5 +1,5 @@
 import s from './Navbar.module.css';
-import Logo from '@/src/components/icons/Logo';
+import Logo from '@/components/icons/Logo';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import Link from 'next/link';

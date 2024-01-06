@@ -6,8 +6,8 @@ import { motion } from 'framer-motion';
 
 import { Sparkles } from 'lucide-react';
 
-import { Badge } from '@/src/components/ui/badge';
-import { Button } from '@/src/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 export default function Hero({ profileData }: { profileData: any }) {

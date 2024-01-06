@@ -11,8 +11,8 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
   AlertDialogAction
-} from '@/src/components/ui/alert-dialog';
-import { Button, buttonVariants } from '@/src/components/ui/button';
+} from '@/components/ui/alert-dialog';
+import { Button, buttonVariants } from '@/components/ui/button';
 
 export default function Paywall() {
   const [isOpen, setIsOpen] = useState(false);

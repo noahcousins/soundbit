@@ -1,10 +1,10 @@
-import ArtistInput from '@/src/components/artists/ArtistInput';
+import ArtistInput from '@/components/artists/ArtistInput';
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-import { searchSpotifyByArtist } from '@/src/lib/spotify';
-import { getSession } from '@/src/app/supabase-server';
+import { searchSpotifyByArtist } from '@/lib/spotify';
+import { getSession } from '@/app/supabase-server';
 import { Session } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
@@ -45,10 +45,12 @@ export default async function Welcome() {
 
       const session = await getSession();
       const user = session?.user;
-      const { error } = await supabase.from('sites').upsert(
-        { artist_name: artist_name, user_id: session?.user.id },
-        { onConflict: 'user_id' } // Specify the conflict target
-      );
+      const { error } = await supabase
+        .from('sites')
+        .upsert(
+          { artist_name: artist_name, user_id: session?.user.id },
+          { onConflict: 'user_id' }
+        );
 
       if (error) {
         console.error('Error adding artist name:', error);

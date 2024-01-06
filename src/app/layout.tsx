@@ -1,6 +1,6 @@
 import './globals.css';
-import { ThemeProvider } from '@/src/components/theme-provider';
-import { Toaster } from '@/src/components/ui/toaster';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
 import localFont from 'next/font/local';
 
 export const metadata = {

@@ -1,9 +1,9 @@
-import Navigation from '@/src/components/layout/Navigation';
+import Navigation from '@/components/layout/Navigation';
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-import Footer from '@/src/components/layout/Footer';
+import Footer from '@/components/layout/Footer';
 
 export default async function SiteLayout({
   children

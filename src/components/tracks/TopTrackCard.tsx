@@ -6,26 +6,28 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { FaPlay, FaPause } from 'react-icons/fa';
-import { useWaveSurfer } from '@/src/context/WaveSurferContext';
+import { useWaveSurfer } from '@/context/WaveSurferContext';
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
-} from '@/src/components/ui/tooltip';
+} from '@/components/ui/tooltip';
 
-import { Disc3 } from 'lucide-react'; // Update the path accordingly
+import { Disc3 } from 'lucide-react';
 
 import { useState } from 'react';
 import WavePlayer from '../waveplayer/WavesurferPlayer';
 
 export default function TopTrackCard({
   track,
-  index
+  index,
+  backgroundColor
 }: {
   track: any;
   index: number;
+  backgroundColor: any;
 }) {
   const [paused, setPaused] = useState(true);
   const { activePlayer, setPlayer } = useWaveSurfer();
@@ -57,7 +59,13 @@ export default function TopTrackCard({
   };
 
   return (
-    <div className="group flex w-full flex-col gap-4 text-left">
+    <div
+      className={`group flex w-full flex-col gap-2 ${
+        backgroundColor === 'bg-[#DDDDDD]'
+          ? 'bg-white text-black'
+          : 'bg-black/25 text-white'
+      } rounded-lg bg-black/25 p-2 text-left`}
+    >
       <div className="relative flex overflow-hidden">
         <Image
           alt={track.name}
@@ -77,12 +85,12 @@ export default function TopTrackCard({
           {activePlayer === track.preview_url ? (
             <FaPause
               size={16}
-              className="ml-1 h-[12px] w-[12px] text-background sm:h-[45%] sm:w-[45%]"
+              className="ml-1 text-black sm:h-[45%] sm:w-[45%]"
             />
           ) : (
             <FaPlay
               size={16}
-              className="ml-1 h-[12px] w-[12px] text-background sm:h-[45%] sm:w-[45%]"
+              className="ml-1 text-black sm:h-[45%] sm:w-[45%]"
             />
           )}
         </button>
@@ -92,7 +100,11 @@ export default function TopTrackCard({
           animate={activePlayer === track.preview_url ? 'visible' : 'hidden'}
           variants={wavePlayerVariants}
         >
-          <WavePlayer paused={paused} url={track.preview_url} />
+          <WavePlayer
+            waveColor={backgroundColor}
+            paused={paused}
+            url={track.preview_url}
+          />
         </motion.div>
       </div>
       <div className="flex flex-col gap-1">
@@ -109,7 +121,13 @@ export default function TopTrackCard({
           </TooltipProvider>
         </Link>
         <Link target="_blank" href={track.album.external_urls.spotify}>
-          <p className="line-clamp-1 flex w-fit gap-1 rounded-sm bg-white/20 px-2 py-1 text-xs transition-transform duration-100 ease-in-out hover:bg-white/40 active:scale-105 active:bg-white/50">
+          <p
+            className={`line-clamp-1 flex w-fit gap-1 rounded-sm  ${
+              backgroundColor === 'bg-[#DDDDDD]'
+                ? 'bg-black/20 text-black'
+                : 'bg-white/20 text-white'
+            } px-2 py-1 text-xs transition-transform duration-100 ease-in-out hover:bg-white/40 active:scale-105 active:bg-white/50`}
+          >
             <Disc3 size={16} />
             <span className="line-clamp-1">{track.album.name}</span>
           </p>

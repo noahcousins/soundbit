@@ -1,24 +1,24 @@
 'use client';
 
-import Avatar from '@/src/components/forms/AvatarWidget';
-import { Button } from '@/src/components/ui/button';
+import Avatar from '@/components/forms/AvatarWidget';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormField,
   FormControl,
   FormLabel,
   FormMessage
-} from '@/src/components/ui/form';
+} from '@/components/ui/form';
 
-import { Input } from '@/src/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createBrowserClient } from '@supabase/ssr';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { ToastAction } from '@/src/components/ui/toast';
-import { useToast } from '@/src/components/ui/use-toast';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 import { ScrollArea } from '../ui/scroll-area';
 
 const profileSchema = z.object({

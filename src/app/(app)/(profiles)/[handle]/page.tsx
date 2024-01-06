@@ -1,19 +1,19 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { getSession } from '@/src/app/supabase-server';
+import { getSession } from '@/app/supabase-server';
 import {
   searchArtistAlbums,
   searchArtistById,
   searchArtistTopTracks
-} from '@/src/lib/spotify';
+} from '@/lib/spotify';
 
-import { Separator } from '@/src/components/ui/separator';
+import { Separator } from '@/components/ui/separator';
 
-import TopTrackCard from '@/src/components/tracks/TopTrackCard';
-import ArtistDetails from '@/src/components/artists/ArtistDetails';
-import AlbumCard from '@/src/components/tracks/AlbumCard';
-import SingleCard from '@/src/components/tracks/SingleCard';
-import CardGrid from '@/src/components/artists/CardGrid';
+import TopTrackCard from '@/components/tracks/TopTrackCard';
+import ArtistDetails from '@/components/artists/ArtistDetails';
+import AlbumCard from '@/components/tracks/AlbumCard';
+import SingleCard from '@/components/tracks/SingleCard';
+import CardGrid from '@/components/artists/CardGrid';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -40,7 +40,7 @@ export default async function Profile({ params }: { params: any }) {
   const { data, error } = await supabase
     .from('sites')
     .select(
-      'artist_name, user_id, artist_id, artist_bio, instagram, facebook, twitter, wikipedia, view, avatar_url, cover_url'
+      'artist_name, user_id, artist_id, artist_bio, instagram, facebook, twitter, wikipedia, view, avatar_url, cover_url, hide_branding, background_color'
     )
     .eq('handle', handle);
 
@@ -108,55 +108,112 @@ export default async function Profile({ params }: { params: any }) {
 
   const albumImageUrl = artistAlbumsData?.items[0].images[0].url;
 
+  console.log(artistSiteData);
+
   return (
-    <main className="flex min-h-screen w-full flex-col items-start gap-8 pt-24">
-      <ArtistDetails artistSiteData={artistSiteData} artistData={artistData} />
-      <div className="mx-auto flex w-full flex-col gap-4 md:w-[736px]">
-        {artistTopTracksData && (
-          <CardGrid title="Top Tracks">
-            {artistTopTracksData?.tracks?.map((track: any, index: number) => {
-              return <TopTrackCard track={track} key={index} index={index} />;
-            })}
-          </CardGrid>
-        )}
-
-        {artistAlbumsData && (
-          <>
-            <Separator className="" />
-
-            <CardGrid title="Albums">
-              {artistAlbumsData?.items?.map((album: any, index: number) => (
-                <AlbumCard key={album.id} album={album} />
-              ))}
+    <div
+      className={`flex w-full px-4 py-8 lg:px-8 ${artistSiteData[0].background_color}`}
+    >
+      <main
+        className={`flex min-h-screen w-full flex-col items-start gap-8 pt-24`}
+      >
+        <ArtistDetails
+          artistSiteData={artistSiteData}
+          artistData={artistData}
+        />
+        <div
+          className={`mx-auto flex w-full flex-col gap-4 ${
+            artistSiteData[0].background_color
+          } ${
+            artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+              ? 'text-black'
+              : 'text-white'
+          } md:w-[736px]`}
+        >
+          {artistTopTracksData && (
+            <CardGrid title="Top Tracks">
+              {artistTopTracksData?.tracks?.map((track: any, index: number) => {
+                return (
+                  <TopTrackCard
+                    backgroundColor={artistSiteData[0].background_color}
+                    track={track}
+                    key={index}
+                    index={index}
+                  />
+                );
+              })}
             </CardGrid>
-          </>
-        )}
+          )}
 
-        {artistSinglesData && (
-          <>
-            <Separator className="" />
+          {artistAlbumsData && (
+            <>
+              <Separator
+                className={`${
+                  artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+                    ? 'bg-black/50'
+                    : 'bg-white/50'
+                }`}
+              />
 
-            <CardGrid title="Albums">
-              {artistSinglesData.items.map((single: any, index: number) => (
-                <SingleCard key={single.id} single={single} />
-              ))}
-            </CardGrid>
-          </>
-        )}
-      </div>
-      {artistData && (
-        <div className="mx-auto flex flex-col gap-2 text-center">
-          <p className="mx-auto text-sm uppercase">
-            {artistData.name} © ALL RIGHTS RESERVED
-          </p>
-          <Link href="/">
-            <p className="text-xs">
-              made with
-              <span className="pl-1 font-grtsk-giga font-bold">soundbit</span>
-            </p>
-          </Link>
+              <CardGrid title="Albums">
+                {artistAlbumsData?.items?.map((album: any, index: number) => (
+                  <AlbumCard
+                    backgroundColor={artistSiteData[0].background_color}
+                    key={album.id}
+                    album={album}
+                  />
+                ))}
+              </CardGrid>
+            </>
+          )}
+
+          {artistSinglesData && (
+            <>
+              <Separator
+                className={`${
+                  artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+                    ? 'bg-black/50'
+                    : 'bg-white/50'
+                }`}
+              />
+              <CardGrid title="Albums">
+                {artistSinglesData.items.map((single: any, index: number) => (
+                  <SingleCard
+                    backgroundColor={artistSiteData[0].background_color}
+                    key={single.id}
+                    single={single}
+                  />
+                ))}
+              </CardGrid>
+            </>
+          )}
         </div>
-      )}
-    </main>
+        {artistData && (
+          <div
+            className={`mx-auto flex flex-col gap-2 text-center ${
+              artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+                ? 'text-black'
+                : 'text-white'
+            }`}
+          >
+            <p className="mx-auto text-sm uppercase">
+              {artistData.name} © ALL RIGHTS RESERVED
+            </p>
+            {artistSiteData[0].hide_branding === false ? (
+              <Link href="/">
+                <p className="text-xs">
+                  made with
+                  <span className="pl-1 font-grtsk-giga font-bold">
+                    soundbit
+                  </span>
+                </p>
+              </Link>
+            ) : (
+              ''
+            )}
+          </div>
+        )}
+      </main>
+    </div>
   );
 }

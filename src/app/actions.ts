@@ -1,6 +1,6 @@
 'use server';
 
-import { searchSpotifyByArtist } from '@/src/lib/spotify';
+import { searchSpotifyByArtist } from '@/lib/spotify';
 
 export async function searchArtist(formData: FormData) {
   const name = formData.get('name') as string;

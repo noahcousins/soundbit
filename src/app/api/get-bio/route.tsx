@@ -1,10 +1,10 @@
-import { searchArtistAlbums, searchArtistById } from '@/src/lib/spotify';
+import { searchArtistAlbums, searchArtistById } from '@/lib/spotify';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest } from 'next/server';
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { getSession } from '@/src/app/supabase-server';
+import { getSession } from '@/app/supabase-server';
 
 async function getBio(req: NextRequest, res: NextApiResponse) {
   const searchParams = req.nextUrl.searchParams;

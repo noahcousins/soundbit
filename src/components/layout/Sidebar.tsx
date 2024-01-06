@@ -1,4 +1,4 @@
-import SidebarContent from '@/src/components/layout/sidebar/SidebarContent';
+import SidebarContent from '@/components/layout/sidebar/SidebarContent';
 
 import {
   Users2,

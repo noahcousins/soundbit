@@ -1,8 +1,8 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { getSession } from '@/src/app/supabase-server';
+import { getSession } from '@/app/supabase-server';
 
-import CustomizeForm from '@/src/components/forms/CustomizeForm';
+import CustomizeForm from '@/components/forms/CustomizeForm';
 
 export const revalidate = 0;
 

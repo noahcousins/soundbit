@@ -1,4 +1,4 @@
-import SidebarContent from '@/src/components/layout/sidebar/SidebarContent';
+import SidebarContent from '@/components/layout/sidebar/SidebarContent';
 
 import {
   Sheet,
@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger
-} from '@/src/components/ui/sheet';
+} from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import {
   Users2,

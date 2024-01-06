@@ -7,10 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/src/components/ui/dialog';
+} from '@/components/ui/dialog';
 import Image from 'next/image';
 import Link from 'next/link';
-import SocialLinks from '@/src/components/artists/SocialLinks';
+import SocialLinks from '@/components/artists/SocialLinks';
 
 import { motion, AnimatePresence } from 'framer-motion';
 

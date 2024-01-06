@@ -4,8 +4,8 @@ import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Button, buttonVariants } from '@/src/components/ui/button';
-import { Input } from '@/src/components/ui/input';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function AuthButtons() {
   const [email, setEmail] = useState('');

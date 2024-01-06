@@ -2,16 +2,16 @@ import {
   getSession,
   getUserDetails,
   getSubscription
-} from '@/src/app/supabase-server';
+} from '@/app/supabase-server';
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
-import { Button, buttonVariants } from '@/src/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 
-import AccountForm from '@/src/components/forms/AccountForm';
+import AccountForm from '@/components/forms/AccountForm';
 
 import {
   Dialog,
@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/src/components/ui/dialog';
+} from '@/components/ui/dialog';
 
 export default async function Profile() {
   const [session, userDetails, subscription] = await Promise.all([

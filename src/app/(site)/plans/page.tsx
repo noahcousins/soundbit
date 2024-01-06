@@ -2,8 +2,8 @@ import {
   getSession,
   getSubscription,
   getActiveProductsWithPrices
-} from '@/src/app/supabase-server';
-import Pricing from '@/src/components/pricing/Pricing';
+} from '@/app/supabase-server';
+import Pricing from '@/components/pricing/Pricing';
 
 export default async function Plans() {
   const [session, products, subscription] = await Promise.all([

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { Button } from '@/src/components/ui/button';
+import { Button } from '@/components/ui/button';
 
 import {
   Form,
@@ -11,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/src/components/ui/form';
+} from '@/components/ui/form';
 
 import { User } from 'lucide-react';
 

@@ -1,13 +1,9 @@
 'use client';
 
-import DropdownLogOutButton from '@/src/components/layout/DropdownLogOutButton';
-import SignOutButton from '@/src/components/layout/SignOutButton';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from '@/src/components/ui/avatar';
-import { Button } from '@/src/components/ui/button';
+import DropdownLogOutButton from '@/components/layout/DropdownLogOutButton';
+import SignOutButton from '@/components/layout/SignOutButton';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +17,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
-} from '@/src/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { createBrowserClient } from '@supabase/ssr';
 import {
   LayoutTemplate,
@@ -64,18 +60,8 @@ export default function MainAccountTab({
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push('/'); // Redirect to the home page after signing out
+    router.push('/');
   };
-  interface UserData {
-    username: string;
-    avatar_url: string;
-    // Add other properties here as needed
-  }
-
-  interface UserRole {
-    role: string;
-    // Add other properties here as needed
-  }
 
   const [avatarUrl, setAvatarUrl] = useState('');
 

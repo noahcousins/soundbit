@@ -1,4 +1,3 @@
-import { Database } from '@/types_db';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { cache } from 'react';

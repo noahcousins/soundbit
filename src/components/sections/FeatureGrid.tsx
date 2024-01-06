@@ -1,5 +1,5 @@
 import { Disc3, Music } from 'lucide-react';
-import ShareCell from '@/src/components/features/ShareCell';
+import ShareCell from '@/components/features/ShareCell';
 
 const people = [
   { name: '1', src: '/avatars/1.svg', active: false },

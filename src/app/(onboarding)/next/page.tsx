@@ -1,4 +1,4 @@
-import Next from '@/src/components/onboarding/next';
+import Next from '@/components/onboarding/next';
 
 export const revalidate = 0;
 

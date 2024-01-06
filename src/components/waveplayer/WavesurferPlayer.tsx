@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react';
 import WaveSurfer from 'wavesurfer.js';
-import { useWaveSurfer } from '@/src/context/WaveSurferContext'; // Update the path based on your project structure
+import { useWaveSurfer } from '@/context/WaveSurferContext';
 
 export default function WavePlayer({
   url,
-  paused
+  paused,
+  waveColor
 }: {
   url: string;
   paused: any;
+  waveColor: string;
 }) {
   const wavesurferRef = useRef<WaveSurfer | null>(null);
   const { activeWaveSurfer, setWaveSurfer } = useWaveSurfer();
@@ -26,6 +28,11 @@ export default function WavePlayer({
   useEffect(() => {
     async function loadWaveSurfer() {
       if (url && !wavesurferRef.current) {
+        const hexCode = waveColor.match(/#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})/);
+        const extractedWaveColor = hexCode ? hexCode[0] : '#FF2E01'; // Default color if not matched
+        const progressColor =
+          waveColor === 'bg-[#DDDDDD]' ? '#616161' : '#ffffff';
+
         const WaveSurfer = (await import('wavesurfer.js')).default;
         if (url && !wavesurferRef.current) {
           wavesurferRef.current = WaveSurfer.create({
@@ -37,8 +44,8 @@ export default function WavePlayer({
             barHeight: 3,
             barWidth: 0,
             cursorWidth: 0,
-            waveColor: '#FF2E01',
-            progressColor: '#ffffff',
+            waveColor: extractedWaveColor,
+            progressColor: progressColor,
             barRadius: 1
           });
 
@@ -68,9 +75,7 @@ export default function WavePlayer({
       }
       wavesurferRef.current.play();
       setWaveSurfer(wavesurferRef.current);
-      // Accessing media and peaks here:
       const newParams = getPlayerParams();
-      console.log(newParams, 'medisiaiaiai'); // Use these values as needed
     }
   }, [paused]);
 

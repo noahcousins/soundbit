@@ -8,14 +8,27 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
-} from '@/src/components/ui/tooltip';
+} from '@/components/ui/tooltip';
 
-export default function SingleCard({ single }: { single: any }) {
+export default function SingleCard({
+  single,
+  backgroundColor
+}: {
+  single: any;
+  backgroundColor: string;
+}) {
   const year = new Date(single.release_date).getFullYear();
 
   return (
     <Link target="_blank" href={single.external_urls.spotify}>
-      <div className="group flex w-full flex-col gap-4 text-left">
+      <div
+        className={`group flex w-full flex-col gap-2 ${
+          backgroundColor === 'bg-[#DDDDDD]'
+            ? 'bg-white text-black'
+            : 'bg-black/25 text-white'
+        } rounded-lg bg-black/25 p-2 text-left`}
+      >
+        {' '}
         <div className="relative flex overflow-hidden">
           <Image
             alt={single.name}
@@ -36,7 +49,14 @@ export default function SingleCard({ single }: { single: any }) {
               <TooltipContent>{single.name}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <p className="line-clamp-1 w-fit rounded-sm bg-white/20 px-2 py-1 text-xs transition-transform duration-100 ease-in-out hover:bg-white/40 active:scale-105 active:bg-white/50">
+          <p
+            className={`line-clamp-1 flex w-fit gap-1 rounded-sm  ${
+              backgroundColor === 'bg-[#DDDDDD]'
+                ? 'bg-black/20 text-black'
+                : 'bg-white/20 text-white'
+            } px-2 py-1 text-xs transition-transform duration-100 ease-in-out hover:bg-white/40 active:scale-105 active:bg-white/50`}
+          >
+            {' '}
             Released in {year}
           </p>
         </div>

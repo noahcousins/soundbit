@@ -1,11 +1,11 @@
-import ArtistSelector from '@/src/components/artists/ArtistSelector';
+import ArtistSelector from '@/components/artists/ArtistSelector';
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 
-import { searchSpotifyByArtist } from '@/src/lib/spotify';
-import { getSession } from '@/src/app/supabase-server';
+import { searchSpotifyByArtist } from '@/lib/spotify';
+import { getSession } from '@/app/supabase-server';
 import { Session } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 

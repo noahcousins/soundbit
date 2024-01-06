@@ -1,44 +1,34 @@
 'use client';
 
-import Avatar from '@/src/components/forms/AvatarWidget';
-import { Button } from '@/src/components/ui/button';
+import Avatar from '@/components/forms/AvatarWidget';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormField,
   FormControl,
   FormLabel,
-  FormMessage
-} from '@/src/components/ui/form';
+  FormMessage,
+  FormItem,
+  FormDescription
+} from '@/components/ui/form';
 
-import { Input } from '@/src/components/ui/input';
+import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createBrowserClient } from '@supabase/ssr';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { ToastAction } from '@/src/components/ui/toast';
-import { useToast } from '@/src/components/ui/use-toast';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 import { ScrollArea } from '../ui/scroll-area';
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from '@/src/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Cover from './CoverWidget';
+import Link from 'next/link';
+import { Checkbox } from '../../../components/ui/checkbox';
 
-const profileSchema = z.object({
-  handle: z.string().min(1, 'handle is required'),
-  artist_bio: z.string().min(1, 'bio is required').optional(),
-  artist_name: z.string().min(1, 'Full Name is required'),
-  avatar_url: z.string().url({ message: 'Invalid URL format' }).optional(),
-  facebook: z.string().url({ message: 'Invalid URL format' }).optional(),
-  instagram: z.string().url({ message: 'Invalid URL format' }).optional(),
-  twitter: z.string().url({ message: 'Invalid URL format' }).optional(),
-  wikipedia: z.string().url({ message: 'Invalid URL format' }).optional()
-});
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 export default function CustomizeForm({
   session,
@@ -49,7 +39,35 @@ export default function CustomizeForm({
   initialFormData: any;
   defaultMusicTabValue: any;
 }) {
-  console.log(initialFormData, 'dkdkdkkd11111');
+  const colorOptions = [
+    'bg-[#DDDDDD]',
+    'bg-[#111111]',
+    'bg-[#B60708]',
+    'bg-[#B4530A]',
+    'bg-[#4D7C0F]',
+    'bg-[#047857]',
+    'bg-[#1C4ED8]',
+    'bg-[#0568A0]',
+    'bg-[#6D27D9]',
+    'bg-[#7E22CD]',
+    'bg-[#A21CAF]',
+    'bg-[#BD123B]'
+  ];
+
+  const profileSchema = z.object({
+    handle: z.string().min(1, 'handle is required'),
+    artist_bio: z.string().min(1, 'bio is required').optional(),
+    artist_name: z.string().min(1, 'Full Name is required'),
+    avatar_url: z.string().url({ message: 'Invalid URL format' }).optional(),
+    facebook: z.string().url({ message: 'Invalid URL format' }).optional(),
+    instagram: z.string().url({ message: 'Invalid URL format' }).optional(),
+    twitter: z.string().url({ message: 'Invalid URL format' }).optional(),
+    wikipedia: z.string().url({ message: 'Invalid URL format' }).optional(),
+    hide_branding: z.boolean().optional(),
+    background_color: z.string().optional(),
+    view: z.enum(['top_tracks', 'catalog', 'both']).default('top_tracks')
+  });
+
   const form = useForm({
     resolver: zodResolver(profileSchema)
   });
@@ -60,9 +78,34 @@ export default function CustomizeForm({
   );
 
   const [loading, setLoading] = useState(true);
+  const [subscriptionActive, setSubscriptionActive] = useState(false);
   const user = session?.user;
 
   const { toast } = useToast();
+
+  async function hasActiveSubscription(userId: any) {
+    const { data, error } = await supabase
+      .from('subscriptions')
+      .select('status')
+      .eq('user_id', userId)
+      .single();
+
+    if (error) {
+      console.error('Error checking subscription status', error);
+      return false;
+    }
+
+    return data?.status === 'active';
+  }
+
+  useEffect(() => {
+    async function fetchSubscriptionStatus() {
+      const isActiveSubscription = await hasActiveSubscription(user?.id);
+      setSubscriptionActive(isActiveSubscription);
+    }
+
+    fetchSubscriptionStatus();
+  }, [user]);
 
   const getProfile = useCallback(async () => {
     try {
@@ -76,6 +119,9 @@ export default function CustomizeForm({
         form.setValue('instagram', initialFormData.instagram);
         form.setValue('twitter', initialFormData.twitter);
         form.setValue('wikipedia', initialFormData.wikipedia);
+        form.setValue('hide_branding', initialFormData.hide_branding);
+        form.setValue('background_color', initialFormData.background_color);
+        form.setValue('view', initialFormData.view);
       }
     } catch (error) {
       alert('Error loading user data!');
@@ -92,6 +138,8 @@ export default function CustomizeForm({
     try {
       setLoading(true);
 
+      console.log(formData, 'pleasee');
+
       const { error } = await supabase
         .from('sites')
         .upsert(
@@ -100,13 +148,15 @@ export default function CustomizeForm({
             artist_name: formData.artist_name,
             handle: formData.handle,
             artist_bio: formData.artist_bio,
-            avatar_url: form.watch('avatar_url'), // Retain the existing avatar_url
-            cover_url: form.watch('cover_url'), // Retain the existing avatar_url
-            // updated_at: new Date().toISOString(),
+            avatar_url: form.watch('avatar_url'),
+            cover_url: form.watch('cover_url'),
             facebook: formData.facebook,
             instagram: formData.instagram,
             twitter: formData.twitter,
-            wikipedia: formData.wikipedia
+            wikipedia: formData.wikipedia,
+            hide_branding: formData.hide_branding,
+            background_color: formData.background_color,
+            view: formData.view
           },
           { onConflict: 'user_id' }
         )
@@ -130,6 +180,7 @@ export default function CustomizeForm({
   }
 
   const handleSubmit = form.handleSubmit((data) => {
+    console.log(data, 'check here'); // Make sure hide_branding is set correctly
     updateProfile(data);
   });
 
@@ -145,7 +196,10 @@ export default function CustomizeForm({
               facebook: form.getValues('facebook'),
               instagram: form.getValues('instagram'),
               twitter: form.getValues('twitter'),
-              wikipedia: form.getValues('wikipedia')
+              wikipedia: form.getValues('wikipedia'),
+              hide_branding: form.getValues('hide_branding'),
+              background_color: form.getValues('background_color'),
+              view: form.getValues('view')
             })
           }
           type="submit"
@@ -159,12 +213,8 @@ export default function CustomizeForm({
         >
           <TabsList className="mx-auto">
             <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger disabled value="theme">
-              Theme
-            </TabsTrigger>
-            <TabsTrigger disabled value="music">
-              Music
-            </TabsTrigger>
+            <TabsTrigger value="layout">Layout</TabsTrigger>
+            <TabsTrigger value="music">Music</TabsTrigger>
             <TabsTrigger value="links">Links</TabsTrigger>
           </TabsList>
           <TabsContent value="general">
@@ -243,7 +293,7 @@ export default function CustomizeForm({
               name="handle"
               render={({ field }) => (
                 <div>
-                  <label htmlFor="handle">handle</label>
+                  <label htmlFor="handle">Handle</label>
                   <Input
                     id="handle"
                     placeholder="Enter your handle"
@@ -258,7 +308,7 @@ export default function CustomizeForm({
               name="artist_bio"
               render={({ field }) => (
                 <div>
-                  <label htmlFor="artist_bio">artist_bio</label>
+                  <label htmlFor="artist_bio">Bio</label>
                   <Input
                     id="artist_bio"
                     placeholder="Enter your artist bio"
@@ -269,40 +319,119 @@ export default function CustomizeForm({
               )}
             />
           </TabsContent>
-          <TabsContent value="theme">
-            <Tabs defaultValue="default" className="flex w-[400px] flex-col">
+          <TabsContent className="flex flex-col gap-8" value="layout">
+            {/* <Tabs
+              defaultValue="default"
+              className="mx-auto flex w-[400px] flex-col"
+            >
               <TabsList className="mx-auto">
-                <TabsTrigger value="default">Default</TabsTrigger>
-                <TabsTrigger value="modern">Modern</TabsTrigger>
-                <TabsTrigger value="underground">Underground</TabsTrigger>
-              </TabsList>
-              <TabsContent value="general"></TabsContent>
-              <TabsContent value="theme">
-                Change your password here.
-              </TabsContent>
-              <TabsContent value="theme">
-                Change your password here.
-              </TabsContent>
-            </Tabs>
-          </TabsContent>
-          <TabsContent value="music">
-            <Tabs defaultValue="default" className="flex w-[400px] flex-col">
-              <TabsList className="mx-auto">
-                <TabsTrigger value="catalog">Catalog</TabsTrigger>
-                <TabsTrigger value="top_tracks">Top Tracks</TabsTrigger>
-                <TabsTrigger disabled value="both">
-                  Both
+                <TabsTrigger disabled value="default">
+                  Default
+                </TabsTrigger>
+                <TabsTrigger disabled value="modern">
+                  Modern
+                </TabsTrigger>
+                <TabsTrigger disabled value="underground">
+                  Underground
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="general"></TabsContent>
-              <TabsContent value="theme">
-                Change your password here.
-              </TabsContent>
-              <TabsContent value="theme">
-                Change your password here.
-              </TabsContent>
-            </Tabs>
+            </Tabs> */}
+
+            <FormField
+              control={form.control}
+              name="hide_branding"
+              render={({ field }) => (
+                <div className="mx-auto flex flex-col">
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md drop-shadow">
+                    <FormControl>
+                      <Checkbox
+                        checked={subscriptionActive ? field.value : false}
+                        onCheckedChange={
+                          subscriptionActive ? field.onChange : undefined
+                        }
+                        disabled={!subscriptionActive}
+                      />
+                    </FormControl>
+
+                    <div className="leading-none">
+                      <FormLabel>
+                        <span className="font-grtsk-giga text-sm font-bold">
+                          soundbit.
+                        </span>
+                      </FormLabel>
+                      <FormDescription>
+                        Toggle to hide
+                        <span className="px-1 font-grtsk-giga text-xs font-bold">
+                          soundbit.
+                        </span>
+                        branding in your profile.
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                </div>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="background_color"
+              render={({ field }) => (
+                <div className="">
+                  {/* <label htmlFor="background_color">Background Color</label> */}
+                  <ToggleGroup
+                    type="single"
+                    size="sm"
+                    className="flex gap-1"
+                    value={field.value}
+                    onValueChange={(value) =>
+                      form.setValue('background_color', value)
+                    }
+                  >
+                    {colorOptions.map((color) => (
+                      <ToggleGroupItem
+                        key={color}
+                        value={color}
+                        className="rounded-full"
+                        aria-label={`Toggle ${color}`}
+                      >
+                        <div className={`h-4 w-4 ${color} rounded-full`}></div>
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
+                  <FormMessage placeholder={field.name} />
+                </div>
+              )}
+            />
           </TabsContent>
+          <TabsContent value="music">
+            <FormField
+              control={form.control}
+              name="view"
+              render={({ field }) => (
+                <div>
+                  <ToggleGroup
+                    type="single"
+                    size="sm"
+                    value={field.value}
+                    onValueChange={(value) => form.setValue('view', value)}
+                  >
+                    {['top_tracks', 'catalog', 'both'].map((view) => (
+                      <ToggleGroupItem
+                        key={view}
+                        value={view}
+                        aria-label={`Toggle ${view}`}
+                      >
+                        {view === 'top_tracks' && 'Top Tracks'}
+                        {view === 'catalog' && 'Catalog'}
+                        {view === 'both' && 'Both'}
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
+                  <FormMessage placeholder={field.name} />
+                </div>
+              )}
+            />
+          </TabsContent>
+
           <TabsContent className="flex flex-col gap-4" value="links">
             <FormField
               control={form.control}

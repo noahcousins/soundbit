@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/lib/utils';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
-} from '@/src/components/ui/navigation-menu';
+} from '@/components/ui/navigation-menu';
 
 import {
   Megaphone,
@@ -30,7 +30,7 @@ type ComponentItem = {
   title: string;
   href: string;
   description: string;
-  icon: React.ElementType; // Adding the icon property
+  icon: React.ElementType;
 };
 
 const components: ComponentItem[] = [

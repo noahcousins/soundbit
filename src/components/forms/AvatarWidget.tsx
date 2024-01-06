@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/src/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { createBrowserClient } from '@supabase/ssr';
 import Image from 'next/image';
 import React, { useEffect, useState, useRef } from 'react';

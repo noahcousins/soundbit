@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@/src/components/ui/button';
-import { Database } from '@/types_db';
-import { postData } from '@/src/utils/helpers';
-import { getStripe } from '@/src/utils/stripe-client';
+import { Button } from '@/components/ui/button';
+import { Database } from '../../../types_db';
+import { postData } from '@/utils/helpers';
+import { getStripe } from '@/utils/stripe-client';
 import { Session, User } from '@supabase/supabase-js';
 import cn from 'classnames';
 import { useRouter } from 'next/navigation';
@@ -15,10 +15,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/src/components/ui/card';
+} from '@/components/ui/card';
 import { CheckCircle2, CheckIcon, Info } from 'lucide-react';
-import { Badge } from '@/src/components/ui/badge';
-import PricingTabs from '@/src/components/pricing/PricingTabs';
+import { Badge } from '@/components/ui/badge';
+import PricingTabs from '@/components/pricing/PricingTabs';
 
 type Subscription = Database['public']['Tables']['subscriptions']['Row'];
 type Product = Database['public']['Tables']['products']['Row'];
@@ -26,7 +26,7 @@ type Price = Database['public']['Tables']['prices']['Row'];
 interface ProductWithPrices extends Product {
   prices: Price[];
   metadata: {
-    benefits: string; // Define benefits as a string
+    benefits: string;
   } | null;
 }
 

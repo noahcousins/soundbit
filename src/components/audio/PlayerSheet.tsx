@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger
-} from '@/src/components/ui/sheet';
+} from '@/components/ui/sheet';
 import Image from 'next/image';
 import Link from 'next/link';
 

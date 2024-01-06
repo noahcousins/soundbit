@@ -2,9 +2,9 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 
-import { getSession } from '@/src/app/supabase-server';
+import { getSession } from '@/app/supabase-server';
 import { Session } from '@supabase/supabase-js';
-import HandleInput from '@/src/components/artists/HandleInput';
+import HandleInput from '@/components/artists/HandleInput';
 import { redirect } from 'next/navigation';
 
 export default async function Handle() {

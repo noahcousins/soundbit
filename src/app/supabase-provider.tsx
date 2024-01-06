@@ -1,6 +1,5 @@
 'use client';
 
-import type { Database } from '@/types_db';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
