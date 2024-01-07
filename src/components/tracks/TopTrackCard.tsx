@@ -19,7 +19,6 @@ import { Disc3 } from 'lucide-react';
 
 import { useState } from 'react';
 import WavePlayer from '../waveplayer/WavesurferPlayer';
-import { dynamicBlurDataUrl } from '../util/dynamicBlurDataUrl';
 
 export default function TopTrackCard({
   track,
