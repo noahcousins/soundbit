@@ -118,6 +118,7 @@ export default async function Profile({ params }: { params: any }) {
         className={`flex min-h-screen w-full flex-col items-start gap-8 pt-24`}
       >
         <ArtistDetails
+          backgroundColor={artistSiteData[0].background_color}
           artistSiteData={artistSiteData}
           artistData={artistData}
         />
