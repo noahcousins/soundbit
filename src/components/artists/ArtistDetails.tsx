@@ -13,18 +13,15 @@ import Link from 'next/link';
 import SocialLinks from '@/components/artists/SocialLinks';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { dynamicBlurDataUrl } from '@/components/util/dynamicBlurDataUrl';
 
 export default function ArtistDetails({
   artistData,
   artistSiteData,
-  backgroundColor,
-  blurUrl
+  backgroundColor
 }: {
   artistData: any;
   artistSiteData: any;
   backgroundColor: string;
-  blurUrl: string;
 }) {
   console.log(artistSiteData, 'this what we need');
 
@@ -86,9 +83,7 @@ export default function ArtistDetails({
                       src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${artistSiteData[0].avatar_url}`}
                       alt="Image"
                       fill={true}
-                      placeholder="blur"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      blurDataURL={blurUrl}
                       style={{ objectFit: 'cover' }}
                     />
                   )}

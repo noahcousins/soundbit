@@ -17,8 +17,6 @@ import CardGrid from '@/components/artists/CardGrid';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { dynamicBlurDataUrl } from '@/components/util/dynamicBlurDataUrl';
-
 export const revalidate = 0;
 
 export default async function Profile({ params }: { params: any }) {
@@ -112,9 +110,9 @@ export default async function Profile({ params }: { params: any }) {
 
   console.log(artistSiteData);
 
-  const blurUrl = await dynamicBlurDataUrl(
-    `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
-  );
+  // const blurUrl = await dynamicBlurDataUrl(
+  //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
+  // );
 
   return (
     <div
@@ -124,7 +122,6 @@ export default async function Profile({ params }: { params: any }) {
         className={`flex min-h-screen w-full flex-col items-start gap-8 pt-24`}
       >
         <ArtistDetails
-          blurUrl={blurUrl}
           backgroundColor={artistSiteData[0].background_color}
           artistSiteData={artistSiteData}
           artistData={artistData}
