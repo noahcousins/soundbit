@@ -54,7 +54,9 @@ const GrtskGiga = localFont({
       style: 'normal'
     }
   ],
-  variable: '--font-grtsk-giga'
+  variable: '--font-grtsk-giga',
+  display: 'block',
+  preload: true
 });
 
 const GrtskPeta = localFont({
@@ -95,7 +97,9 @@ const GrtskPeta = localFont({
       style: 'normal'
     }
   ],
-  variable: '--font-grtsk-peta'
+  variable: '--font-grtsk-peta',
+  display: 'block',
+  preload: true
 });
 
 export default function RootLayout({
