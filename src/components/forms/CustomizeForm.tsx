@@ -138,8 +138,6 @@ export default function CustomizeForm({
     try {
       setLoading(true);
 
-      console.log(formData, 'pleasee');
-
       const { error } = await supabase
         .from('sites')
         .upsert(
@@ -168,7 +166,7 @@ export default function CustomizeForm({
         description: 'Your profile has been updated.'
       });
     } catch (error) {
-      console.log('ahhhhh fahk', error);
+      console.log(error);
       toast({
         variant: 'destructive',
         title: 'Error!',
@@ -180,7 +178,6 @@ export default function CustomizeForm({
   }
 
   const handleSubmit = form.handleSubmit((data) => {
-    console.log(data, 'check here'); // Make sure hide_branding is set correctly
     updateProfile(data);
   });
 

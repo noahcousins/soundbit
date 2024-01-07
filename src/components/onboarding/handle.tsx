@@ -37,7 +37,6 @@ export default async function Handle() {
       if (error) {
         console.error('Error adding artist handle:', error);
       } else {
-        console.log('Artist handle added');
         const { error } = await supabase
           .from('users')
           .update({ is_onboarded: true })
@@ -46,7 +45,6 @@ export default async function Handle() {
         if (error) {
           console.error('Error updating user:', error);
         } else {
-          console.log('User updated successfully');
         }
         redirect(`/${handle}`);
       }

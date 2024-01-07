@@ -52,8 +52,6 @@ export default function Pricing({
   products,
   subscription
 }: Props) {
-  console.log(session, user, products, subscription, 'Stripe data here');
-
   const intervals = Array.from(
     new Set(
       products.flatMap((product) =>
@@ -62,7 +60,6 @@ export default function Pricing({
     )
   );
 
-  console.log(intervals, 'inin');
   const router = useRouter();
   const [billingInterval, setBillingInterval] =
     useState<BillingInterval>('month');
@@ -145,8 +142,6 @@ export default function Pricing({
             currency: price.currency!,
             minimumFractionDigits: 0
           }).format((price?.unit_amount || 0) / 100);
-
-          console.log(price, priceString, 'pririri');
 
           const benefits = product.metadata?.benefits
             ? JSON.parse(product.metadata.benefits)

@@ -64,8 +64,6 @@ const bottomRoutes = [
 ];
 
 export default function Sidebar() {
-  // console.log("Check for cookie", sessionUser);
-
   return (
     <div className="sticky top-0 z-30 hidden w-1/6 flex-col gap-4 bg-gradient-to-b from-white/5 to-transparent leading-none transition lg:flex">
       <div className="sticky top-0 flex flex-col justify-between">

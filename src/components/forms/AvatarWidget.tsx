@@ -31,14 +31,12 @@ export default function Avatar({
   //         .from('avatars')
   //         .download(`${path}`);
 
-  //       console.log(data, 'plkekekek');
   //       if (error) {
-  //         console.log(error, 'eorororororo');
+  //         console.log(error);
   //         throw error;
   //       }
 
   //       const url = URL.createObjectURL(data);
-  //       console.log(url, 'url here');
   //       setAvatarUrl(url);
   //     } catch (error) {
   //       console.log('Error downloading image: ', error);
@@ -78,13 +76,10 @@ export default function Avatar({
       onUpload(filePath);
     } catch (error) {
       alert('Error uploading avatar!');
-      console.log(error, 'hehwhh wwe e f');
     } finally {
       setUploading(false);
     }
   };
-
-  console.log(url, 'lord help me');
 
   return (
     <div className="flex flex-col gap-4 text-center">

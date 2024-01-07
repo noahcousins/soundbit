@@ -74,8 +74,6 @@ const bottomRoutes = [
 ];
 
 export default function MobileSidebar() {
-  // console.log("Check for cookie", sessionUser);
-
   return (
     <Sheet>
       <SheetTrigger>

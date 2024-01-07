@@ -31,14 +31,12 @@ export default function Cover({
   //         .from('avatars')
   //         .download(`${path}`);
 
-  //       console.log(data, 'plkekekek');
   //       if (error) {
-  //         console.log(error, 'eorororororo');
+  //         console.log(error);
   //         throw error;
   //       }
 
   //       const url = URL.createObjectURL(data);
-  //       console.log(url, 'url here');
   //       setAvatarUrl(url);
   //     } catch (error) {
   //       console.log('Error downloading image: ', error);
@@ -78,13 +76,10 @@ export default function Cover({
       onUpload(filePath);
     } catch (error) {
       alert('Error uploading cover!');
-      console.log(error, 'hehwhh wwe e f');
     } finally {
       setUploading(false);
     }
   };
-
-  console.log(url, 'lord help me');
 
   return (
     <div className="flex w-2/3 flex-col gap-4 text-center md:w-full">

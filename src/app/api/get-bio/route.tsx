@@ -104,8 +104,6 @@ async function getBio(req: NextRequest, res: NextApiResponse) {
     const formattedAvatarUrl = reformatUrl(avatarNewUrl);
     const formattedCoverUrl = reformatUrl(coverUrl);
 
-    console.log(formattedAvatarUrl, formattedCoverUrl, 'owowoow');
-
     await supabase
       .from('sites')
       .update({

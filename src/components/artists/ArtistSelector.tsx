@@ -78,7 +78,6 @@ const ArtistSelector = ({
       }
 
       const data = await res.json();
-      console.log(data, 'bio');
 
       const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -86,8 +85,6 @@ const ArtistSelector = ({
       );
 
       const { bio, socialMediaLinks } = data.responseContent;
-
-      console.log(data, 'djdjdjdj');
 
       const { error } = await supabase.from('sites').upsert(
         {
@@ -104,7 +101,7 @@ const ArtistSelector = ({
       if (error) {
         console.error('Error adding artist bio:', error);
       } else {
-        console.log('Artist bio added');
+        // console.log('Artist bio added');
       }
     } catch (error) {
       console.error('Error fetching bio:', error);

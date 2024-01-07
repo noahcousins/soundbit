@@ -23,8 +23,6 @@ export default function ArtistDetails({
   artistSiteData: any;
   backgroundColor: string;
 }) {
-  console.log(artistSiteData, 'this what we need');
-
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.95 },
     show: {

@@ -106,9 +106,7 @@ export default async function Profile({ params }: { params: any }) {
     notFound();
   }
 
-  const albumImageUrl = artistAlbumsData?.items[0].images[0].url;
 
-  console.log(artistSiteData);
 
   // const blurUrl = await dynamicBlurDataUrl(
   //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
