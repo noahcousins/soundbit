@@ -14,7 +14,7 @@ import SocialLinks from '@/components/artists/SocialLinks';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default async function ArtistDetails({
+export default function ArtistDetails({
   artistData,
   artistSiteData,
   backgroundColor
@@ -23,8 +23,6 @@ export default async function ArtistDetails({
   artistSiteData: any;
   backgroundColor: string;
 }) {
-  console.log(artistSiteData, 'this what we need');
-
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.95 },
     show: {
@@ -83,6 +81,7 @@ export default async function ArtistDetails({
                       src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${artistSiteData[0].avatar_url}`}
                       alt="Image"
                       fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       style={{ objectFit: 'cover' }}
                     />
                   )}
