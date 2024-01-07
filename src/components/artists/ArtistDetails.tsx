@@ -13,7 +13,6 @@ import Link from 'next/link';
 import SocialLinks from '@/components/artists/SocialLinks';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { dynamicBlurDataUrl } from '@/components/util/dynamicBlurDataUrl';
 
 export default async function ArtistDetails({
   artistData,
@@ -50,10 +49,6 @@ export default async function ArtistDetails({
     exit: { opacity: 0, y: -20 }
   };
 
-  // const blurUrl = await dynamicBlurDataUrl(
-  //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
-  // );
-
   if (artistSiteData.length > 0 && artistSiteData[0].artist_id) {
     return (
       <AnimatePresence>
@@ -88,8 +83,6 @@ export default async function ArtistDetails({
                       src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${artistSiteData[0].avatar_url}`}
                       alt="Image"
                       fill={true}
-                      // placeholder="blur"
-                      // blurDataURL={blurUrl}
                       style={{ objectFit: 'cover' }}
                     />
                   )}
