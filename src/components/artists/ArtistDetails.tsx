@@ -13,13 +13,16 @@ import Link from 'next/link';
 import SocialLinks from '@/components/artists/SocialLinks';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { dynamicBlurDataUrl } from '../util/dynamicBlurDataUrl';
 
-export default function ArtistDetails({
+export default async function ArtistDetails({
   artistData,
-  artistSiteData
+  artistSiteData,
+  backgroundColor
 }: {
   artistData: any;
   artistSiteData: any;
+  backgroundColor: string;
 }) {
   console.log(artistSiteData, 'this what we need');
 
@@ -47,11 +50,15 @@ export default function ArtistDetails({
     exit: { opacity: 0, y: -20 }
   };
 
+  const blurUrl = await dynamicBlurDataUrl(
+    `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
+  );
+
   if (artistSiteData.length > 0 && artistSiteData[0].artist_id) {
     return (
       <AnimatePresence>
         <motion.div
-          className="border-gradient mx-auto rounded-2xl"
+          className="border-gradient mx-auto rounded-2xl text-white"
           variants={containerVariants}
           initial="hidden"
           animate="show"
@@ -72,7 +79,7 @@ export default function ArtistDetails({
 
               <div className="relative z-10 mx-auto flex flex-col gap-4 lg:flex-row">
                 <div
-                  className="absolute -top-8 left-1/2 aspect-square h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 items-center rounded-full border-8 border-[#0D0D0D] drop-shadow-md"
+                  className={`absolute -top-8 left-1/2 aspect-square h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 items-center rounded-full border-8 ${backgroundColor} border-transparent drop-shadow-md`}
                   style={{ overflow: 'hidden', height: '200px' }}
                 >
                   {artistSiteData[0].avatar_url && (
@@ -81,6 +88,8 @@ export default function ArtistDetails({
                       src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${artistSiteData[0].avatar_url}`}
                       alt="Image"
                       fill={true}
+                      placeholder="blur"
+                      blurDataURL={blurUrl}
                       style={{ objectFit: 'cover' }}
                     />
                   )}

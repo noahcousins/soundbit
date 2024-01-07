@@ -68,16 +68,21 @@ export default function WavePlayer({
     if (!wavesurferRef.current) return;
 
     if (paused) {
+      // console.log('Pausing WaveSurfer...');
       wavesurferRef.current.pause();
     } else {
       if (activeWaveSurfer && activeWaveSurfer !== wavesurferRef.current) {
+        // console.log('Stopping previously active WaveSurfer...');
         activeWaveSurfer.stop();
       }
+
+      // console.log('Playing WaveSurfer...');
       wavesurferRef.current.play();
       setWaveSurfer(wavesurferRef.current);
+
       const newParams = getPlayerParams();
     }
-  }, [paused]);
+  }, [paused, activeWaveSurfer]); // Include activeWaveSurfer as a dependency
 
   return (
     <div className="relative h-full w-full">

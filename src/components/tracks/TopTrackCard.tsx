@@ -19,6 +19,7 @@ import { Disc3 } from 'lucide-react';
 
 import { useState } from 'react';
 import WavePlayer from '../waveplayer/WavesurferPlayer';
+import { dynamicBlurDataUrl } from '../util/dynamicBlurDataUrl';
 
 export default function TopTrackCard({
   track,
@@ -30,17 +31,18 @@ export default function TopTrackCard({
   backgroundColor: any;
 }) {
   const [paused, setPaused] = useState(true);
+
   const { activePlayer, setPlayer } = useWaveSurfer();
 
   const playPreview = () => {
-    if (paused) {
-      setPaused(false);
-      setPlayer(track.preview_url);
-    } else {
-      setPaused(true);
+    if (activePlayer === track.preview_url) {
       setPlayer(null);
+    } else {
+      setPlayer(track.preview_url);
     }
   };
+
+  const isPlaying = activePlayer === track.preview_url;
 
   const wavePlayerVariants = {
     hidden: {
@@ -76,21 +78,21 @@ export default function TopTrackCard({
         />
         <button
           onClick={playPreview}
-          className={`absolute inset-1/2 z-10 h-1/3 w-1/3 translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-white shadow-lg transition-transform duration-100 ease-in-out hover:scale-105 hover:bg-gray-300 ${
+          className={`absolute inset-1/2 z-10 h-1/4 w-1/4 translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-white shadow-lg transition-transform duration-100 ease-in-out hover:scale-105 hover:bg-gray-300 ${
             activePlayer === track.preview_url
               ? 'flex'
-              : 'hidden group-hover:flex'
+              : 'flex lg:hidden lg:group-hover:flex'
           }`}
         >
           {activePlayer === track.preview_url ? (
             <FaPause
               size={16}
-              className="ml-1 text-black sm:h-[45%] sm:w-[45%]"
+              className="ml-1 h-1/2 w-1/2 text-black lg:h-[45%] lg:w-[45%]"
             />
           ) : (
             <FaPlay
               size={16}
-              className="ml-1 text-black sm:h-[45%] sm:w-[45%]"
+              className="ml-1 h-1/2 w-1/2 text-black lg:h-[45%] lg:w-[45%]"
             />
           )}
         </button>
@@ -102,7 +104,7 @@ export default function TopTrackCard({
         >
           <WavePlayer
             waveColor={backgroundColor}
-            paused={paused}
+            paused={!isPlaying}
             url={track.preview_url}
           />
         </motion.div>

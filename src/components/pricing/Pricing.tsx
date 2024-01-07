@@ -122,9 +122,9 @@ export default function Pricing({
             Go PRO
           </h3>
           <p className="m-auto max-w-xl text-center text-lg text-zinc-200">
-            Make your
-            <span className="px-2 font-grtsk-giga font-bold">soundbit.</span>
-            yours.
+            For artists needing the
+            <span className="px-1 font-grtsk-giga font-bold">ultimate</span>
+            website.
           </p>
         </div>
         <PricingTabs
