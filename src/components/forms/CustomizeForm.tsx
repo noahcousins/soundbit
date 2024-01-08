@@ -29,6 +29,7 @@ import Link from 'next/link';
 import { Checkbox } from '../../../components/ui/checkbox';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Textarea } from '../ui/textarea';
 
 export default function CustomizeForm({
   session,
@@ -162,7 +163,7 @@ export default function CustomizeForm({
 
       if (error) throw error;
       toast({
-        title: 'Updated',
+        title: 'Changes saved!',
         description: 'Your profile has been updated.'
       });
     } catch (error) {
@@ -202,7 +203,7 @@ export default function CustomizeForm({
           type="submit"
           className="mx-auto w-fit"
         >
-          Update Profile
+          Save Changes
         </Button>
         <Tabs
           defaultValue="general"
@@ -306,9 +307,10 @@ export default function CustomizeForm({
               render={({ field }) => (
                 <div>
                   <label htmlFor="artist_bio">Bio</label>
-                  <Input
+                  <Textarea
                     id="artist_bio"
-                    placeholder="Enter your artist bio"
+                    placeholder="Tell us a little bit about yourself"
+                    className="h-48"
                     {...field}
                   />
                   <FormMessage placeholder={field.name} />
