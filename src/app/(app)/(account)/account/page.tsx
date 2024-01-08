@@ -135,40 +135,18 @@ export default async function Account() {
   }
 
   return (
-    <section className="flex w-full flex-col gap-16">
-      <div className="flex w-full justify-between">
-        {' '}
+    <section className="my-16 flex w-full flex-col gap-16">
+      <div className="flex w-full flex-col justify-between gap-4">
         <div className="flex w-full flex-col">
-          <h1 className="text-4xl font-bold">Settings</h1>
+          <h1 className="font-grtsk-giga text-4xl font-bold">Settings</h1>
           <p className="text-lg">Edit your account settings on soundbit.</p>
         </div>
-        <div className="flex w-full content-end gap-4 text-right">
-          <h2 className="text-4xl font-light">
-            Hello, <span className="font-semibold">{session.user.email}</span>
-          </h2>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="w-24" variant="outline">
-                Edit Profile
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                  Make changes to your profile here. Click save when you're
-                  done.
-                </DialogDescription>
-              </DialogHeader>
-              {/* @ts-ignore */}
-              <AccountForm session={session} />
-            </DialogContent>
-          </Dialog>
-        </div>
+        <h2 className="font-light">
+          Hello, <span className="font-medium">{session.user.email}</span>
+        </h2>
       </div>
-      <ModeToggle />
       <Card
-        title="Your Plan"
+        title={subscription?.prices?.products?.name}
         description={
           subscription
             ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
@@ -178,7 +156,15 @@ export default async function Account() {
       >
         <div className="mb-4 mt-8 text-xl font-semibold">
           {subscription ? (
-            `${subscriptionPrice}/${subscription?.prices?.interval}`
+            <div className="flex">
+              <h3 className="font-grtsk-giga text-3xl font-bold">
+                {subscriptionPrice}
+              </h3>
+              <span className="mb-1 flex flex-col justify-end text-sm">
+                {'/'}
+                {subscription.prices?.interval}
+              </span>
+            </div>
           ) : (
             <Link href="/">Choose your plan</Link>
           )}
@@ -199,13 +185,11 @@ function Card({ title, description, footer, children }: Props) {
   return (
     <div className="w-full max-w-3xl rounded-md border border-zinc-700">
       <div className="px-5 py-4">
-        <h3 className="mb-1 text-2xl font-medium">{title}</h3>
+        <h3 className="mb-1 font-grtsk-giga text-2xl font-medium">{title}</h3>
         <p className="text-zinc-300">{description}</p>
         {children}
       </div>
-      <div className="rounded-b-md border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500">
-        {footer}
-      </div>
+      <div className="rounded-b-md border-t p-4">{footer}</div>
     </div>
   );
 }

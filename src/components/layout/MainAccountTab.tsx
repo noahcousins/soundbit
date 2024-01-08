@@ -90,7 +90,7 @@ export default function MainAccountTab({
   return (
     <div className="flex w-fit items-center space-x-4">
       <div className="flex items-center space-x-4">
-        <p className="hidden whitespace-nowrap text-sm text-primary/90 md:flex">
+        <p className="hidden whitespace-nowrap text-sm text-white/90 md:flex">
           {/* @ts-ignore */}
           Hello, {profile?.username || sessionUser?.email}
         </p>
@@ -99,7 +99,7 @@ export default function MainAccountTab({
           <DropdownMenuTrigger asChild>
             <div className="order-1 flex cursor-pointer rounded-full border-2 border-white/30 transition-all duration-200 ease-in-out hover:border-white">
               {/* Wrap the components in a parent div */}
-              <Avatar>
+              <Avatar className="">
                 <AvatarImage src={avatarUrl} alt="@shadcn" />
                 <AvatarFallback>{fallbackInitials}</AvatarFallback>
               </Avatar>

@@ -14,7 +14,7 @@ export default async function Navigation({
   user: any;
 }) {
   return (
-    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-b-background/10 bg-background/95 px-3 text-sm backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-b-background/10 px-3 text-sm text-white backdrop-blur supports-[backdrop-filter]:bg-black/95 dark:supports-[backdrop-filter]:bg-background/80">
       <Link className="flex cursor-pointer" href="/">
         <span className="text font-grtsk-giga text-xl font-bold">
           soundbit.

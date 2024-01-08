@@ -18,10 +18,10 @@ const people = [
 
 export default function FeatureGrid() {
   return (
-    <section className="mx-auto grid max-w-screen-xl grid-cols-1 gap-8 px-4 pb-16 lg:grid-cols-3 lg:gap-16 xl:px-0">
-      <article className="group flex h-80 w-full flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background lg:w-96">
-        <div className="relative flex h-1/2 items-center justify-center overflow-hidden border-b-[1px] border-white/40 bg-gradient-radial from-white/5 to-[#181818] transition-all duration-200 ease-in-out">
-          <div className="absolute flex h-[100px] w-[100px] items-center justify-center rounded-full border-[1px] border-[#FF2E01] bg-[#631301] transition-all duration-200 ease-in-out group-hover:h-[140px] group-hover:w-[140px]">
+    <section className="mx-auto grid max-w-screen-xl grid-cols-1 gap-8 px-4 py-16 lg:grid-cols-3 lg:gap-16 xl:px-0">
+      <article className="group flex h-80 w-full max-w-lg flex-col overflow-hidden rounded-2xl border-[1px] border-primary/40 bg-white dark:bg-transparent">
+        <div className="relative flex h-1/2 items-center justify-center overflow-hidden border-b-[1px] border-primary/40 bg-gradient-radial transition-all duration-200 ease-in-out dark:from-white/5 dark:to-[#181818]/20">
+          <div className="absolute flex h-[100px] w-[100px] items-center justify-center rounded-full border-[1px] border-[#FF2E01] bg-[#000000] transition-all duration-200 ease-in-out group-hover:h-[140px] group-hover:w-[140px] dark:bg-[#631301]">
             <Disc3
               className="rotate-0 duration-200 ease-in-out group-hover:rotate-180"
               stroke="#FF2E01"
@@ -35,18 +35,18 @@ export default function FeatureGrid() {
           <div className="absolute h-[250px] w-[250px] rounded-full border-[1px] border-[#FF2E01] transition-all duration-200 ease-in-out group-hover:h-[275px] group-hover:w-[275px]"></div>
           <div className="absolute h-[300px] w-[300px] rounded-full border-[1px] border-[#FF2E01] transition-all duration-200 ease-in-out group-hover:h-[325px] group-hover:w-[325px]"></div>
         </div>
-        <div className="flex h-1/2 flex-col bg-white/[3%] px-4 py-6">
+        <div className="flex h-1/2 flex-col bg-primary/[3%] px-4 py-6">
           <h3 className="mb-3 text-xl font-medium">
             All your music, in one place
           </h3>
-          <p className="font-light text-white/50">
+          <p className="text-sm font-light text-primary/50 sm:text-base">
             Get started by choosing your Spotify profile. We'll make sure it's
             always up to date.
           </p>
         </div>
       </article>
-      <article className="group flex h-80 w-full flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background lg:w-96">
-        <div className="relative h-1/2 overflow-hidden border-b-[1px] border-white/40 bg-gradient-radial from-white/5 to-[#181818] px-4 pt-4 transition-all duration-200 ease-in-out group-hover:px-6 group-hover:pt-6">
+      <article className="group flex h-80 w-full max-w-lg flex-col overflow-hidden rounded-2xl border-[1px] border-primary/40 bg-white dark:bg-transparent">
+        <div className="relative h-1/2 overflow-hidden border-b-[1px] border-primary/40 bg-gradient-radial px-4 pt-4 transition-all duration-200 ease-in-out group-hover:px-6 group-hover:pt-6 dark:from-white/5 dark:to-[#181818]/20">
           <div className="grid h-full w-full grid-cols-5 items-center justify-center gap-2 rounded-t-lg bg-[#FF2E01] p-4">
             {Array.from({ length: 10 }, (_, index) => (
               <div key={index} className="flex h-full w-full flex-col gap-1">
@@ -65,16 +65,16 @@ export default function FeatureGrid() {
             ))}
           </div>
         </div>
-        <div className="flex h-1/2 flex-col bg-white/[3%] px-4 py-6">
+        <div className="flex h-1/2 flex-col bg-primary/[3%] px-4 py-6">
           <h3 className="mb-3 text-xl font-medium">Customize your way</h3>
-          <p className="font-light text-white/50">
+          <p className="text-sm font-light text-primary/50 sm:text-base">
             Display your full catalog, top tracks, or both. Choose the music you
             don't want to show.
           </p>
         </div>
       </article>
-      <article className="group flex h-80 w-full flex-col overflow-hidden rounded-2xl border-[1px] border-white/40 bg-background lg:w-96">
-        <div className="relative flex h-1/2 flex-col items-center justify-center gap-2 overflow-hidden border-b-[1px] border-white/40 bg-gradient-radial from-white/5 to-[#181818] transition-all duration-200 ease-in-out">
+      <article className="group flex h-80 w-full max-w-lg flex-col overflow-hidden rounded-2xl border-[1px] border-primary/40 bg-white dark:bg-transparent">
+        <div className="relative flex h-1/2 flex-col items-center justify-center gap-2 overflow-hidden border-b-[1px] border-primary/40 bg-gradient-radial transition-all duration-200 ease-in-out dark:from-white/5 dark:to-[#181818]/20">
           <div className="flex -translate-x-14 flex-row gap-2 transition-transform duration-200 group-hover:-translate-x-4">
             {people.slice(0, 4).map((person: any, index: number) => (
               <ShareCell key={index} person={person} />
@@ -91,9 +91,9 @@ export default function FeatureGrid() {
             ))}
           </div>
         </div>
-        <div className="flex h-1/2 flex-col bg-white/[3%] px-4 py-6">
+        <div className="flex h-1/2 flex-col bg-primary/[3%] px-4 py-6">
           <h3 className="mb-3 text-xl font-medium">Share with the world</h3>
-          <p className="font-light text-white/50">
+          <p className="text-sm font-light text-primary/50 sm:text-base">
             Share your new site with the world. Create a short, memorable link
             to send to anybody.
           </p>

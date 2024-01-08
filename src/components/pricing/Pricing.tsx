@@ -112,16 +112,15 @@ export default function Pricing({
   ];
 
   return (
-    <section className="bg-gradient-to-b from-transparent to-black  px-4 lg:px-0">
+    <section className="black bg-gradient-to-b from-[#181818] to-black px-4 lg:px-0">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 py-8">
         <div className="align-center flex flex-col gap-2">
           <h3 className="text-center font-grtsk-giga text-4xl font-extrabold text-white sm:text-6xl">
             Go PRO
           </h3>
-          <p className="m-auto max-w-xl text-center text-lg text-zinc-200">
-            For artists needing the
-            <span className="px-1 font-grtsk-giga font-bold">ultimate</span>
-            website.
+          <p className="m-auto max-w-xl text-center text-lg text-white">
+            For artists who need to
+            <span className="px-1 font-grtsk-giga font-bold">stand out.</span>
           </p>
         </div>
         <PricingTabs
@@ -150,7 +149,7 @@ export default function Pricing({
           return (
             <Card
               className={cn(
-                `relative z-10 mx-auto flex w-full flex-col justify-between gap-8 rounded-3xl p-12 sm:mx-0 sm:w-80`
+                `relative z-10 mx-auto flex w-full flex-col justify-between gap-8 rounded-3xl bg-black p-12 sm:mx-0 sm:w-80`
               )}
             >
               <div
@@ -175,12 +174,12 @@ export default function Pricing({
                     </CardTitle>
                   </div>
                   {priceString && billingInterval ? (
-                    <div className="flex w-full items-center justify-between">
+                    <div className="flex w-full items-center justify-between text-foreground">
                       <div className="flex gap-0.5">
-                        <h3 className="font-grtsk-giga text-3xl font-bold">
+                        <h3 className="font-grtsk-giga text-3xl font-bold text-white">
                           {priceString}
                         </h3>
-                        <span className="mb-1 flex flex-col justify-end text-sm">
+                        <span className="mb-1 flex flex-col justify-end text-sm text-white">
                           {'/'}
                           {billingInterval}
                         </span>
@@ -204,8 +203,8 @@ export default function Pricing({
                   ) : (
                     ''
                   )}
-                  <CardDescription className="h-12 pt-1.5 font-light">
-                    Perfect for artists who need a custom website.
+                  <CardDescription className="h-12 pt-1.5 font-light text-white/80">
+                    Create your website the way you want.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 p-0">
@@ -216,36 +215,39 @@ export default function Pricing({
                 <CardFooter className="p-0">
                   {intervals.includes('month') && (
                     <div className="flex w-full items-center">
-                      <Button
-                        type="button"
-                        onClick={() => handleCheckout(price)}
-                        className="relative mx-auto inline-flex w-full items-center justify-center rounded-md bg-white px-6 font-medium text-black transition-colors focus:outline-none focus:ring-0"
-                      >
-                        Get Started
-                      </Button>
-                      {/* <Button
-                        type="button"
-                        onClick={() => handleCheckout(price)}
-                        style={
-                          {
-                            '--background': '0 0 0',
-                            '--highlight': '255 255 255',
+                      {subscription ? (
+                        <Button
+                          type="button"
+                          onClick={() => handleCheckout(price)}
+                          className="relative mx-auto inline-flex w-full items-center justify-center rounded-md bg-white px-6 font-medium text-black transition-colors focus:outline-none focus:ring-0"
+                        >
+                          Manage Plan
+                        </Button>
+                      ) : (
+                        <Button
+                          type="button"
+                          onClick={() => handleCheckout(price)}
+                          style={
+                            {
+                              '--background': '0 0 0',
+                              '--highlight': '255 255 255',
 
-                            '--bg-color':
-                              'linear-gradient(rgb(var(--background)), rgb(var(--background)))',
-                            '--border-color': `linear-gradient(145deg,
+                              '--bg-color':
+                                'linear-gradient(rgb(var(--background)), rgb(var(--background)))',
+                              '--border-color': `linear-gradient(145deg,
                               rgb(var(--highlight)) 0%,
                               rgb(var(--highlight) / 0.3) 33.33%,
                               rgb(var(--highlight) / 0.14) 66.67%,
                               rgb(var(--highlight) / 0.1) 100%)
                             `
-                          } as CSSProperties
-                        }
-                        className="focus:outline-nonefocus:ring-0 relative inline-flex w-full items-center
+                            } as CSSProperties
+                          }
+                          className="focus:outline-nonefocus:ring-0 relative inline-flex w-full items-center
                         justify-center rounded-md border border-transparent bg-black text-center font-medium text-white transition-colors [background:padding-box_var(--bg-color),border-box_var(--border-color)]"
-                      >
-                        Get Started
-                      </Button> */}
+                        >
+                          Get Started
+                        </Button>
+                      )}
                     </div>
                   )}
                 </CardFooter>
@@ -261,6 +263,6 @@ export default function Pricing({
 const CheckItem = ({ text }: { text: string }) => (
   <div className="flex items-center gap-2">
     <CheckCircle2 size={18} className="my-auto text-[#FF2E01]" />
-    <p className="text-xs text-white/80">{text}</p>
+    <p className="text-xs font-light text-white/60">{text}</p>
   </div>
 );

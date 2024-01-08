@@ -110,7 +110,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${GrtskGiga.variable} ${GrtskPeta.variable} bg-background focus-visible:ring-transparent dark:bg-[#181818]`}
+        className={`${GrtskGiga.variable} ${GrtskPeta.variable} bg-[#DDDDDD] focus-visible:ring-transparent dark:bg-[#181818]`}
       >
         <main className="mx-auto flex h-screen flex-col items-center font-grtsk-peta tracking-tighter">
           <ThemeProvider

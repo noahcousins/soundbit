@@ -2,7 +2,7 @@ export default function ShareCell({ person }: { person: any }) {
   return (
     <div
       className={`flex w-28 items-center gap-1 rounded-full border-[1px] ${
-        person.active ? 'bg-[#FF2E01]' : 'bg-white/10'
+        person.active ? 'bg-[#FF2E01]' : 'bg-primary/10'
       } border-white/20 p-1`}
     >
       <div className="relative aspect-square h-auto w-1/3 rounded-full bg-white/50">
@@ -17,12 +17,12 @@ export default function ShareCell({ person }: { person: any }) {
       <div className="flex w-2/3 flex-col gap-1 pr-4">
         <div
           className={`h-1 w-full rounded-full ${
-            person.active ? 'bg-black/50' : 'bg-white/25'
+            person.active ? 'bg-black/50' : 'bg-primary/25'
           }`}
         ></div>
         <div
           className={`h-1 w-3/4 rounded-full ${
-            person.active ? 'bg-black/50' : 'bg-white/25'
+            person.active ? 'bg-black/50' : 'bg-primary/25'
           }`}
         ></div>
       </div>

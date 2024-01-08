@@ -106,8 +106,6 @@ export default async function Profile({ params }: { params: any }) {
     notFound();
   }
 
-
-
   // const blurUrl = await dynamicBlurDataUrl(
   //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
   // );
@@ -207,7 +205,7 @@ export default async function Profile({ params }: { params: any }) {
                 <p className="text-xs">
                   made with
                   <span className="pl-1 font-grtsk-giga font-bold">
-                    soundbit
+                    soundbit.
                   </span>
                 </p>
               </Link>
