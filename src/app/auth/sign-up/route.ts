@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
   if (error) {
     return NextResponse.redirect(
-      `${requestUrl.origin}/login?error=Could not authenticate user`,
+      `${requestUrl.origin}/sign-up?error=Invalid details. Please try a different email.`,
       {
         // a 301 status is required to redirect from a POST to a GET route
         status: 301
