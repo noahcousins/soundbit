@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { redirect, useRouter } from 'next/navigation';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -23,13 +21,11 @@ const handleSchema = z.object({
   handle: z.string().min(1, 'Handle is required')
 });
 
-function HandleInput({ onSubmit }: { onSubmit: Function }) {
+export default function HandleInput({ onSubmit }: { onSubmit: Function }) {
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(handleSchema)
   });
-
-  const router = useRouter();
 
   const handleSubmit = async (data: any) => {
     setIsLoading(true);
@@ -47,27 +43,34 @@ function HandleInput({ onSubmit }: { onSubmit: Function }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="flex w-full flex-col gap-8"
+      >
+        <FormLabel className="max-w-md text-center font-grtsk-giga text-4xl font-bold">
+          Pick your artist handle
+        </FormLabel>
         <FormField
           control={form.control}
           name="handle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-grtsk-giga text-2xl font-bold">
-                Pick your artist handle
-              </FormLabel>
               <FormControl>
-                <Input placeholder="Your site handle" {...field} />
+                <Input
+                  className="mx-auto w-72"
+                  placeholder="Your site handle"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit"> {isLoading ? 'Loading...' : 'Submit'}</Button>
+        <Button className="mx-auto w-fit" type="submit">
+          {isLoading ? 'Loading...' : 'Submit'}
+        </Button>
       </form>
     </Form>
   );
 }
-
-export default HandleInput;

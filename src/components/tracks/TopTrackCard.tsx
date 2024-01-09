@@ -75,26 +75,31 @@ export default function TopTrackCard({
           width={200}
           src={track.album.images[0].url}
         />
-        <button
-          onClick={playPreview}
-          className={`absolute inset-1/2 z-10 h-1/4 w-1/4 translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-white shadow-lg transition-transform duration-100 ease-in-out hover:scale-105 hover:bg-gray-300 ${
-            activePlayer === track.preview_url
-              ? 'flex'
-              : 'flex lg:hidden lg:group-hover:flex'
-          }`}
-        >
-          {activePlayer === track.preview_url ? (
-            <FaPause
-              size={16}
-              className="ml-1 h-1/2 w-1/2 text-black lg:h-[45%] lg:w-[45%]"
-            />
-          ) : (
-            <FaPlay
-              size={16}
-              className="ml-1 h-1/2 w-1/2 text-black lg:h-[45%] lg:w-[45%]"
-            />
-          )}
-        </button>
+        {track.preview_url ? (
+          <button
+            onClick={playPreview}
+            className={`absolute inset-1/2 z-10 h-1/4 w-1/4 translate-x-[-50%] translate-y-[-50%] items-center justify-center rounded-full bg-white shadow-lg transition-transform duration-100 ease-in-out hover:scale-105 hover:bg-gray-300 ${
+              activePlayer === track.preview_url
+                ? 'flex'
+                : 'flex lg:hidden lg:group-hover:flex'
+            }`}
+          >
+            {activePlayer === track.preview_url ? (
+              <FaPause
+                size={16}
+                className="ml-1 h-1/2 w-1/2 text-black lg:h-[45%] lg:w-[45%]"
+              />
+            ) : (
+              <FaPlay
+                size={16}
+                className="ml-1 h-1/2 w-1/2 text-black lg:h-[45%] lg:w-[45%]"
+              />
+            )}
+          </button>
+        ) : (
+          ''
+        )}
+
         <motion.div
           className="absolute bottom-0 z-0 w-full -translate-x-1/2 bg-black/80 p-1 backdrop-blur-lg"
           initial="hidden"

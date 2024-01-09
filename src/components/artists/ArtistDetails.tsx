@@ -59,7 +59,7 @@ export default function ArtistDetails({
       >
         {artistSiteData && (
           <div
-            className="relative mx-auto flex w-full max-w-7xl flex-col gap-4 rounded-2xl p-8"
+            className="relative mx-auto flex max-w-7xl flex-col gap-4 rounded-2xl p-8"
             style={{
               backgroundSize: artistSiteData?.cover_url ? 'cover' : '',
               backgroundImage: artistSiteData?.cover_url
@@ -126,7 +126,7 @@ export default function ArtistDetails({
               </div>
             </div>
 
-            <div className="z-10 mx-auto flex gap-2">
+            <div className="z-10 mx-auto flex w-full flex-wrap justify-center gap-2">
               {artistData?.genres?.map((genre: any, index: number) => (
                 <motion.div
                   key={index}
