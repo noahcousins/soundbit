@@ -3,6 +3,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import localFont from 'next/font/local';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: 'soundbit.',
@@ -123,6 +124,7 @@ export default function RootLayout({
             <div className="flex w-full">{children}</div>
           </ThemeProvider>
         </main>
+        <Analytics />
         <Toaster />
       </body>
     </html>
