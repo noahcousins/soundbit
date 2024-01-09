@@ -4,6 +4,16 @@ import { getSession } from '@/app/supabase-server';
 
 import CustomizeForm from '@/components/forms/CustomizeForm';
 
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup
+} from '@/components/ui/resizable';
+import ArtistPage from '@/components/pages/ArtistCustomPage';
+
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+
 export const revalidate = 0;
 
 export default async function Customize() {
@@ -23,9 +33,9 @@ export default async function Customize() {
   const session = await getSession();
 
   const user_id = session?.user.id;
-
   let initialFormData;
   let defaultMusicTabValue = 'catalog';
+  let siteHandle; // Define a variable to hold the 'handle' value
 
   if (user_id) {
     const { data } = await supabase
@@ -43,15 +53,34 @@ export default async function Customize() {
         defaultMusicTabValue = 'top_tracks';
       }
     }
+
+    // Assuming 'handle' is a property in initialFormData
+    siteHandle = data?.handle; // Get the 'handle' value from initialFormData
   }
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-start gap-8 pt-4">
-      <CustomizeForm
-        session={session}
-        defaultMusicTabValue={defaultMusicTabValue}
-        initialFormData={initialFormData}
-      />
+    <main className="flex min-h-screen w-full flex-col items-start gap-8 md:flex-row">
+      <aside className="flex w-full md:w-1/4 lg:w-1/3">
+        <ScrollArea className="block h-full w-full rounded-md p-4">
+          <div style={{ height: '100%', width: '100%' }}>
+            <CustomizeForm
+              session={session}
+              defaultMusicTabValue={defaultMusicTabValue}
+              initialFormData={initialFormData}
+            />
+          </div>
+        </ScrollArea>
+      </aside>
+      <Separator className="hidden sm:block" orientation="vertical" />
+      <Separator className="block sm:hidden" orientation="horizontal" />
+
+      <div className="flex h-screen w-full md:w-3/4 lg:w-2/3">
+        <ScrollArea className="block h-full w-full rounded-md p-4">
+          <div style={{ height: '100%', width: '100%' }}>
+            <ArtistPage artistSiteData={initialFormData} handle={siteHandle} />
+          </div>
+        </ScrollArea>
+      </div>
     </main>
   );
 }

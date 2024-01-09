@@ -1,6 +1,7 @@
+import Dock from '@/components/layout/Dock';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 import localFont from 'next/font/local';
 
 export const metadata = {
@@ -112,7 +113,7 @@ export default function RootLayout({
       <body
         className={`${GrtskGiga.variable} ${GrtskPeta.variable} bg-[#DDDDDD] focus-visible:ring-transparent dark:bg-[#181818]`}
       >
-        <main className="mx-auto flex h-screen flex-col items-center font-grtsk-peta tracking-tighter">
+        <main className="relative mx-auto flex h-screen flex-col items-center font-grtsk-peta tracking-tighter">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

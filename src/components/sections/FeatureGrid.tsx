@@ -18,7 +18,7 @@ const people = [
 
 export default function FeatureGrid() {
   return (
-    <section className="mx-auto grid max-w-screen-xl grid-cols-1 gap-8 px-4 py-16 lg:grid-cols-3 lg:gap-16 xl:px-0">
+    <section className="mx-auto grid max-w-screen-xl grid-cols-1 gap-8 px-4 py-4 lg:grid-cols-3 lg:gap-16 lg:py-16 xl:px-0">
       <article className="group flex h-80 w-full max-w-lg flex-col overflow-hidden rounded-2xl border-[1px] border-primary/40 bg-white dark:bg-transparent">
         <div className="relative flex h-1/2 items-center justify-center overflow-hidden border-b-[1px] border-primary/40 bg-gradient-radial transition-all duration-200 ease-in-out dark:from-white/5 dark:to-[#181818]/20">
           <div className="absolute flex h-[100px] w-[100px] items-center justify-center rounded-full border-[1px] border-[#FF2E01] bg-[#000000] transition-all duration-200 ease-in-out group-hover:h-[140px] group-hover:w-[140px] dark:bg-[#631301]">

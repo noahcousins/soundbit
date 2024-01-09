@@ -36,11 +36,11 @@ export default function Footer({ siteData }: { siteData: any }) {
           <DarkModeSvg />
         </div>
         <div className="order-1 flex h-full w-64 select-none flex-col justify-between gap-8 sm:order-2 sm:flex-row">
-          <ul className="flex h-full flex-col justify-between text-center text-xl sm:text-left sm:text-sm">
+          <ul className="flex h-full w-full flex-col justify-between text-center text-xl sm:text-left sm:text-sm">
             {modifiedFooterLinks.slice(0, 3).map((item: any, i: number) => (
               <Link
                 href={item.href}
-                className="w-fit opacity-100 hover:opacity-60 active:opacity-80"
+                className="w-full opacity-100 hover:opacity-60 active:opacity-80 sm:w-fit"
               >
                 <li key={i} className="">
                   {item.name}
@@ -48,7 +48,7 @@ export default function Footer({ siteData }: { siteData: any }) {
               </Link>
             ))}
           </ul>
-          <ul className="flex h-full w-full flex-col justify-between text-center text-xl sm:text-left sm:text-sm">
+          <ul className="flex h-full w-full flex-col justify-between text-center text-xl sm:w-fit sm:text-left sm:text-sm">
             {modifiedFooterLinks.slice(3, 6).map((item: any, i: number) => (
               <Link
                 href={item.href}

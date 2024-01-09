@@ -20,7 +20,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { ToastAction } from '@/components/ui/toast';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { ScrollArea } from '../ui/scroll-area';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -80,9 +80,9 @@ export default function CustomizeForm({
 
   const [loading, setLoading] = useState(true);
   const [subscriptionActive, setSubscriptionActive] = useState(false);
-  const user = session?.user;
+  const [showForm, setShowForm] = useState(false);
 
-  const { toast } = useToast();
+  const user = session?.user;
 
   async function hasActiveSubscription(userId: any) {
     const { data, error } = await supabase
@@ -162,16 +162,12 @@ export default function CustomizeForm({
         .select();
 
       if (error) throw error;
-      toast({
-        title: 'Changes saved!',
+      toast('Changes saved!', {
         description: 'Your profile has been updated.'
       });
     } catch (error) {
-      console.log(error);
-      toast({
-        variant: 'destructive',
-        title: 'Error!',
-        description: 'Error updating your profile@@@@.'
+      toast('Error!', {
+        description: 'There was an issue updating your profile.'
       });
     } finally {
       setLoading(false);
@@ -183,143 +179,153 @@ export default function CustomizeForm({
   });
 
   return (
-    <Form {...form}>
-      <form className="mx-auto flex flex-col gap-4" onSubmit={handleSubmit}>
-        <Button
-          onClick={() =>
-            updateProfile({
-              artist_name: form.getValues('artist_name'),
-              handle: form.getValues('handle'),
-              artist_bio: form.getValues('artist_bio'),
-              facebook: form.getValues('facebook'),
-              instagram: form.getValues('instagram'),
-              twitter: form.getValues('twitter'),
-              wikipedia: form.getValues('wikipedia'),
-              hide_branding: form.getValues('hide_branding'),
-              background_color: form.getValues('background_color'),
-              view: form.getValues('view')
-            })
-          }
-          type="submit"
-          className="mx-auto w-fit"
-        >
-          Save Changes
+    <div className="relative">
+      {showForm && (
+        <Button onClick={() => setShowForm(false)} className="mx-auto w-fit">
+          Hide
         </Button>
-        <Tabs
-          defaultValue="general"
-          className="mx-auto flex w-full flex-col gap-4"
-        >
-          <TabsList className="mx-auto">
-            <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="layout">Layout</TabsTrigger>
-            <TabsTrigger value="music">Music</TabsTrigger>
-            <TabsTrigger value="links">Links</TabsTrigger>
-          </TabsList>
-          <TabsContent value="general">
-            <div className="flex flex-col items-center gap-8 md:flex-row">
-              <Avatar
-                uid={user.id}
-                url={initialFormData.avatar_url}
-                size={150}
-                onUpload={(url: string) => {
-                  form.setValue('avatar_url', url);
-                  updateProfile({
-                    artist_name: form.getValues('artist_name'),
-                    handle: form.getValues('handle'),
-                    artist_bio: form.getValues('artist_bio'),
-                    avatar_url: url,
-                    facebook: form.getValues('facebook'),
-                    instagram: form.getValues('instagram'),
-                    twitter: form.getValues('twitter'),
-                    wikipedia: form.getValues('wikipedia')
-                  });
-                }}
-              />
+      )}
+      <div className={`${showForm || 'hidden sm:block'}`}>
+        <Form {...form}>
+          <form
+            className="mx-auto flex w-full flex-col gap-4"
+            onSubmit={handleSubmit}
+          >
+            <Button
+              onClick={() =>
+                updateProfile({
+                  artist_name: form.getValues('artist_name'),
+                  handle: form.getValues('handle'),
+                  artist_bio: form.getValues('artist_bio'),
+                  facebook: form.getValues('facebook'),
+                  instagram: form.getValues('instagram'),
+                  twitter: form.getValues('twitter'),
+                  wikipedia: form.getValues('wikipedia'),
+                  hide_branding: form.getValues('hide_branding'),
+                  background_color: form.getValues('background_color'),
+                  view: form.getValues('view')
+                })
+              }
+              type="submit"
+              className="mx-auto w-fit"
+            >
+              Save Changes
+            </Button>
+            <Tabs
+              defaultValue="general"
+              className="mx-auto flex w-full flex-col gap-4"
+            >
+              <TabsList className="mx-auto">
+                <TabsTrigger value="general">General</TabsTrigger>
+                <TabsTrigger value="layout">Layout</TabsTrigger>
+                <TabsTrigger value="music">Music</TabsTrigger>
+                <TabsTrigger value="links">Links</TabsTrigger>
+              </TabsList>
+              <TabsContent value="general">
+                <div className="flex flex-col items-center gap-8 md:flex-row">
+                  <Avatar
+                    uid={user.id}
+                    url={initialFormData.avatar_url}
+                    size={150}
+                    onUpload={(url: string) => {
+                      form.setValue('avatar_url', url);
+                      updateProfile({
+                        artist_name: form.getValues('artist_name'),
+                        handle: form.getValues('handle'),
+                        artist_bio: form.getValues('artist_bio'),
+                        avatar_url: url,
+                        facebook: form.getValues('facebook'),
+                        instagram: form.getValues('instagram'),
+                        twitter: form.getValues('twitter'),
+                        wikipedia: form.getValues('wikipedia')
+                      });
+                    }}
+                  />
 
-              <Cover
-                uid={user.id}
-                url={initialFormData.cover_url}
-                size={150}
-                onUpload={(url: string) => {
-                  form.setValue('cover_url', url);
-                  updateProfile({
-                    artist_name: form.getValues('artist_name'),
-                    handle: form.getValues('handle'),
-                    artist_bio: form.getValues('artist_bio'),
-                    cover_url: url,
-                    facebook: form.getValues('facebook'),
-                    instagram: form.getValues('instagram'),
-                    twitter: form.getValues('twitter'),
-                    wikipedia: form.getValues('wikipedia')
-                  });
-                }}
-              />
-            </div>
+                  <Cover
+                    uid={user.id}
+                    url={initialFormData.cover_url}
+                    size={150}
+                    onUpload={(url: string) => {
+                      form.setValue('cover_url', url);
+                      updateProfile({
+                        artist_name: form.getValues('artist_name'),
+                        handle: form.getValues('handle'),
+                        artist_bio: form.getValues('artist_bio'),
+                        cover_url: url,
+                        facebook: form.getValues('facebook'),
+                        instagram: form.getValues('instagram'),
+                        twitter: form.getValues('twitter'),
+                        wikipedia: form.getValues('wikipedia')
+                      });
+                    }}
+                  />
+                </div>
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    id="email"
-                    disabled
-                    placeholder={`${session?.user.email}`}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="artist_name"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="fullName">Full Name</label>
-                  <Input
-                    id="fullName"
-                    placeholder="Enter your full name"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="handle"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="handle">Handle</label>
-                  <Input
-                    id="handle"
-                    placeholder="Enter your handle"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="artist_bio"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="artist_bio">Bio</label>
-                  <Textarea
-                    id="artist_bio"
-                    placeholder="Tell us a little bit about yourself"
-                    className="h-48"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-          </TabsContent>
-          <TabsContent className="flex flex-col gap-8" value="layout">
-            {/* <Tabs
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="email">Email</label>
+                      <Input
+                        id="email"
+                        disabled
+                        placeholder={`${session?.user.email}`}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="artist_name"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="fullName">Full Name</label>
+                      <Input
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="handle"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="handle">Handle</label>
+                      <Input
+                        id="handle"
+                        placeholder="Enter your handle"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="artist_bio"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="artist_bio">Bio</label>
+                      <Textarea
+                        id="artist_bio"
+                        placeholder="Tell us a little bit about yourself"
+                        className="h-48"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+              </TabsContent>
+              <TabsContent className="flex flex-col gap-8" value="layout">
+                {/* <Tabs
               defaultValue="default"
               className="mx-auto flex w-[400px] flex-col"
             >
@@ -336,169 +342,180 @@ export default function CustomizeForm({
               </TabsList>
             </Tabs> */}
 
-            <FormField
-              control={form.control}
-              name="hide_branding"
-              render={({ field }) => (
-                <div className="mx-auto flex flex-col">
-                  <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md drop-shadow">
-                    <FormControl>
-                      <Checkbox
-                        checked={subscriptionActive ? field.value : false}
-                        onCheckedChange={
-                          subscriptionActive ? field.onChange : undefined
-                        }
-                        disabled={!subscriptionActive}
-                      />
-                    </FormControl>
+                <FormField
+                  control={form.control}
+                  name="hide_branding"
+                  render={({ field }) => (
+                    <div className="mx-auto flex flex-col">
+                      <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md drop-shadow">
+                        <FormControl>
+                          <Checkbox
+                            checked={subscriptionActive ? field.value : false}
+                            onCheckedChange={
+                              subscriptionActive ? field.onChange : undefined
+                            }
+                            disabled={!subscriptionActive}
+                          />
+                        </FormControl>
 
-                    <div className="leading-none">
-                      <FormLabel>
-                        <span className="font-grtsk-giga text-sm font-bold">
-                          soundbit.
-                        </span>
-                      </FormLabel>
-                      <FormDescription>
-                        Toggle to hide
-                        <span className="px-1 font-grtsk-giga text-xs font-bold">
-                          soundbit.
-                        </span>
-                        branding in your profile.
-                      </FormDescription>
+                        <div className="leading-none">
+                          <FormLabel>
+                            <span className="font-grtsk-giga text-sm font-bold">
+                              soundbit.
+                            </span>
+                          </FormLabel>
+                          <FormDescription>
+                            Toggle to hide
+                            <span className="px-1 font-grtsk-giga text-xs font-bold">
+                              soundbit.
+                            </span>
+                            branding in your profile.
+                          </FormDescription>
+                        </div>
+                      </FormItem>
                     </div>
-                  </FormItem>
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="background_color"
-              render={({ field }) => (
-                <div className="">
-                  {/* <label htmlFor="background_color">Background Color</label> */}
-                  <ToggleGroup
-                    type="single"
-                    size="sm"
-                    className="flex gap-1"
-                    value={field.value}
-                    onValueChange={(value) =>
-                      form.setValue('background_color', value)
-                    }
-                  >
-                    {colorOptions.map((color) => (
-                      <ToggleGroupItem
-                        key={color}
-                        value={color}
-                        className="rounded-full"
-                        aria-label={`Toggle ${color}`}
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="background_color"
+                  render={({ field }) => (
+                    <div className="">
+                      {/* <label htmlFor="background_color">Background Color</label> */}
+                      <ToggleGroup
+                        type="single"
+                        size="sm"
+                        className="flex gap-1"
+                        value={field.value}
+                        onValueChange={(value) =>
+                          form.setValue('background_color', value)
+                        }
                       >
-                        <div className={`h-4 w-4 ${color} rounded-full`}></div>
-                      </ToggleGroupItem>
-                    ))}
-                  </ToggleGroup>
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-          </TabsContent>
-          <TabsContent value="music">
-            <FormField
-              control={form.control}
-              name="view"
-              render={({ field }) => (
-                <div>
-                  <ToggleGroup
-                    type="single"
-                    size="sm"
-                    value={field.value}
-                    onValueChange={(value) => form.setValue('view', value)}
-                  >
-                    {['top_tracks', 'catalog', 'both'].map((view) => (
-                      <ToggleGroupItem
-                        key={view}
-                        value={view}
-                        aria-label={`Toggle ${view}`}
+                        {colorOptions.map((color) => (
+                          <ToggleGroupItem
+                            key={color}
+                            value={color}
+                            className="rounded-full"
+                            aria-label={`Toggle ${color}`}
+                          >
+                            <div
+                              className={`h-4 w-4 ${color} rounded-full`}
+                            ></div>
+                          </ToggleGroupItem>
+                        ))}
+                      </ToggleGroup>
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+              </TabsContent>
+              <TabsContent value="music">
+                <FormField
+                  control={form.control}
+                  name="view"
+                  render={({ field }) => (
+                    <div>
+                      <ToggleGroup
+                        type="single"
+                        size="sm"
+                        value={field.value}
+                        onValueChange={(value) => form.setValue('view', value)}
                       >
-                        {view === 'top_tracks' && 'Top Tracks'}
-                        {view === 'catalog' && 'Catalog'}
-                        {view === 'both' && 'Both'}
-                      </ToggleGroupItem>
-                    ))}
-                  </ToggleGroup>
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-          </TabsContent>
+                        {['top_tracks', 'catalog', 'both'].map((view) => (
+                          <ToggleGroupItem
+                            key={view}
+                            value={view}
+                            aria-label={`Toggle ${view}`}
+                          >
+                            {view === 'top_tracks' && 'Top Tracks'}
+                            {view === 'catalog' && 'Catalog'}
+                            {view === 'both' && 'Both'}
+                          </ToggleGroupItem>
+                        ))}
+                      </ToggleGroup>
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+              </TabsContent>
 
-          <TabsContent className="flex flex-col gap-4" value="links">
-            <FormField
-              control={form.control}
-              name="facebook"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="facebook">Facebook</label>
-                  <Input
-                    id="facebook"
-                    placeholder="Enter your Facebook link"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="instagram"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="instagram">Instagram</label>
-                  <Input
-                    id="instagram"
-                    placeholder="Enter your Instagram link"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="twitter"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="twitter">Twitter</label>
-                  <Input
-                    id="twitter"
-                    placeholder="Enter your Twitter link"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="wikipedia"
-              render={({ field }) => (
-                <div>
-                  <label htmlFor="wikipedia">Wikipedia</label>
-                  <Input
-                    id="wikipedia"
-                    placeholder="Enter your Wikipedia link"
-                    {...field}
-                  />
-                  <FormMessage placeholder={field.name} />
-                </div>
-              )}
-            />
-          </TabsContent>
-        </Tabs>
-        <div className="flex flex-col gap-4">
-          <div className="flex w-full justify-end"></div>
+              <TabsContent className="flex flex-col gap-4" value="links">
+                <FormField
+                  control={form.control}
+                  name="facebook"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="facebook">Facebook</label>
+                      <Input
+                        id="facebook"
+                        placeholder="Enter your Facebook link"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="instagram"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="instagram">Instagram</label>
+                      <Input
+                        id="instagram"
+                        placeholder="Enter your Instagram link"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="twitter"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="twitter">Twitter</label>
+                      <Input
+                        id="twitter"
+                        placeholder="Enter your Twitter link"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="wikipedia"
+                  render={({ field }) => (
+                    <div>
+                      <label htmlFor="wikipedia">Wikipedia</label>
+                      <Input
+                        id="wikipedia"
+                        placeholder="Enter your Wikipedia link"
+                        {...field}
+                      />
+                      <FormMessage placeholder={field.name} />
+                    </div>
+                  )}
+                />
+              </TabsContent>
+            </Tabs>
+            <div className="flex flex-col gap-4">
+              <div className="flex w-full justify-end"></div>
+            </div>
+            {/* </ScrollArea> */}
+          </form>
+        </Form>
+      </div>{' '}
+      {!showForm && (
+        <div className="sm:hidden">
+          <Button onClick={() => setShowForm(true)} className="mx-auto w-fit">
+            Edit Profile
+          </Button>
         </div>
-        {/* </ScrollArea> */}
-      </form>
-    </Form>
+      )}
+    </div>
   );
 }

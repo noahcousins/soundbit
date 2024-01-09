@@ -42,5 +42,5 @@ export default async function CustomizeLayout({
 
   const session = await fetchData(); // Get the session
 
-  return <div className="mx-auto flex">{children}</div>;
+  return <div className="mx-auto flex w-full">{children}</div>;
 }

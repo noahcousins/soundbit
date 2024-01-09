@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { ToastAction } from '@/components/ui/toast';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { ScrollArea } from '../ui/scroll-area';
 
 const profileSchema = z.object({
@@ -46,8 +46,6 @@ export default function AccountForm({
 
   const [loading, setLoading] = useState(true);
   const user = session?.user;
-
-  const { toast } = useToast();
 
   const getProfile = useCallback(async () => {
     try {
@@ -84,15 +82,12 @@ export default function AccountForm({
       ]);
 
       if (error) throw error;
-      toast({
-        title: 'Updated',
+      toast('Changes saved!', {
         description: 'Your profile has been updated.'
       });
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error!',
-        description: 'Error updating your profile.'
+      toast('Error!', {
+        description: 'There was an issue updating your profile.'
       });
     } finally {
       setLoading(false);

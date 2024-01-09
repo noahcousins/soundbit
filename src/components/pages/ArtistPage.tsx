@@ -16,7 +16,7 @@ import SingleCard from '@/components/tracks/SingleCard';
 import CardGrid from '@/components/artists/CardGrid';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Dock from '@/components/layout/Dock';
+import Dock from '../layout/Dock';
 
 export const revalidate = 0;
 
@@ -113,21 +113,14 @@ export default async function ArtistPage({ params }: { params: any }) {
 
   return (
     <div
-      className={`flex w-full px-4 py-8 lg:px-8 ${artistSiteData[0].background_color}`}
+      className={`relative flex w-full px-4 py-8 lg:px-8 ${artistSiteData[0].background_color}`}
     >
-      {userId === session?.user.id ? (
-        <div className="fixed bottom-0 left-1/2 z-[999] mb-12 flex -translate-x-1/2 transform">
-          <Dock handle={handle} />
-        </div>
-      ) : (
-        ''
-      )}
       <main
         className={`flex min-h-screen w-full flex-col items-start gap-8 pt-24`}
       >
         <ArtistDetails
           backgroundColor={artistSiteData[0].background_color}
-          artistSiteData={artistSiteData[0]}
+          artistSiteData={artistSiteData}
           artistData={artistData}
         />
         <div

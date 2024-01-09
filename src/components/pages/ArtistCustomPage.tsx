@@ -16,48 +16,27 @@ import SingleCard from '@/components/tracks/SingleCard';
 import CardGrid from '@/components/artists/CardGrid';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Dock from '@/components/layout/Dock';
 
 export const revalidate = 0;
 
-export default async function ArtistPage({ params }: { params: any }) {
-  const { handle } = params;
-
-  const cookieStore = cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        }
-      }
-    }
-  );
-
-  const session = await getSession();
-
-  const { data, error } = await supabase
-    .from('sites')
-    .select(
-      'artist_name, user_id, artist_id, artist_bio, instagram, facebook, twitter, wikipedia, view, avatar_url, cover_url, hide_branding, background_color'
-    )
-    .eq('handle', handle);
-
-  const artistSiteData = data;
-
+export default async function ArtistPage({
+  handle,
+  artistSiteData
+}: {
+  handle: any;
+  artistSiteData: any;
+}) {
   let artistName = 'Unknown';
   let artistId = 'Unknown';
   let artistBio = 'Unknown';
   let userId = 'Unknown';
   let market = 'Unknown';
 
-  if (artistSiteData && artistSiteData.length > 0) {
-    artistName = artistSiteData[0].artist_name;
-    artistId = artistSiteData[0].artist_id;
-    artistBio = artistSiteData[0].artist_bio;
-    userId = artistSiteData[0].user_id;
+  if (artistSiteData) {
+    artistName = artistSiteData.artist_name;
+    artistId = artistSiteData.artist_id;
+    artistBio = artistSiteData.artist_bio;
+    userId = artistSiteData.user_id;
     market = 'US';
   }
 
@@ -82,8 +61,8 @@ export default async function ArtistPage({ params }: { params: any }) {
   let artistAlbumsData, artistSinglesData, artistTopTracksData;
 
   // Conditional checks based on the 'view' value
-  if (artistSiteData && artistSiteData.length > 0) {
-    const view = artistSiteData[0].view;
+  if (artistSiteData) {
+    const view = artistSiteData.view;
 
     if (view === 'top_tracks' || view === 'both') {
       const artistTopTracks = await searchArtistTopTracks({ artistId, market });
@@ -104,37 +83,30 @@ export default async function ArtistPage({ params }: { params: any }) {
       artistSinglesData = await artistSingles.json();
     }
   } else {
-    notFound();
+    <div>Artist data not available</div>; // Replace this with your desired UI/message
   }
 
   // const blurUrl = await dynamicBlurDataUrl(
-  //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
+  //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData.cover_url})`
   // );
 
   return (
     <div
-      className={`flex w-full px-4 py-8 lg:px-8 ${artistSiteData[0].background_color}`}
+      className={`flex w-full px-4 py-8 lg:px-8 ${artistSiteData.background_color}`}
     >
-      {userId === session?.user.id ? (
-        <div className="fixed bottom-0 left-1/2 z-[999] mb-12 flex -translate-x-1/2 transform">
-          <Dock handle={handle} />
-        </div>
-      ) : (
-        ''
-      )}
       <main
         className={`flex min-h-screen w-full flex-col items-start gap-8 pt-24`}
       >
         <ArtistDetails
-          backgroundColor={artistSiteData[0].background_color}
-          artistSiteData={artistSiteData[0]}
+          backgroundColor={artistSiteData.background_color}
+          artistSiteData={artistSiteData}
           artistData={artistData}
         />
         <div
           className={`mx-auto flex w-full flex-col gap-4 ${
-            artistSiteData[0].background_color
+            artistSiteData.background_color
           } ${
-            artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+            artistSiteData.background_color === 'bg-[#DDDDDD]'
               ? 'text-black'
               : 'text-white'
           } md:w-[736px]`}
@@ -144,7 +116,7 @@ export default async function ArtistPage({ params }: { params: any }) {
               {artistTopTracksData?.tracks?.map((track: any, index: number) => {
                 return (
                   <TopTrackCard
-                    backgroundColor={artistSiteData[0].background_color}
+                    backgroundColor={artistSiteData.background_color}
                     track={track}
                     key={index}
                     index={index}
@@ -158,7 +130,7 @@ export default async function ArtistPage({ params }: { params: any }) {
             <>
               <Separator
                 className={`${
-                  artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+                  artistSiteData.background_color === 'bg-[#DDDDDD]'
                     ? 'bg-black/50'
                     : 'bg-white/50'
                 }`}
@@ -167,7 +139,7 @@ export default async function ArtistPage({ params }: { params: any }) {
               <CardGrid title="Albums">
                 {artistAlbumsData?.items?.map((album: any, index: number) => (
                   <AlbumCard
-                    backgroundColor={artistSiteData[0].background_color}
+                    backgroundColor={artistSiteData.background_color}
                     key={album.id}
                     album={album}
                   />
@@ -180,7 +152,7 @@ export default async function ArtistPage({ params }: { params: any }) {
             <>
               <Separator
                 className={`${
-                  artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+                  artistSiteData.background_color === 'bg-[#DDDDDD]'
                     ? 'bg-black/50'
                     : 'bg-white/50'
                 }`}
@@ -188,7 +160,7 @@ export default async function ArtistPage({ params }: { params: any }) {
               <CardGrid title="Albums">
                 {artistSinglesData.items.map((single: any, index: number) => (
                   <SingleCard
-                    backgroundColor={artistSiteData[0].background_color}
+                    backgroundColor={artistSiteData.background_color}
                     key={single.id}
                     single={single}
                   />
@@ -200,7 +172,7 @@ export default async function ArtistPage({ params }: { params: any }) {
         {artistData && (
           <div
             className={`mx-auto flex flex-col gap-2 text-center ${
-              artistSiteData[0].background_color === 'bg-[#DDDDDD]'
+              artistSiteData.background_color === 'bg-[#DDDDDD]'
                 ? 'text-black'
                 : 'text-white'
             }`}
@@ -208,7 +180,7 @@ export default async function ArtistPage({ params }: { params: any }) {
             <p className="mx-auto text-sm uppercase">
               {artistData.name} © ALL RIGHTS RESERVED
             </p>
-            {artistSiteData[0].hide_branding === false ? (
+            {artistSiteData.hide_branding === false ? (
               <Link href="/">
                 <p className="text-xs">
                   made with
