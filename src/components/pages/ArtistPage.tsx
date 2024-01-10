@@ -133,7 +133,7 @@ export default async function ArtistPage({ params }: { params: any }) {
           } md:w-[736px]`}
         >
           {artistTopTracksData && (
-            <CardGrid title="Top Tracks">
+            <CardGrid artistSiteData={artistSiteData} title="Top Tracks">
               {artistTopTracksData?.tracks?.map((track: any, index: number) => {
                 return (
                   <TopTrackCard
@@ -157,7 +157,7 @@ export default async function ArtistPage({ params }: { params: any }) {
                 }`}
               />
 
-              <CardGrid title="Albums">
+              <CardGrid artistSiteData={artistSiteData} title="Albums">
                 {artistAlbumsData?.items?.map((album: any, index: number) => (
                   <AlbumCard
                     backgroundColor={artistSiteData[0].background_color}
@@ -178,7 +178,7 @@ export default async function ArtistPage({ params }: { params: any }) {
                     : 'bg-white/50'
                 }`}
               />
-              <CardGrid title="Albums">
+              <CardGrid artistSiteData={artistSiteData} title="Albums">
                 {artistSinglesData.items.map((single: any, index: number) => (
                   <SingleCard
                     backgroundColor={artistSiteData[0].background_color}
