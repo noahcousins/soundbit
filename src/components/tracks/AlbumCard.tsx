@@ -19,7 +19,7 @@ export default function AlbumCard({
           backgroundColor === 'bg-[#DDDDDD]'
             ? 'bg-white text-black'
             : 'bg-black/25 text-white'
-        } rounded-lg bg-black/25 p-2 text-left`}
+        } rounded-lg bg-black/50 p-2 text-left`}
       >
         {' '}
         <div className="relative flex overflow-hidden">
@@ -32,7 +32,9 @@ export default function AlbumCard({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <p className="line-clamp-1 text-base">{album.name}</p>
+          <p className="line-clamp-1 text-left text-sm tracking-tight">
+            {album.name}
+          </p>
           <p
             className={`line-clamp-1 flex w-fit gap-1 rounded-sm  ${
               backgroundColor === 'bg-[#DDDDDD]'

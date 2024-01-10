@@ -94,7 +94,7 @@ export default function ArtistDetails({
                     rel="noopener noreferrer"
                   >
                     <p className="font-grtsk-giga text-4xl font-extrabold uppercase drop-shadow-lg">
-                      {artistData?.name}
+                      {artistSiteData?.artist_name || artistData?.name}
                     </p>
                   </Link>{' '}
                   <SocialLinks

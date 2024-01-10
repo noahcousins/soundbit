@@ -26,7 +26,7 @@ export default function SingleCard({
           backgroundColor === 'bg-[#DDDDDD]'
             ? 'bg-white text-black'
             : 'bg-black/25 text-white'
-        } rounded-lg bg-black/25 p-2 text-left`}
+        } rounded-lg bg-black/50 p-2 text-left`}
       >
         {' '}
         <div className="relative flex overflow-hidden">
@@ -42,7 +42,7 @@ export default function SingleCard({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <p className="line-clamp-1 text-left text-base">
+                <p className="line-clamp-1 text-left text-sm tracking-tight">
                   {single.name}
                 </p>
               </TooltipTrigger>

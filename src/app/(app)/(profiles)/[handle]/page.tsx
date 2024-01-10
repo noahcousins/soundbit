@@ -140,7 +140,7 @@ export default async function ArtistPage({ params }: { params: any }) {
           } md:w-[736px]`}
         >
           {artistTopTracksData && (
-            <CardGrid title="Top Tracks">
+            <CardGrid artistSiteData={artistSiteData} title="Top Tracks">
               {artistTopTracksData?.tracks?.map((track: any, index: number) => {
                 return (
                   <TopTrackCard
@@ -155,46 +155,27 @@ export default async function ArtistPage({ params }: { params: any }) {
           )}
 
           {artistAlbumsData && (
-            <>
-              <Separator
-                className={`${
-                  artistSiteData[0].background_color === 'bg-[#DDDDDD]'
-                    ? 'bg-black/50'
-                    : 'bg-white/50'
-                }`}
-              />
-
-              <CardGrid title="Albums">
-                {artistAlbumsData?.items?.map((album: any, index: number) => (
-                  <AlbumCard
-                    backgroundColor={artistSiteData[0].background_color}
-                    key={album.id}
-                    album={album}
-                  />
-                ))}
-              </CardGrid>
-            </>
+            <CardGrid artistSiteData={artistSiteData} title="Albums">
+              {artistAlbumsData?.items?.map((album: any, index: number) => (
+                <AlbumCard
+                  backgroundColor={artistSiteData[0].background_color}
+                  key={album.id}
+                  album={album}
+                />
+              ))}
+            </CardGrid>
           )}
 
           {artistSinglesData && (
-            <>
-              <Separator
-                className={`${
-                  artistSiteData[0].background_color === 'bg-[#DDDDDD]'
-                    ? 'bg-black/50'
-                    : 'bg-white/50'
-                }`}
-              />
-              <CardGrid title="Albums">
-                {artistSinglesData.items.map((single: any, index: number) => (
-                  <SingleCard
-                    backgroundColor={artistSiteData[0].background_color}
-                    key={single.id}
-                    single={single}
-                  />
-                ))}
-              </CardGrid>
-            </>
+            <CardGrid artistSiteData={artistSiteData} title="Singles">
+              {artistSinglesData.items.map((single: any, index: number) => (
+                <SingleCard
+                  backgroundColor={artistSiteData[0].background_color}
+                  key={single.id}
+                  single={single}
+                />
+              ))}
+            </CardGrid>
           )}
         </div>
         {artistData && (

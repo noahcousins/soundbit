@@ -109,10 +109,14 @@ export default function Dock({ handle }: { handle: string }) {
               </Tooltip>
             </TooltipProvider>
           </DialogTrigger>
-          <DialogContent className="rounded-3xl">
-            <DialogHeader>
+          <DialogContent className="sm:rounded-3xl md:w-fit">
+            <DialogHeader className="sm:w-fit">
               {/* <DialogTitle>Share with the world</DialogTitle> */}
               <DialogDescription>
+                <p className="text-center">
+                  Share with the{' '}
+                  <span className="font-grtsk-giga font-bold">world</span>.
+                </p>
                 <div className="mx-auto flex w-fit select-none items-center gap-2 rounded-3xl bg-white/5 px-6 py-4 text-center">
                   <p className="flex w-full items-center text-center text-2xl font-medium">
                     soundbit.io/<span className="text-white">{handle}</span>
