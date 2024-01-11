@@ -90,7 +90,7 @@ export default function Avatar({
           height={size}
           src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${url}`}
           alt="Avatar"
-          className="avatar image mx-auto cursor-pointer rounded-full"
+          className="avatar image mx-auto cursor-pointer rounded-full border border-primary/25 p-1 transition-all duration-200 hover:border-primary/50 hover:p-2"
           style={{ height: size, width: size }}
         />
       ) : (

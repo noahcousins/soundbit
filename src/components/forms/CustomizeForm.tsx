@@ -11,6 +11,12 @@ import {
   FormItem,
   FormDescription
 } from '@/components/ui/form';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,13 +25,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { ToastAction } from '@/components/ui/toast';
 import { toast } from 'sonner';
-import { ScrollArea } from '../ui/scroll-area';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Cover from './CoverWidget';
-import Link from 'next/link';
 import { Checkbox } from '../../../components/ui/checkbox';
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
@@ -34,11 +37,17 @@ import { Textarea } from '../ui/textarea';
 export default function CustomizeForm({
   session,
   initialFormData,
-  defaultMusicTabValue
+  defaultMusicTabValue,
+  artistTopTracksData,
+  artistAlbumsData,
+  artistSinglesData
 }: {
   session: any;
   initialFormData: any;
   defaultMusicTabValue: any;
+  artistTopTracksData: any;
+  artistAlbumsData: any;
+  artistSinglesData: any;
 }) {
   const colorOptions = [
     'bg-[#DDDDDD]',
@@ -66,7 +75,10 @@ export default function CustomizeForm({
     wikipedia: z.string().url({ message: 'Invalid URL format' }).optional(),
     hide_branding: z.boolean().optional(),
     background_color: z.string().optional(),
-    view: z.enum(['top_tracks', 'catalog', 'both']).default('top_tracks')
+    view: z.enum(['top_tracks', 'catalog', 'both']).default('top_tracks'),
+    hidden_singles: z.array(z.string()).default([]),
+    hidden_albums: z.array(z.string()).default([]),
+    hidden_top_tracks: z.array(z.string()).default([])
   });
 
   const form = useForm({
@@ -123,6 +135,9 @@ export default function CustomizeForm({
         form.setValue('hide_branding', initialFormData.hide_branding);
         form.setValue('background_color', initialFormData.background_color);
         form.setValue('view', initialFormData.view);
+        form.setValue('hidden_singles', initialFormData.hidden_singles);
+        form.setValue('hidden_albums', initialFormData.hidden_albums);
+        form.setValue('hidden_top_tracks', initialFormData.hidden_top_tracks);
       }
     } catch (error) {
       alert('Error loading user data!');
@@ -155,7 +170,10 @@ export default function CustomizeForm({
             wikipedia: formData.wikipedia,
             hide_branding: formData.hide_branding,
             background_color: formData.background_color,
-            view: formData.view
+            view: formData.view,
+            hidden_singles: formData.hidden_singles,
+            hidden_albums: formData.hidden_albums,
+            hidden_top_tracks: formData.hidden_top_tracks
           },
           { onConflict: 'user_id' }
         )
@@ -203,7 +221,10 @@ export default function CustomizeForm({
                   wikipedia: form.getValues('wikipedia'),
                   hide_branding: form.getValues('hide_branding'),
                   background_color: form.getValues('background_color'),
-                  view: form.getValues('view')
+                  view: form.getValues('view'),
+                  hidden_singles: form.getValues('hidden_singles'),
+                  hidden_albums: form.getValues('hidden_albums'),
+                  hidden_top_tracks: form.getValues('hidden_top_tracks')
                 })
               }
               type="submit"
@@ -437,6 +458,92 @@ export default function CustomizeForm({
                     </div>
                   )}
                 />
+
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="top tracks">
+                    <AccordionTrigger>Top Tracks</AccordionTrigger>
+                    <AccordionContent>
+                      <FormField
+                        control={form.control}
+                        name="hidden_top_tracks"
+                        render={({ field }) => (
+                          <ToggleGroup
+                            className="flex flex-col"
+                            type="multiple"
+                            value={field.value || []} // Add a check here
+                            onValueChange={(value) => field.onChange(value)}
+                          >
+                            {console.log(artistAlbumsData, 'albums')}
+
+                            {artistTopTracksData.tracks.map((track: any) => (
+                              <ToggleGroupItem
+                                key={track.id}
+                                value={track.id}
+                                aria-label={`Toggle ${track.name}`}
+                              >
+                                {track.name}
+                              </ToggleGroupItem>
+                            ))}
+                          </ToggleGroup>
+                        )}
+                      />{' '}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="singles">
+                    <AccordionTrigger>Singles</AccordionTrigger>
+                    <AccordionContent>
+                      <FormField
+                        control={form.control}
+                        name="hidden_singles"
+                        render={({ field }) => (
+                          <ToggleGroup
+                            className="flex flex-col"
+                            type="multiple"
+                            value={field.value || []} // Add a check here
+                            onValueChange={(value) => field.onChange(value)}
+                          >
+                            {artistSinglesData.items.map((single: any) => (
+                              <ToggleGroupItem
+                                key={single.id}
+                                value={single.id}
+                                aria-label={`Toggle ${single.name}`}
+                              >
+                                {single.name}
+                              </ToggleGroupItem>
+                            ))}
+                          </ToggleGroup>
+                        )}
+                      />
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="albums">
+                    <AccordionTrigger>Albums</AccordionTrigger>
+                    <AccordionContent>
+                      <FormField
+                        control={form.control}
+                        name="hidden_albums"
+                        render={({ field }) => (
+                          <ToggleGroup
+                            className="flex flex-col"
+                            type="multiple"
+                            value={field.value || []} // Add a check here
+                            onValueChange={(value) => field.onChange(value)}
+                          >
+                            {artistAlbumsData.items.map((album: any) => (
+                              <ToggleGroupItem
+                                key={album.id}
+                                value={album.id}
+                                aria-label={`Toggle ${album.name}`}
+                              >
+                                {album.name}
+                              </ToggleGroupItem>
+                            ))}
+                          </ToggleGroup>
+                        )}
+                      />{' '}
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </TabsContent>
 
               <TabsContent className="flex flex-col gap-4" value="links">
@@ -508,7 +615,7 @@ export default function CustomizeForm({
             {/* </ScrollArea> */}
           </form>
         </Form>
-      </div>{' '}
+      </div>
       {!showForm && (
         <div className="sm:hidden">
           <Button onClick={() => setShowForm(true)} className="mx-auto w-fit">

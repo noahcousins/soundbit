@@ -5,6 +5,12 @@ import { getSession } from '@/app/supabase-server';
 import CustomizeForm from '@/components/forms/CustomizeForm';
 
 import {
+  searchArtistAlbums,
+  searchArtistById,
+  searchArtistTopTracks
+} from '@/lib/spotify';
+
+import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup
@@ -58,12 +64,75 @@ export default async function Customize() {
     siteHandle = data?.handle; // Get the 'handle' value from initialFormData
   }
 
+  let artistName = 'Unknown';
+  let artistId = 'Unknown';
+  let artistBio = 'Unknown';
+  let userId = 'Unknown';
+  let market = 'Unknown';
+
+  if (initialFormData) {
+    artistName = initialFormData.artist_name;
+    artistId = initialFormData.artist_id;
+    artistBio = initialFormData.artist_bio;
+    userId = initialFormData.user_id;
+    market = 'US';
+  }
+
+  const artistDetails = await searchArtistById(artistId);
+
+  const artistSpotifyData = await artistDetails.json();
+
+  const albumFilters = {
+    includeGroups: 'album',
+    market: 'US',
+    limit: 50,
+    offset: 0
+  };
+
+  const singleFilters = {
+    includeGroups: 'single',
+    market: 'US',
+    limit: 50,
+    offset: 0
+  };
+
+  let artistAlbumsData, artistSinglesData, artistTopTracksData;
+
+  // Conditional checks based on the 'view' value
+  if (initialFormData) {
+    const view = initialFormData.view;
+
+    if (view === 'top_tracks' || view === 'both') {
+      const artistTopTracks = await searchArtistTopTracks({ artistId, market });
+      artistTopTracksData = await artistTopTracks.json();
+    }
+
+    if (view === 'catalog' || view === 'both') {
+      const artistAlbums = await searchArtistAlbums({
+        artistId,
+        ...albumFilters
+      });
+      const artistSingles = await searchArtistAlbums({
+        artistId,
+        ...singleFilters
+      });
+
+      artistAlbumsData = await artistAlbums.json();
+      artistSinglesData = await artistSingles.json();
+    }
+  } else {
+    <div>Artist data not available</div>; // Replace this with your desired UI/message
+  }
+
   return (
     <main className="flex min-h-screen w-full flex-col items-start gap-8 md:flex-row">
       <aside className="flex w-full md:w-1/4 lg:w-1/3">
         <ScrollArea className="block h-full w-full rounded-md p-4">
           <div style={{ height: '100%', width: '100%' }}>
             <CustomizeForm
+              artistTopTracksData={artistTopTracksData}
+              artistAlbumsData={artistAlbumsData}
+              artistSinglesData={artistSinglesData}
               session={session}
               defaultMusicTabValue={defaultMusicTabValue}
               initialFormData={initialFormData}
@@ -77,7 +146,11 @@ export default async function Customize() {
       <div className="flex h-screen w-full md:w-3/4 lg:w-2/3">
         <ScrollArea className="block h-full w-full rounded-md p-4">
           <div style={{ height: '100%', width: '100%' }}>
-            <ArtistPage artistSiteData={initialFormData} handle={siteHandle} />
+            <ArtistPage
+              artistSpotifyData={artistSpotifyData}
+              artistSiteData={initialFormData}
+              handle={siteHandle}
+            />
           </div>
         </ScrollArea>
       </div>

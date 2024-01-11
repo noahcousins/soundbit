@@ -1,11 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { getSession } from '@/app/supabase-server';
-import {
-  searchArtistAlbums,
-  searchArtistById,
-  searchArtistTopTracks
-} from '@/lib/spotify';
 
 import { Separator } from '@/components/ui/separator';
 
@@ -21,75 +16,13 @@ export const revalidate = 0;
 
 export default async function ArtistPage({
   handle,
-  artistSiteData
+  artistSiteData,
+  artistSpotifyData
 }: {
   handle: any;
   artistSiteData: any;
+  artistSpotifyData: any;
 }) {
-  let artistName = 'Unknown';
-  let artistId = 'Unknown';
-  let artistBio = 'Unknown';
-  let userId = 'Unknown';
-  let market = 'Unknown';
-
-  if (artistSiteData) {
-    artistName = artistSiteData.artist_name;
-    artistId = artistSiteData.artist_id;
-    artistBio = artistSiteData.artist_bio;
-    userId = artistSiteData.user_id;
-    market = 'US';
-  }
-
-  const artistDetails = await searchArtistById(artistId);
-
-  const artistData = await artistDetails.json();
-
-  const albumFilters = {
-    includeGroups: 'album',
-    market: 'US',
-    limit: 50,
-    offset: 0
-  };
-
-  const singleFilters = {
-    includeGroups: 'single',
-    market: 'US',
-    limit: 50,
-    offset: 0
-  };
-
-  let artistAlbumsData, artistSinglesData, artistTopTracksData;
-
-  // Conditional checks based on the 'view' value
-  if (artistSiteData) {
-    const view = artistSiteData.view;
-
-    if (view === 'top_tracks' || view === 'both') {
-      const artistTopTracks = await searchArtistTopTracks({ artistId, market });
-      artistTopTracksData = await artistTopTracks.json();
-    }
-
-    if (view === 'catalog' || view === 'both') {
-      const artistAlbums = await searchArtistAlbums({
-        artistId,
-        ...albumFilters
-      });
-      const artistSingles = await searchArtistAlbums({
-        artistId,
-        ...singleFilters
-      });
-
-      artistAlbumsData = await artistAlbums.json();
-      artistSinglesData = await artistSingles.json();
-    }
-  } else {
-    <div>Artist data not available</div>; // Replace this with your desired UI/message
-  }
-
-  // const blurUrl = await dynamicBlurDataUrl(
-  //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData.cover_url})`
-  // );
-
   return (
     <div
       className={`flex w-full px-4 py-8 lg:px-8 ${artistSiteData.background_color}`}
@@ -100,7 +33,7 @@ export default async function ArtistPage({
         <ArtistDetails
           backgroundColor={artistSiteData.background_color}
           artistSiteData={artistSiteData}
-          artistData={artistData}
+          artistData={artistSpotifyData}
         />
         <div
           className={`mx-auto flex w-full flex-col gap-4 ${
@@ -169,7 +102,7 @@ export default async function ArtistPage({
             </>
           )} */}
         </div>
-        {artistData && (
+        {artistSpotifyData && (
           <div
             className={`mx-auto flex flex-col gap-2 text-center ${
               artistSiteData.background_color === 'bg-[#DDDDDD]'
@@ -178,7 +111,7 @@ export default async function ArtistPage({
             }`}
           >
             <p className="mx-auto text-sm uppercase">
-              {artistData.name} © ALL RIGHTS RESERVED
+              {artistSpotifyData.name} © ALL RIGHTS RESERVED
             </p>
             {artistSiteData.hide_branding === false ? (
               <Link href="/">

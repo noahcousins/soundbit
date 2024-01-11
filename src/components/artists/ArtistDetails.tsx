@@ -23,7 +23,6 @@ export default function ArtistDetails({
   artistSiteData: any;
   backgroundColor: string;
 }) {
-  console.log(artistSiteData, artistData, 'front');
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.95 },
     show: {
@@ -72,12 +71,12 @@ export default function ArtistDetails({
 
             <div className="relative z-10 mx-auto flex flex-col gap-4 lg:flex-row">
               <div
-                className={`absolute -top-8 left-1/2 aspect-square h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 items-center rounded-full border-8 ${backgroundColor} border-transparent drop-shadow-md`}
+                className={`absolute -top-8 left-1/2 aspect-square h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 select-none items-center rounded-full border-8 ${backgroundColor} border-transparent drop-shadow-md`}
                 style={{ overflow: 'hidden', height: '200px' }}
               >
                 {artistSiteData?.avatar_url && (
                   <Image
-                    className="image-no-drag"
+                    className="image-no-drag pointer-events-none select-none"
                     src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/avatars/${artistSiteData?.avatar_url}`}
                     alt="Image"
                     fill={true}
@@ -130,7 +129,7 @@ export default function ArtistDetails({
               {artistData?.genres?.map((genre: any, index: number) => (
                 <motion.div
                   key={index}
-                  className="line-clamp-1 w-fit rounded-sm bg-white/20 px-2 py-1 text-xs backdrop-blur-2xl transition-transform duration-100 ease-in-out hover:bg-white/40 active:scale-105 active:bg-white/50"
+                  className="line-clamp-1 w-fit cursor-default select-none rounded-sm bg-white/20 px-2 py-1 text-xs backdrop-blur-2xl transition-transform duration-100 ease-in-out hover:bg-white/40 active:scale-105 active:bg-white/50"
                   variants={tagVariants}
                   initial="hidden"
                   animate="show"

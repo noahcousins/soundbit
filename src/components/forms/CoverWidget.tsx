@@ -91,7 +91,7 @@ export default function Cover({
             objectFit="cover"
             src={`https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${url}`}
             alt="Cover"
-            className="avatar image mx-auto w-64 cursor-pointer"
+            className="avatar image mx-auto w-64 cursor-pointer rounded-xl border border-primary/25 p-1 transition-all duration-200 hover:border-primary/50 hover:p-2"
           />
         </div>
       ) : (

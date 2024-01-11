@@ -41,7 +41,7 @@ export default async function ArtistPage({ params }: { params: any }) {
   const { data, error } = await supabase
     .from('sites')
     .select(
-      'artist_name, user_id, artist_id, artist_bio, instagram, facebook, twitter, wikipedia, view, avatar_url, cover_url, hide_branding, background_color'
+      'artist_name, user_id, artist_id, artist_bio, instagram, facebook, twitter, wikipedia, view, avatar_url, cover_url, hide_branding, background_color, hidden_singles, hidden_albums, hidden_top_tracks'
     )
     .eq('handle', handle);
 
@@ -111,6 +111,25 @@ export default async function ArtistPage({ params }: { params: any }) {
   //   `(https://wiigbntntwayaoxtkrjv.supabase.co/storage/v1/object/public/covers/${artistSiteData[0].cover_url})`
   // );
 
+  const hiddenAlbums = artistSiteData[0].hidden_albums || [];
+  const hiddenSingles = artistSiteData[0].hidden_singles || [];
+  const hiddenTopTracks = artistSiteData[0].hidden_top_tracks || [];
+
+  // Filter out hidden albums
+  const filteredAlbums = artistAlbumsData?.items?.filter(
+    (album: any) => !hiddenAlbums.includes(album.id)
+  );
+
+  // Filter out hidden singles
+  const filteredSingles = artistSinglesData?.items?.filter(
+    (single: any) => !hiddenSingles.includes(single.id)
+  );
+
+  // Filter out hidden top tracks
+  const filteredTopTracks = artistTopTracksData?.tracks?.filter(
+    (track: any) => !hiddenTopTracks.includes(track.id)
+  );
+
   return (
     <div
       className={`flex w-full px-4 py-8 lg:px-8 ${artistSiteData[0].background_color}`}
@@ -139,9 +158,9 @@ export default async function ArtistPage({ params }: { params: any }) {
               : 'text-white'
           } md:w-[736px]`}
         >
-          {artistTopTracksData && (
+          {filteredTopTracks && (
             <CardGrid artistSiteData={artistSiteData} title="Top Tracks">
-              {artistTopTracksData?.tracks?.map((track: any, index: number) => {
+              {filteredTopTracks?.map((track: any, index: number) => {
                 return (
                   <TopTrackCard
                     backgroundColor={artistSiteData[0].background_color}
@@ -154,9 +173,9 @@ export default async function ArtistPage({ params }: { params: any }) {
             </CardGrid>
           )}
 
-          {artistAlbumsData && (
+          {filteredAlbums && (
             <CardGrid artistSiteData={artistSiteData} title="Albums">
-              {artistAlbumsData?.items?.map((album: any, index: number) => (
+              {filteredAlbums?.map((album: any, index: number) => (
                 <AlbumCard
                   backgroundColor={artistSiteData[0].background_color}
                   key={album.id}
@@ -166,9 +185,9 @@ export default async function ArtistPage({ params }: { params: any }) {
             </CardGrid>
           )}
 
-          {artistSinglesData && (
+          {filteredSingles && (
             <CardGrid artistSiteData={artistSiteData} title="Singles">
-              {artistSinglesData.items.map((single: any, index: number) => (
+              {filteredSingles.map((single: any, index: number) => (
                 <SingleCard
                   backgroundColor={artistSiteData[0].background_color}
                   key={single.id}
